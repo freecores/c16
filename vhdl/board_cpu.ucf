@@ -1,6 +1,59 @@
 NET "clk40" TNM_NET = "clk40";
 TIMESPEC "TS_clk40" = PERIOD "clk40" 25 ns HIGH 50 %;
 
+#######################################################################
+#                                                                     #
+# FPGA PIN DESCRIPTION (from FPGA perspective)                        #
+#                                                                     #
+#######################################################################
+#
+# clk40			40 MHz input clock
+# clk_out		output clock for debug purposes
+#
+#
+# the xm_ signals connect an external 32k x 8 SRAM (15 ns) ...
+#
+# xm_addr<0:14>		address output to SRAM
+# xm_dio<0:7)		data bus from/to SRAM
+# xm_ce			chip enable to SRAM
+# xm_we			write enable to SRAM
+# xm_oe			output enable to SRAM
+#
+#
+# the following signals connect a V.24 driver chip.
+# deactivate_n and enable_n are held at constant level...
+#
+# deactivate_n
+# enable_n
+# serial_in		serial input from V.24 driver
+#serial_out		serial output to   V.24 driver
+#
+#
+# the following signals connect an array of 8 leds
+# and two 7-segment displays...
+#
+# led<0:7>		signal to 8 leds
+# seg1<0:7>		signal to left  7 segment dislpay
+# seg2<0:7>		signal to right 7 segment dislpay
+#
+#
+# the temp_ signals connect a temperature sensor...
+#
+# temp_ce		chip enable for temperature sensor
+# temp_sclk		serial clock to temperature sensor
+# temp_spi		serial data from (? to) temperature sensor
+# temp_spo		serial data to (? from) temperature sensor
+#
+#
+# the following signals connect a DIP switch
+# and two push-buttons...
+#
+# switch<0:7>		signal from DIP switch
+# switch<8>		signal from first  push-button
+# switch<9>		signal from second push-button
+#
+#
+#
 NET "clk40"        LOC = P92;
 NET "clk_out"      LOC = P84;
 NET "xm_adr<14>"   LOC = P66;
