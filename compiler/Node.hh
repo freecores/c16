@@ -482,7 +482,8 @@ public:
    virtual void Emit(FILE * out);
    virtual void EmitValue(FILE * out, TypeName * tn);
 
-   int  InitAutovar(FILE * out, SUW suw);
+   int  InitAutovar(FILE * out, TypeName * type);
+   int  ElementCount() const;
       
 private:
    Expression      * skalar_value;
@@ -671,6 +672,7 @@ public:
 
    int Emit(FILE * out, const char * struct_name, int pos, bool is_union);
    TypeName * GetMemberType(const char * struct_name, const char * member);
+   TypeName * GetMemberType(int pos);
    int GetMemberPosition(const char * struct_name,
 		         const char * member, bool is_union) const;
    int GetSize() const   { assert(size != -1);   return size; };
@@ -678,12 +680,15 @@ public:
    TypeSpecifier        * GetSpecifier()   const { return decl_specifiers; };
    StructDeclaratorList * GetDeclarators() const { return struct_decl_list; };
    TypeName * FirstUnionMember(int size) const;
+   int GetDeclaratorCount() const
+      { return StructDeclaratorList::Length(struct_decl_list); };
 
 private:
    TypeSpecifier        * decl_specifiers;
    StructDeclaratorList * struct_decl_list;
    int size;
 };
+TypeName * GetMemberType(StructDeclarationList * sdl, int pos);
 //-----------------------------------------------------------------------------
 class TypeSpecifier : public Node
 {

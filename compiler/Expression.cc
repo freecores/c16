@@ -1578,7 +1578,6 @@ ParameterDeclarationList * a = args;
         return rpush + lpush;
       }
 
-   fprintf(stderr, "Too many arguments\n");
    semantic_errors++;
    EmitEnd(out);
    return 0;

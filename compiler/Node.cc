@@ -293,24 +293,33 @@ const Specifier spec = typespec->GetType();
    assert(!(spec & SC_TYPEDEF));
    assert(!(spec & SC_EXTERN));
 
-const int size    = typespec->GetSize(declarator);
 const char * name = ::GetDeclaredName(declarator);
    assert(name);
 
+int size = type.GetSize();
+   if (size < 0)   // a[]
+      {
+        if (initializer == 0)
+           {
+              fprintf(stderr, "Can't use [] without initializer\n");
+              semantic_errors++;
+              size = 2;
+           }
+        else
+           {
+             TypeName * etype = type.GetElementType();
+             assert(etype);
+             size = initializer->ElementCount() * etype->GetSize();
+             assert(size > 0);
+           }
+      }
    Name::SetAutoPos(name, Backend::GetSP() - size);
 
-const int ret = typespec->GetSize(declarator);
-   if (ret < 0)
-      {
-        type.Print(stderr);
-        assert(0);
-      }
-
-   if (initializer)   initializer->InitAutovar(out, type.GetSUW());
-   else               Backend::push_zero(ret);
+   if (initializer)   initializer->InitAutovar(out, &type);
+   else               Backend::push_zero(size);
 
    EmitEnd(out);
-   return ret;
+   return size;
 }
 //-----------------------------------------------------------------------------
 void InitDeclarator::Allocate(FILE * out, TypeSpecifier * typespec)
@@ -439,6 +448,12 @@ void Ptr::Emit(FILE * out)
    EmitEnd(out);
 }
 //-----------------------------------------------------------------------------
+int Initializer::ElementCount() const
+{
+   if (skalar_value)   return 1;
+   return InitializerList::Length(array_value);
+}
+//-----------------------------------------------------------------------------
 void Initializer::Emit(FILE * out)
 {
    // debug only: must call EmitValue() or EmitAutovars()
@@ -450,12 +465,12 @@ void Initializer::Emit(FILE * out)
 //-----------------------------------------------------------------------------
 void Initializer::EmitValue(FILE * out, TypeName * tn)
 {
-   if (tn->IsUnion())
+   while (tn->IsUnion())
       {
         int union_size = tn->GetSize();
         TypeName * first = tn->FirstUnionMember(union_size);
-        if (first)   EmitValue(out, first);
-        return;
+        assert(first);
+        tn = first;
       }
 
    if (skalar_value)
@@ -626,17 +641,32 @@ InitializerList * il = array_value;
        }
 }
 //-----------------------------------------------------------------------------
-int Initializer::InitAutovar(FILE * out, SUW suw)
+int Initializer::InitAutovar(FILE * out, TypeName * type)
 {
 int ret = 0;
 
-   assert( skalar_value ||  array_value);
-   assert(!skalar_value || !array_value);
-
    EmitStart(out);
+
+   while (type->IsUnion())
+      {
+        int union_size = type->GetSize();
+        TypeName * first = type->FirstUnionMember(union_size);
+        assert(first);
+        type = first;
+      }
 
    if (skalar_value)
       {
+        assert(!array_value);
+
+        if (type->GetSize() > 2)   // fixme: check for valid size
+           {
+             fprintf(stderr, "Initialization of compound type with skalar\n");
+             semantic_errors++;
+             return 2;
+           }
+
+        SUW suw = type->GetSUW();
         ret = 1;   if (suw == WO)   ret = 2;
 
         if (skalar_value->IsNumericConstant())
@@ -657,10 +687,112 @@ int ret = 0;
              skalar_value->Emit(out);
              Backend::push_rr(suw);
            }
+        EmitEnd(out);
+        return ret;
       }
-   else
+
+
+   assert(array_value);
+
+   // array or struct...
+   // check for array
+   //
+   //
+   ret = type->GetSize();
+InitializerList * arev = array_value->Reverse();
+int alen = InitializerList::Length(arev);
+
+   if (type->IsArray())
       {
-        fprintf(stderr, "TODO: aggregate initializer\r\n");
+        TypeName * etype = type->GetElementType();
+        int esize = etype->GetSize();
+        Expression * lenexpr = type->ArrayLength();
+        int len = alen;
+        if (lenexpr)   len = lenexpr->GetConstantNumericValue();
+
+        if (alen > len)
+           {
+             fprintf(stderr, "Too many array initializer\n");
+             semantic_errors++;
+             return ret;
+           }
+
+        for (; alen < len; len--)
+            {
+              Backend::push_zero(esize);
+            }
+
+        for (; arev; arev = arev->Tail())
+            {
+              Initializer * ini = arev->Head();
+              assert(ini);
+              ini->InitAutovar(out, etype);
+            }
+        return ret;
+      }
+
+   // struct...
+   //
+   if (!type->IsStruct())
+      {
+        fprintf(stderr, "Initialization of skalar type with array\n");
+        semantic_errors++;
+        return ret;
+      }
+
+TypeSpecifier * ts = type->GetTypeSpecifier();
+   assert(ts);
+
+const char * sname = ts->GetName();
+   if (sname == 0)
+      {
+        fprintf(stderr, "No struct name in struct initializer\n");
+        semantic_errors++;
+        return 2;
+      }
+
+StructDeclarationList * sdl = StructName::Find(sname);
+   if (sdl == 0)
+      {
+        fprintf(stderr, "No struct %s defined\n", sname);
+        semantic_errors++;
+        return 2;
+      }
+
+   // compute member count...
+   // 
+int len = 0;
+   for (StructDeclarationList * s = sdl; s; s = s->Tail())
+       {
+         StructDeclaration * sd = s->Head();
+         assert(sd);
+         len += sd->GetDeclaratorCount();
+       }
+
+   if (alen > len)
+      {
+        fprintf(stderr, "Too many struct initializer\n");
+        semantic_errors++;
+        return ret;
+      }
+
+   while (alen < len)   // uninitialized members
+      {
+        TypeName * tn = GetMemberType(sdl, --len);
+        assert(tn);
+        Backend::push_zero(tn->GetSize());
+      }
+
+   while (len)   // uninitialized members
+      {
+        TypeName * tn = GetMemberType(sdl, --len);
+        assert(tn);
+
+        assert(arev);
+        Initializer * ini = arev->Head();
+        assert(ini);
+        arev = arev->Tail();
+        ini->InitAutovar(out, tn);
       }
 
    EmitEnd(out);
@@ -739,6 +871,21 @@ TypeName * StructDeclaration::GetMemberType(const char * struct_name,
    return 0;
 }
 //-----------------------------------------------------------------------------
+TypeName * StructDeclaration::GetMemberType(int pos)
+{
+   for (StructDeclaratorList * sl = struct_decl_list; sl ; sl = sl->Tail())
+       {
+         StructDeclarator * sd = sl->Head();
+         assert(sd);
+
+         if (pos == 0)   return new TypeName(decl_specifiers,
+			                     sd->GetDeclarator());
+         --pos;
+       }
+
+   return 0;
+}
+//-----------------------------------------------------------------------------
 TypeName * StructDeclaration::FirstUnionMember(int union_size) const
 {
    for (StructDeclaratorList * sl = struct_decl_list; sl ; sl = sl->Tail())
@@ -770,7 +917,7 @@ int StructDeclaration::GetMemberPosition(const char * struct_name,
 }
 //-----------------------------------------------------------------------------
 TypeName * StructDeclarator::GetMemberType(TypeSpecifier * tspec,
-                                                const char * member)
+                                           const char * member)
 {
    for (Declarator * decl = declarator; decl; decl = decl->Tail())
        {
@@ -1267,7 +1414,8 @@ if (size != 1)
 fprintf(stderr, "---- Size not 1 or 2:\n");
 Emit(stderr);
 fprintf(stderr, "\n====\n");
-*(char*)0 = 0;
+ *(char*)0 = 0;
+// for (;;)   fprintf(stderr, "?");
 fprintf(stderr, "\n====\n");
 }
    assert(size == 1);
@@ -1689,5 +1837,17 @@ ParameterDeclarationList * GetParameters(Declarator * decl)
 
    fprintf(stderr, "Can't get parameters of undeclared function\n");
    return 0;
+}
+//-----------------------------------------------------------------------------
+TypeName * GetMemberType(StructDeclarationList * sdl, int pos)
+{
+   for (; sdl; sdl = sdl->Tail())
+       {
+         StructDeclaration * sd = sdl->Head();
+         int count = sd->GetDeclaratorCount();
+         if (pos < count)   return sd->GetMemberType(pos);
+
+         pos -= count;
+       }
 }
 //-----------------------------------------------------------------------------
