@@ -88,21 +88,22 @@ architecture Behavioral of opcode_decoder is
 	signal HALT_REQ     : std_logic;
 	signal UNHALT_REQ   : std_logic;
 	signal HALTED       : std_logic;
-	signal SERVE_INT    : std_logic;
-	signal INT_ACK      : std_logic;
+	signal INT_M1       : std_logic;
+	signal INT_M2       : std_logic;
 
 begin
 
 	LAST_M <= '1' when (OP_CYC = LAST) else '0';
 
-	HLT    <= HALTED;
+	HLT    <= HALTED;	-- show when CPU is halted
+	-- HLT    <= '1' when DISABLE_CNT = 0 else '0';	-- show when ints enabled
 
 	process(CLK_I)
 	begin
 		if (rising_edge(CLK_I)) then
 			if (CLR = '1') then
 				DISABLE_CNT <= "0001";	-- 1 x disabled
-				INT_ACK     <= '0';
+				INT_M2      <= '0';
 				HALTED      <= '0';
 			elsif (CE = '1' and T2 = '1') then
 				if (DISABLE_INT = '1') then
@@ -117,12 +118,12 @@ begin
 					HALTED <= '1';
 				end if;
 
-				INT_ACK <= SERVE_INT;
+				INT_M2 <= INT_M1;
 			end if;
 		end if;
 	end process;
 
-	process(OPCODE, OP_CYC, INT, RRZ, INT_ACK, DISABLE_CNT, HALTED)
+	process(OPCODE, OP_CYC, INT, RRZ, INT_M2, DISABLE_CNT, HALTED)
 
 		variable	IS_M1			: std_logic;
 		variable	IS_M2, IS_M1_M2	: std_logic;
@@ -162,13 +163,13 @@ begin
 		DISABLE_INT <= '0';
 		HALT_REQ    <= '0';
 		UNHALT_REQ  <= '0';
-		SERVE_INT   <= '0';
+		INT_M1      <= '0';
 
 		if ((IS_M1 = '1' and INT = '1' and DISABLE_CNT = "0000")	-- new INT or
-			or INT_ACK = '1' ) then									-- continue INT
+			or INT_M2 = '1' ) then							-- continue INT
 			OP_CAT      <= INTR;
 			LAST        <= M2;
-			SERVE_INT   <= IS_M1;	-- assert INT_ACK in M2
+			INT_M1      <= IS_M1;
 			D_OP        <= ALU_X_ADD_Y;
 			D_SX        <= SX_PC;
 			D_SY        <= SY_SY0;		-- PC + 0 (current PC)
@@ -178,7 +179,7 @@ begin
 			PC_OP       <= pc(IS_M1, PC_INT);
 			D_SMQ       <= IS_M1;
 			D_WE_SP     <= sp(IS_M1_M2, SP_LOAD);
-			DISABLE_INT <= '1';
+			DISABLE_INT <= IS_M1;
 			UNHALT_REQ  <= '1';
 
 		elsif (HALTED = '1') then
@@ -367,7 +368,7 @@ begin
 						OP_CAT      <= RET;
 					else
 						OP_CAT      <= RETI;
-						ENABLE_INT  <= '1';
+						ENABLE_INT  <= IS_M1;
 					end if;
 
 					LAST    <= M5;
@@ -1397,11 +1398,11 @@ begin
 
 				when "1110111" =>
 					OP_CAT      <= EI;
-					ENABLE_INT  <= '1';
+					ENABLE_INT  <= IS_M1;
 
 				when "1111001" =>
 					OP_CAT      <= DI;
-					DISABLE_INT <= '1';
+					DISABLE_INT <= IS_M1;
 
 				-- undefined --------------------------------------------------------
 				when others =>
