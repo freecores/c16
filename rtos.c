@@ -619,7 +619,7 @@ char * bottom = current_task->stack_bottom;
 
 extern char * end_text;
 
-void init_unused()   // MUST only be called by idle task
+void init_unused()   // must ONLY be called by idle task
 {
 char * cp = current_task->stack_bottom;
 
@@ -827,11 +827,23 @@ int  col;
 //
 int main()
 {
-   ASM(" MOVE #0x05, RR");            // enable Rx and timer interrupts
-   ASM(" OUT  R, (OUT_INT_MASK)");
-   deschedule();
+int i;
+
    init_unused();
    init_stack();
+
+   ASM(" MOVE #0x00, RR");            // disable all interrupt sources
+   ASM(" OUT  R, (OUT_INT_MASK)");
+
+   // we dont know the value of the interrupt disable counter,
+   // so we force it to zero (i.e. interrupts enabled)
+   //
+   for (i = 0; i < 16; ++i)   ASM(" EI");   // decrement int disable counter
+
+   ASM(" MOVE #0x05, RR");            // enable Rx and timer interrupts
+   ASM(" OUT  R, (OUT_INT_MASK)");
+
+   deschedule();
 
    for (;;)   ASM(" HALT");
 }
@@ -842,6 +854,8 @@ int             c;
 char            last_c;
 unsigned char * address;
 int             value;
+
+   ASM(" EI");
 
    init_stack();
 
@@ -985,6 +999,8 @@ unsigned int halt_total;
 int n;
 int idle;
 
+   ASM(" EI");
+
    init_stack();
 
    for (;;)
@@ -1039,6 +1055,8 @@ int idle;
 void main_3()
 {
 char out;
+
+   ASM(" EI");
 
    init_stack();
 

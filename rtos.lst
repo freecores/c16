@@ -39,30 +39,30 @@ Crx_sema:
    001C: 0000       .WORD 0
    001E: 0000       .WORD 0
    0020: 0000       .WORD 0
-   0022: 190C       .WORD Cstr_0
+   0022: 1928       .WORD Cstr_0
 Ct2_control:
    0024: 0000       .WORD 0
    0026: 0000       .WORD 0
    0028: 0000       .WORD 0
-   002A: 1919       .WORD Cstr_1
+   002A: 1935       .WORD Cstr_1
 Ct3_control:
    002C: 0000       .WORD 0
    002E: 0000       .WORD 0
    0030: 0000       .WORD 0
-   0032: 1928       .WORD Cstr_2
+   0032: 1944       .WORD Cstr_2
 Cserial_out:
    0034: 0001       .WORD 1
    0036: 0000       .WORD 0
    0038: 0000       .WORD 0
-   003A: 1937       .WORD Cstr_3
+   003A: 1953       .WORD Cstr_3
 Ctx_sema:
    003C: 0010       .WORD 16
    003E: 0000       .WORD 0
    0040: 0000       .WORD 0
-   0042: 1942       .WORD Cstr_4
+   0042: 195E       .WORD Cstr_4
 Cswitch_tasks:
    0044: 2C         CLRW -(SP)
-   0045: 49 190A    MOVE (Ccurrent_task), RR
+   0045: 49 1926    MOVE (Ccurrent_task), RR
    0048: 0E         MOVE RR, -(SP)
 st_loop:
    0049: 61 00      MOVE 0(SP), RR
@@ -86,24 +86,24 @@ st_accept:
    0065: 5D 02      MOVE RR, 2(SP)
 st_next_task:
    0067: 61 00      MOVE 0(SP), RR
-   0069: 4C 190A    MOVE (Ccurrent_task), LL
+   0069: 4C 1926    MOVE (Ccurrent_task), LL
    006C: 34         SNE LL, RR
    006D: 03 0049    JMP RRNZ, st_loop
-   0070: 49 190A    MOVE (Ccurrent_task), RR
+   0070: 49 1926    MOVE (Ccurrent_task), RR
    0073: 43         MOVE RR, LL
    0074: 61 02      MOVE 2(SP), RR
    0076: 34         SNE LL, RR
    0077: 04 008F    JMP RRZ, L2_endif_1
    007A: 6D 00      LEA 0(SP), RR
    007C: 0E         MOVE RR, -(SP)
-   007D: 49 190A    MOVE (Ccurrent_task), RR
+   007D: 49 1926    MOVE (Ccurrent_task), RR
    0080: A2         ADD RR, #2
    0081: 43         MOVE RR, LL
    0082: 08         MOVE (SP)+, RR
    0083: 44         MOVE RR, (LL)
    0084: 61 02      MOVE 2(SP), RR
-   0086: 5A 190A    MOVE RR, (Ccurrent_task)
-   0089: 49 190A    MOVE (Ccurrent_task), RR
+   0086: 5A 1926    MOVE RR, (Ccurrent_task)
+   0089: 49 1926    MOVE (Ccurrent_task), RR
    008C: A2         ADD RR, #2
    008D: 46         MOVE (RR), RR
    008E: 4F         MOVE RR, SP
@@ -121,24 +121,24 @@ CP:
    009B: 04 00EF    JMP RRZ, L3_endif_2
    009E: 61 02      MOVE 2(SP), RR
    00A0: 0E         MOVE RR, -(SP)
-   00A1: 49 190A    MOVE (Ccurrent_task), RR
+   00A1: 49 1926    MOVE (Ccurrent_task), RR
    00A4: AE         ADD RR, #14
    00A5: 43         MOVE RR, LL
    00A6: 08         MOVE (SP)+, RR
    00A7: 44         MOVE RR, (LL)
    00A8: C0         MOVE #0, RR
    00A9: 0E         MOVE RR, -(SP)
-   00AA: 49 190A    MOVE (Ccurrent_task), RR
+   00AA: 49 1926    MOVE (Ccurrent_task), RR
    00AD: F5 10      ADD RR, #16
    00AF: 43         MOVE RR, LL
    00B0: 08         MOVE (SP)+, RR
    00B1: 44         MOVE RR, (LL)
-   00B2: 49 190A    MOVE (Ccurrent_task), RR
+   00B2: 49 1926    MOVE (Ccurrent_task), RR
    00B5: A4         ADD RR, #4
    00B6: 47         MOVE (RR), RS
    00B7: 13 01      OR RR, #1
    00B9: 0F         MOVE R, -(SP)
-   00BA: 49 190A    MOVE (Ccurrent_task), RR
+   00BA: 49 1926    MOVE (Ccurrent_task), RR
    00BD: A4         ADD RR, #4
    00BE: 43         MOVE RR, LL
    00BF: 09         MOVE (SP)+, RS
@@ -147,7 +147,7 @@ CP:
    00C3: A2         ADD RR, #2
    00C4: 46         MOVE (RR), RR
    00C5: 04 00D8    JMP RRZ, L3_else_3
-   00C8: 49 190A    MOVE (Ccurrent_task), RR
+   00C8: 49 1926    MOVE (Ccurrent_task), RR
    00CB: 0E         MOVE RR, -(SP)
    00CC: 61 04      MOVE 4(SP), RR
    00CE: A4         ADD RR, #4
@@ -158,7 +158,7 @@ CP:
    00D4: 44         MOVE RR, (LL)
    00D5: 02 00E2    JMP L3_endif_3
 L3_else_3:
-   00D8: 49 190A    MOVE (Ccurrent_task), RR
+   00D8: 49 1926    MOVE (Ccurrent_task), RR
    00DB: 0E         MOVE RR, -(SP)
    00DC: 61 04      MOVE 4(SP), RR
    00DE: A2         ADD RR, #2
@@ -166,7 +166,7 @@ L3_else_3:
    00E0: 08         MOVE (SP)+, RR
    00E1: 44         MOVE RR, (LL)
 L3_endif_3:
-   00E2: 49 190A    MOVE (Ccurrent_task), RR
+   00E2: 49 1926    MOVE (Ccurrent_task), RR
    00E5: 0E         MOVE RR, -(SP)
    00E6: 61 04      MOVE 4(SP), RR
    00E8: A4         ADD RR, #4
@@ -189,38 +189,38 @@ CP_timed:
    00FB: 04 0160    JMP RRZ, L4_endif_4
    00FE: 61 03      MOVE 3(SP), RR
    0100: 0E         MOVE RR, -(SP)
-   0101: 49 190A    MOVE (Ccurrent_task), RR
+   0101: 49 1926    MOVE (Ccurrent_task), RR
    0104: AE         ADD RR, #14
    0105: 43         MOVE RR, LL
    0106: 08         MOVE (SP)+, RR
    0107: 44         MOVE RR, (LL)
    0108: 61 05      MOVE 5(SP), RR
    010A: 0E         MOVE RR, -(SP)
-   010B: 49 190A    MOVE (Ccurrent_task), RR
+   010B: 49 1926    MOVE (Ccurrent_task), RR
    010E: F5 12      ADD RR, #18
    0110: 43         MOVE RR, LL
    0111: 08         MOVE (SP)+, RR
    0112: 44         MOVE RR, (LL)
    0113: C0         MOVE #0, RR
    0114: 0E         MOVE RR, -(SP)
-   0115: 49 190A    MOVE (Ccurrent_task), RR
+   0115: 49 1926    MOVE (Ccurrent_task), RR
    0118: F5 10      ADD RR, #16
    011A: 43         MOVE RR, LL
    011B: 08         MOVE (SP)+, RR
    011C: 44         MOVE RR, (LL)
-   011D: 49 190A    MOVE (Ccurrent_task), RR
+   011D: 49 1926    MOVE (Ccurrent_task), RR
    0120: A4         ADD RR, #4
    0121: 47         MOVE (RR), RS
    0122: 13 03      OR RR, #3
    0124: 0F         MOVE R, -(SP)
-   0125: 49 190A    MOVE (Ccurrent_task), RR
+   0125: 49 1926    MOVE (Ccurrent_task), RR
    0128: A4         ADD RR, #4
    0129: 43         MOVE RR, LL
    012A: 09         MOVE (SP)+, RS
    012B: 45         MOVE R, (LL)
    012C: C0         MOVE #0, RR
    012D: 0F         MOVE R, -(SP)
-   012E: 49 190A    MOVE (Ccurrent_task), RR
+   012E: 49 1926    MOVE (Ccurrent_task), RR
    0131: AC         ADD RR, #12
    0132: 43         MOVE RR, LL
    0133: 09         MOVE (SP)+, RS
@@ -229,7 +229,7 @@ CP_timed:
    0137: A2         ADD RR, #2
    0138: 46         MOVE (RR), RR
    0139: 04 014C    JMP RRZ, L4_else_5
-   013C: 49 190A    MOVE (Ccurrent_task), RR
+   013C: 49 1926    MOVE (Ccurrent_task), RR
    013F: 0E         MOVE RR, -(SP)
    0140: 61 05      MOVE 5(SP), RR
    0142: A4         ADD RR, #4
@@ -240,7 +240,7 @@ CP_timed:
    0148: 44         MOVE RR, (LL)
    0149: 02 0156    JMP L4_endif_5
 L4_else_5:
-   014C: 49 190A    MOVE (Ccurrent_task), RR
+   014C: 49 1926    MOVE (Ccurrent_task), RR
    014F: 0E         MOVE RR, -(SP)
    0150: 61 05      MOVE 5(SP), RR
    0152: A2         ADD RR, #2
@@ -249,7 +249,7 @@ L4_else_5:
    0155: 44         MOVE RR, (LL)
 L4_endif_5:
    0156: 05 0044    CALL Cswitch_tasks
-   0159: 49 190A    MOVE (Ccurrent_task), RR
+   0159: 49 1926    MOVE (Ccurrent_task), RR
    015C: AC         ADD RR, #12
    015D: 47         MOVE (RR), RS
    015E: 5F 00      MOVE R, 0(SP)
@@ -308,7 +308,7 @@ L5_endif_7:
    01A5: A5         ADD RR, #5
    01A6: 48         MOVE (RR), RU
    01A7: 0E         MOVE RR, -(SP)
-   01A8: 49 190A    MOVE (Ccurrent_task), RR
+   01A8: 49 1926    MOVE (Ccurrent_task), RR
    01AB: A5         ADD RR, #5
    01AC: 48         MOVE (RR), RU
    01AD: 0B         MOVE (SP)+, LL
@@ -456,7 +456,7 @@ Cseconds_high:
 Cseconds_changed:
    0272: 00         .BYTE 0
 Ctimer_interrupt:
-   0273: 49 190A    MOVE (Ccurrent_task), RR
+   0273: 49 1926    MOVE (Ccurrent_task), RR
    0276: 0E         MOVE RR, -(SP)
    0277: 2C         CLRW -(SP)
    0278: 2C         CLRW -(SP)
@@ -629,7 +629,7 @@ L9_cont_16:
    0371: 61 04      MOVE 4(SP), RR
    0373: 46         MOVE (RR), RR
    0374: 5D 04      MOVE RR, 4(SP)
-   0376: 4C 190A    MOVE (Ccurrent_task), LL
+   0376: 4C 1926    MOVE (Ccurrent_task), LL
    0379: 34         SNE LL, RR
    037A: 03 02B1    JMP RRNZ, L9_loop_16
 L9_brk_17:
@@ -678,14 +678,14 @@ Csleep:
    03C1: 79         DI 
    03C2: 61 02      MOVE 2(SP), RR
    03C4: 0E         MOVE RR, -(SP)
-   03C5: 49 190A    MOVE (Ccurrent_task), RR
+   03C5: 49 1926    MOVE (Ccurrent_task), RR
    03C8: F5 12      ADD RR, #18
    03CA: 43         MOVE RR, LL
    03CB: 08         MOVE (SP)+, RR
    03CC: 44         MOVE RR, (LL)
    03CD: C2         MOVE #2, RR
    03CE: 0F         MOVE R, -(SP)
-   03CF: 49 190A    MOVE (Ccurrent_task), RR
+   03CF: 49 1926    MOVE (Ccurrent_task), RR
    03D2: A4         ADD RR, #4
    03D3: 43         MOVE RR, LL
    03D4: 09         MOVE (SP)+, RS
@@ -1217,7 +1217,7 @@ L20_loop_58:
    070E: 03 097A    JMP RRNZ, L20_case_60_0000
    0711: 02 0983    JMP L20_deflt_60
 L20_case_60_0058:
-   0714: F8 194F    MOVE #Cstr_36, RR
+   0714: F8 196B    MOVE #Cstr_36, RR
    0717: 0E         MOVE RR, -(SP)
    0718: 61 1C      MOVE 28(SP), RR
    071A: A2         ADD RR, #2
@@ -1235,7 +1235,7 @@ L20_case_60_0058:
    072D: 0E         MOVE RR, -(SP)
    072E: 61 13      MOVE 19(SP), RR
    0730: 0E         MOVE RR, -(SP)
-   0731: F8 1960    MOVE #Cstr_37, RR
+   0731: F8 197C    MOVE #Cstr_37, RR
    0734: 0E         MOVE RR, -(SP)
    0735: 63 1B      MOVE 27(SP), RS
    0737: 0F         MOVE R, -(SP)
@@ -1283,7 +1283,7 @@ L20_endif_61:
    0779: 0E         MOVE RR, -(SP)
    077A: 61 13      MOVE 19(SP), RR
    077C: 0E         MOVE RR, -(SP)
-   077D: F8 1963    MOVE #Cstr_38, RR
+   077D: F8 197F    MOVE #Cstr_38, RR
    0780: 0E         MOVE RR, -(SP)
    0781: 63 1B      MOVE 27(SP), RS
    0783: 0F         MOVE R, -(SP)
@@ -1306,7 +1306,7 @@ L20_case_60_0073:
    079F: 0E         MOVE RR, -(SP)
    07A0: 61 13      MOVE 19(SP), RR
    07A2: 0E         MOVE RR, -(SP)
-   07A3: F8 1964    MOVE #Cstr_39, RR
+   07A3: F8 1980    MOVE #Cstr_39, RR
    07A6: 0E         MOVE RR, -(SP)
    07A7: F9 20      MOVE #32, RR
    07A9: 0F         MOVE R, -(SP)
@@ -1344,7 +1344,7 @@ L20_case_60_0075:
    07DB: 0E         MOVE RR, -(SP)
    07DC: 61 13      MOVE 19(SP), RR
    07DE: 0E         MOVE RR, -(SP)
-   07DF: F8 1965    MOVE #Cstr_40, RR
+   07DF: F8 1981    MOVE #Cstr_40, RR
    07E2: 0E         MOVE RR, -(SP)
    07E3: 63 1B      MOVE 27(SP), RS
    07E5: 0F         MOVE R, -(SP)
@@ -1361,7 +1361,7 @@ L20_case_60_0075:
    07F7: 5D 18      MOVE RR, 24(SP)
    07F9: 02 0993    JMP L20_brk_60
 L20_case_60_0078:
-   07FC: F8 1966    MOVE #Cstr_41, RR
+   07FC: F8 1982    MOVE #Cstr_41, RR
    07FF: 0E         MOVE RR, -(SP)
    0800: 61 1C      MOVE 28(SP), RR
    0802: A2         ADD RR, #2
@@ -1379,7 +1379,7 @@ L20_case_60_0078:
    0815: 0E         MOVE RR, -(SP)
    0816: 61 13      MOVE 19(SP), RR
    0818: 0E         MOVE RR, -(SP)
-   0819: F8 1977    MOVE #Cstr_42, RR
+   0819: F8 1993    MOVE #Cstr_42, RR
    081C: 0E         MOVE RR, -(SP)
    081D: 63 1B      MOVE 27(SP), RS
    081F: 0F         MOVE R, -(SP)
@@ -1816,7 +1816,7 @@ L25_brk_76:
    0AC5: 2B 03      ADD SP, #3
    0AC7: 07         RET 
 Cinit_stack:
-   0AC8: 49 190A    MOVE (Ccurrent_task), RR
+   0AC8: 49 1926    MOVE (Ccurrent_task), RR
    0ACB: A8         ADD RR, #8
    0ACC: 46         MOVE (RR), RR
    0ACD: 0E         MOVE RR, -(SP)
@@ -1840,7 +1840,7 @@ L26_brk_78:
    0AE5: 2B 02      ADD SP, #2
    0AE7: 07         RET 
 Cinit_unused:
-   0AE8: 49 190A    MOVE (Ccurrent_task), RR
+   0AE8: 49 1926    MOVE (Ccurrent_task), RR
    0AEB: A8         ADD RR, #8
    0AEC: 46         MOVE (RR), RR
    0AED: 0E         MOVE RR, -(SP)
@@ -1857,7 +1857,7 @@ L27_cont_79:
    0AFB: B1         SUB RR, #1
    0AFC: 5D 00      MOVE RR, 0(SP)
    0AFE: 0E         MOVE RR, -(SP)
-   0AFF: F8 1D38    MOVE #Cend_text, RR
+   0AFF: F8 1D54    MOVE #Cend_text, RR
    0B02: 0B         MOVE (SP)+, LL
    0B03: 39         SHS LL, RR
    0B04: 03 0AF1    JMP RRNZ, L27_loop_79
@@ -1900,7 +1900,7 @@ Cshow_sema:
    0B35: A6         ADD RR, #6
    0B36: 46         MOVE (RR), RR
    0B37: 0E         MOVE RR, -(SP)
-   0B38: F8 197A    MOVE #Cstr_44, RR
+   0B38: F8 1996    MOVE #Cstr_44, RR
    0B3B: 0E         MOVE RR, -(SP)
    0B3C: 05 0654    CALL Cprintf
    0B3F: 2B 06      ADD SP, #6
@@ -1918,7 +1918,7 @@ L29_loop_84:
    0B54: A6         ADD RR, #6
    0B55: 46         MOVE (RR), RR
    0B56: 0E         MOVE RR, -(SP)
-   0B57: F8 1985    MOVE #Cstr_45, RR
+   0B57: F8 19A1    MOVE #Cstr_45, RR
    0B5A: 0E         MOVE RR, -(SP)
    0B5B: 05 0654    CALL Cprintf
    0B5E: 2B 04      ADD SP, #4
@@ -1928,7 +1928,7 @@ L29_loop_84:
    0B64: 67 00      MOVE 0(SP), LL
    0B66: 33         SEQ LL, RR
    0B67: 04 0B73    JMP RRZ, L29_endif_86
-   0B6A: F8 198C    MOVE #Cstr_46, RR
+   0B6A: F8 19A8    MOVE #Cstr_46, RR
    0B6D: 0E         MOVE RR, -(SP)
    0B6E: 05 0654    CALL Cprintf
    0B71: 2B 02      ADD SP, #2
@@ -1944,12 +1944,12 @@ L29_tst_84:
 L29_brk_85:
    0B7F: 02 0B8B    JMP L29_endif_83
 L29_else_83:
-   0B82: F8 198E    MOVE #Cstr_47, RR
+   0B82: F8 19AA    MOVE #Cstr_47, RR
    0B85: 0E         MOVE RR, -(SP)
    0B86: 05 0654    CALL Cprintf
    0B89: 2B 02      ADD SP, #2
 L29_endif_83:
-   0B8B: F8 1994    MOVE #Cstr_48, RR
+   0B8B: F8 19B0    MOVE #Cstr_48, RR
    0B8E: 0E         MOVE RR, -(SP)
    0B8F: 05 0654    CALL Cprintf
    0B92: 2B 02      ADD SP, #2
@@ -2426,7 +2426,7 @@ Cload_image:
    0D6F: 0E         MOVE RR, -(SP)
    0D70: F8 01CE    MOVE #462, RR
    0D73: 0E         MOVE RR, -(SP)
-   0D74: F8 1997    MOVE #Cstr_49, RR
+   0D74: F8 19B3    MOVE #Cstr_49, RR
    0D77: 0E         MOVE RR, -(SP)
    0D78: 05 0654    CALL Cprintf
    0D7B: 2B 02      ADD SP, #2
@@ -2469,7 +2469,7 @@ L30_brk_90:
    0DAE: 2B 06      ADD SP, #6
    0DB0: 07         RET 
 Cshow_semas:
-   0DB1: F8 19AA    MOVE #Cstr_55, RR
+   0DB1: F8 19C6    MOVE #Cstr_55, RR
    0DB4: 0E         MOVE RR, -(SP)
    0DB5: 05 0654    CALL Cprintf
    0DB8: 2B 02      ADD SP, #2
@@ -2479,7 +2479,7 @@ Cshow_semas:
    0DBF: 0F         MOVE R, -(SP)
    0DC0: 05 0429    CALL Cprint_n
    0DC3: 2B 03      ADD SP, #3
-   0DC5: F8 19D6    MOVE #Cstr_56, RR
+   0DC5: F8 19F2    MOVE #Cstr_56, RR
    0DC8: 0E         MOVE RR, -(SP)
    0DC9: 05 0654    CALL Cprintf
    0DCC: 2B 02      ADD SP, #2
@@ -2509,7 +2509,7 @@ Cshow_semas:
    0E00: 0F         MOVE R, -(SP)
    0E01: 05 0429    CALL Cprint_n
    0E04: 2B 03      ADD SP, #3
-   0E06: F8 19D9    MOVE #Cstr_57, RR
+   0E06: F8 19F5    MOVE #Cstr_57, RR
    0E09: 0E         MOVE RR, -(SP)
    0E0A: 05 0654    CALL Cprintf
    0E0D: 2B 02      ADD SP, #2
@@ -2517,16 +2517,16 @@ Cshow_semas:
    0E12: 04 0E22    JMP RRZ, L31_endif_91
    0E15: 49 01DC    MOVE (Cserial_in_overflows), RR
    0E18: 0E         MOVE RR, -(SP)
-   0E19: F8 19DC    MOVE #Cstr_58, RR
+   0E19: F8 19F8    MOVE #Cstr_58, RR
    0E1C: 0E         MOVE RR, -(SP)
    0E1D: 05 0654    CALL Cprintf
    0E20: 2B 04      ADD SP, #4
 L31_endif_91:
    0E22: 07         RET 
 Cshow_tasks:
-   0E23: F8 18F6    MOVE #Ctask_idle, RR
+   0E23: F8 1912    MOVE #Ctask_idle, RR
    0E26: 0E         MOVE RR, -(SP)
-   0E27: F8 19F9    MOVE #Cstr_59, RR
+   0E27: F8 1A15    MOVE #Cstr_59, RR
    0E2A: 0E         MOVE RR, -(SP)
    0E2B: 05 0654    CALL Cprintf
    0E2E: 2B 02      ADD SP, #2
@@ -2536,7 +2536,7 @@ Cshow_tasks:
    0E35: 0F         MOVE R, -(SP)
    0E36: 05 0429    CALL Cprint_n
    0E39: 2B 03      ADD SP, #3
-   0E3B: F8 1A42    MOVE #Cstr_61, RR
+   0E3B: F8 1A5E    MOVE #Cstr_61, RR
    0E3E: 0E         MOVE RR, -(SP)
    0E3F: 05 0654    CALL Cprintf
    0E42: 2B 02      ADD SP, #2
@@ -2579,7 +2579,7 @@ L32_loop_92:
    0E72: A6         ADD RR, #6
    0E73: 46         MOVE (RR), RR
    0E74: 0E         MOVE RR, -(SP)
-   0E75: F8 1A45    MOVE #Cstr_62, RR
+   0E75: F8 1A61    MOVE #Cstr_62, RR
    0E78: 0E         MOVE RR, -(SP)
    0E79: 05 0654    CALL Cprintf
    0E7C: 2B 0E      ADD SP, #14
@@ -2591,13 +2591,13 @@ L32_loop_92:
    0E88: F5 10      ADD RR, #16
    0E8A: 46         MOVE (RR), RR
    0E8B: 0E         MOVE RR, -(SP)
-   0E8C: F8 1A61    MOVE #Cstr_63, RR
+   0E8C: F8 1A7D    MOVE #Cstr_63, RR
    0E8F: 0E         MOVE RR, -(SP)
    0E90: 05 0654    CALL Cprintf
    0E93: 2B 04      ADD SP, #4
    0E95: 02 0EA1    JMP L32_endif_94
 L32_else_94:
-   0E98: F8 1A68    MOVE #Cstr_64, RR
+   0E98: F8 1A84    MOVE #Cstr_64, RR
    0E9B: 0E         MOVE RR, -(SP)
    0E9C: 05 0654    CALL Cprintf
    0E9F: 2B 02      ADD SP, #2
@@ -2607,7 +2607,7 @@ L32_endif_94:
    0EA4: 47         MOVE (RR), RS
    0EA5: 17 00      SEQ RR, #0
    0EA7: 04 0EB3    JMP RRZ, L32_endif_95
-   0EAA: F8 1A7A    MOVE #Cstr_65, RR
+   0EAA: F8 1A96    MOVE #Cstr_65, RR
    0EAD: 0E         MOVE RR, -(SP)
    0EAE: 05 0654    CALL Cprintf
    0EB1: 2B 02      ADD SP, #2
@@ -2617,7 +2617,7 @@ L32_endif_95:
    0EB6: 47         MOVE (RR), RS
    0EB7: 11 04      AND RR, #4
    0EB9: 04 0EC5    JMP RRZ, L32_endif_96
-   0EBC: F8 1A7F    MOVE #Cstr_66, RR
+   0EBC: F8 1A9B    MOVE #Cstr_66, RR
    0EBF: 0E         MOVE RR, -(SP)
    0EC0: 05 0654    CALL Cprintf
    0EC3: 2B 02      ADD SP, #2
@@ -2631,7 +2631,7 @@ L32_endif_96:
    0ED0: F5 12      ADD RR, #18
    0ED2: 46         MOVE (RR), RR
    0ED3: 0E         MOVE RR, -(SP)
-   0ED4: F8 1A85    MOVE #Cstr_67, RR
+   0ED4: F8 1AA1    MOVE #Cstr_67, RR
    0ED7: 0E         MOVE RR, -(SP)
    0ED8: 05 0654    CALL Cprintf
    0EDB: 2B 04      ADD SP, #4
@@ -2647,12 +2647,12 @@ L32_endif_97:
    0EEA: A6         ADD RR, #6
    0EEB: 46         MOVE (RR), RR
    0EEC: 0E         MOVE RR, -(SP)
-   0EED: F8 1A92    MOVE #Cstr_68, RR
+   0EED: F8 1AAE    MOVE #Cstr_68, RR
    0EF0: 0E         MOVE RR, -(SP)
    0EF1: 05 0654    CALL Cprintf
    0EF4: 2B 04      ADD SP, #4
 L32_endif_98:
-   0EF6: F8 1A9E    MOVE #Cstr_69, RR
+   0EF6: F8 1ABA    MOVE #Cstr_69, RR
    0EF9: 0E         MOVE RR, -(SP)
    0EFA: 05 0654    CALL Cprintf
    0EFD: 2B 02      ADD SP, #2
@@ -2660,7 +2660,7 @@ L32_endif_98:
    0F01: 46         MOVE (RR), RR
    0F02: 5D 00      MOVE RR, 0(SP)
 L32_cont_92:
-   0F04: F8 18F6    MOVE #Ctask_idle, RR
+   0F04: F8 1912    MOVE #Ctask_idle, RR
    0F07: 67 00      MOVE 0(SP), LL
    0F09: 34         SNE LL, RR
    0F0A: 03 0E44    JMP RRNZ, L32_loop_92
@@ -2671,7 +2671,7 @@ L32_brk_93:
    0F12: 0F         MOVE R, -(SP)
    0F13: 05 0429    CALL Cprint_n
    0F16: 2B 03      ADD SP, #3
-   0F18: F8 1AA1    MOVE #Cstr_70, RR
+   0F18: F8 1ABD    MOVE #Cstr_70, RR
    0F1B: 0E         MOVE RR, -(SP)
    0F1C: 05 0654    CALL Cprintf
    0F1F: 2B 02      ADD SP, #2
@@ -2700,7 +2700,7 @@ L33_brk_100:
    0F45: 0E         MOVE RR, -(SP)
    0F46: 61 04      MOVE 4(SP), RR
    0F48: 0E         MOVE RR, -(SP)
-   0F49: F8 1AA4    MOVE #Cstr_71, RR
+   0F49: F8 1AC0    MOVE #Cstr_71, RR
    0F4C: 0E         MOVE RR, -(SP)
    0F4D: 05 0654    CALL Cprintf
    0F50: 2B 08      ADD SP, #8
@@ -2716,7 +2716,7 @@ Cdisplay_memory:
 L34_loop_101:
    0F5E: 61 07      MOVE 7(SP), RR
    0F60: 0E         MOVE RR, -(SP)
-   0F61: F8 1AC8    MOVE #Cstr_72, RR
+   0F61: F8 1AE4    MOVE #Cstr_72, RR
    0F64: 0E         MOVE RR, -(SP)
    0F65: 05 0654    CALL Cprintf
    0F68: 2B 04      ADD SP, #4
@@ -2730,7 +2730,7 @@ L34_loop_103:
    0F75: B1         SUB RR, #1
    0F76: 48         MOVE (RR), RU
    0F77: 0E         MOVE RR, -(SP)
-   0F78: F8 1ACF    MOVE #Cstr_73, RR
+   0F78: F8 1AEB    MOVE #Cstr_73, RR
    0F7B: 0E         MOVE RR, -(SP)
    0F7C: 05 0654    CALL Cprintf
    0F7F: 2B 04      ADD SP, #4
@@ -2747,7 +2747,7 @@ L34_brk_104:
    0F8E: 61 07      MOVE 7(SP), RR
    0F90: F7 10      SUB RR, #16
    0F92: 5D 07      MOVE RR, 7(SP)
-   0F94: F8 1AD6    MOVE #Cstr_74, RR
+   0F94: F8 1AF2    MOVE #Cstr_74, RR
    0F97: 0E         MOVE RR, -(SP)
    0F98: 05 0654    CALL Cprintf
    0F9B: 2B 02      ADD SP, #2
@@ -2795,7 +2795,7 @@ L34_tst_105:
    0FE0: 21 10      SLT RR, #16
    0FE2: 03 0FA3    JMP RRNZ, L34_loop_105
 L34_brk_106:
-   0FE5: F8 1ADA    MOVE #Cstr_75, RR
+   0FE5: F8 1AF6    MOVE #Cstr_75, RR
    0FE8: 0E         MOVE RR, -(SP)
    0FE9: 05 0654    CALL Cprintf
    0FEC: 2B 02      ADD SP, #2
@@ -2812,586 +2812,579 @@ L34_brk_102:
    0FFB: 2B 05      ADD SP, #5
    0FFD: 07         RET 
 Cmain:
-   0FFE: C5         MOVE #5, RR
-   0FFF: 2F 03      OUT R, (OUT_INT_MASK)
-   1001: 05 03DB    CALL Cdeschedule
-   1004: 05 0AE8    CALL Cinit_unused
-   1007: 05 0AC8    CALL Cinit_stack
+   0FFE: 2C         CLRW -(SP)
+   0FFF: 05 0AE8    CALL Cinit_unused
+   1002: 05 0AC8    CALL Cinit_stack
+   1005: C0         MOVE #0, RR
+   1006: 2F 03      OUT R, (OUT_INT_MASK)
+   1008: C0         MOVE #0, RR
+   1009: 5D 00      MOVE RR, 0(SP)
+   100B: 02 1014    JMP L35_tst_109
 L35_loop_109:
-   100A: 00         HALT 
+   100E: 77         EI 
 L35_cont_109:
-   100B: 02 100A    JMP L35_loop_109
+   100F: 61 00      MOVE 0(SP), RR
+   1011: A1         ADD RR, #1
+   1012: 5D 00      MOVE RR, 0(SP)
+L35_tst_109:
+   1014: 61 00      MOVE 0(SP), RR
+   1016: 21 10      SLT RR, #16
+   1018: 03 100E    JMP RRNZ, L35_loop_109
 L35_brk_110:
-   100E: 07         RET 
+   101B: C5         MOVE #5, RR
+   101C: 2F 03      OUT R, (OUT_INT_MASK)
+   101E: 05 03DB    CALL Cdeschedule
+L35_loop_111:
+   1021: 00         HALT 
+L35_cont_111:
+   1022: 02 1021    JMP L35_loop_111
+L35_brk_112:
+   1025: 2B 02      ADD SP, #2
+   1027: 07         RET 
 Cmain_1:
-   100F: 2C         CLRW -(SP)
-   1010: 2D         CLRB -(SP)
-   1011: 2C         CLRW -(SP)
-   1012: 2C         CLRW -(SP)
-   1013: 05 0AC8    CALL Cinit_stack
-L36_loop_111:
-   1016: F8 0034    MOVE #Cserial_out, RR
-   1019: 0E         MOVE RR, -(SP)
-   101A: 05 0092    CALL CP
-   101D: 2B 02      ADD SP, #2
-   101F: F8 1ADD    MOVE #Cstr_79, RR
-   1022: 0E         MOVE RR, -(SP)
-   1023: 05 0654    CALL Cprintf
-   1026: 2B 02      ADD SP, #2
-   1028: F8 0034    MOVE #Cserial_out, RR
-   102B: 0E         MOVE RR, -(SP)
-   102C: 05 01B9    CALL CV
-   102F: 2B 02      ADD SP, #2
-   1031: 61 05      MOVE 5(SP), RR
-   1033: 5F 04      MOVE R, 4(SP)
-   1035: F8 EA60    MOVE #60000, RR
-   1038: 0E         MOVE RR, -(SP)
-   1039: 05 09D8    CALL Cgetchr_timed
-   103C: 2B 02      ADD SP, #2
-   103E: 5D 05      MOVE RR, 5(SP)
-   1040: 61 05      MOVE 5(SP), RR
-   1042: 16 FFFF    SEQ RR, #65535
-   1045: 04 106C    JMP RRZ, L36_endif_113
-   1048: F8 0034    MOVE #Cserial_out, RR
-   104B: 0E         MOVE RR, -(SP)
-   104C: 05 0092    CALL CP
-   104F: 2B 02      ADD SP, #2
-   1051: 49 190A    MOVE (Ccurrent_task), RR
-   1054: A6         ADD RR, #6
-   1055: 46         MOVE (RR), RR
-   1056: 0E         MOVE RR, -(SP)
-   1057: F8 1AE4    MOVE #Cstr_80, RR
-   105A: 0E         MOVE RR, -(SP)
-   105B: 05 0654    CALL Cprintf
-   105E: 2B 04      ADD SP, #4
-   1060: F8 0034    MOVE #Cserial_out, RR
-   1063: 0E         MOVE RR, -(SP)
-   1064: 05 01B9    CALL CV
-   1067: 2B 02      ADD SP, #2
-   1069: 02 123D    JMP L36_cont_111
-L36_endif_113:
-   106C: F8 0034    MOVE #Cserial_out, RR
-   106F: 0E         MOVE RR, -(SP)
-   1070: 05 0092    CALL CP
-   1073: 2B 02      ADD SP, #2
-   1075: 61 05      MOVE 5(SP), RR
-   1077: 43         MOVE RR, LL
-   1078: FB 0D      SEQ LL, #13
-   107A: 03 10C6    JMP RRNZ, L36_case_114_000D
-   107D: FB 0A      SEQ LL, #10
-   107F: 03 10C6    JMP RRNZ, L36_case_114_000A
-   1082: FB 32      SEQ LL, #50
-   1084: 03 10EB    JMP RRNZ, L36_case_114_0032
-   1087: FB 33      SEQ LL, #51
-   1089: 03 1100    JMP RRNZ, L36_case_114_0033
-   108C: FB 62      SEQ LL, #98
-   108E: 03 1126    JMP RRNZ, L36_case_114_0062
-   1091: FB 63      SEQ LL, #99
-   1093: 03 1156    JMP RRNZ, L36_case_114_0063
-   1096: FB 64      SEQ LL, #100
-   1098: 03 115C    JMP RRNZ, L36_case_114_0064
-   109B: FB 65      SEQ LL, #101
-   109D: 03 1189    JMP RRNZ, L36_case_114_0065
-   10A0: FB 6D      SEQ LL, #109
-   10A2: 03 11AA    JMP RRNZ, L36_case_114_006D
-   10A5: FB 73      SEQ LL, #115
-   10A7: 03 11E4    JMP RRNZ, L36_case_114_0073
-   10AA: FB 74      SEQ LL, #116
-   10AC: 03 11F3    JMP RRNZ, L36_case_114_0074
-   10AF: FB 48      SEQ LL, #72
-   10B1: 03 1202    JMP RRNZ, L36_case_114_0048
-   10B4: FB 49      SEQ LL, #73
-   10B6: 03 1219    JMP RRNZ, L36_case_114_0049
-   10B9: FB 53      SEQ LL, #83
-   10BB: 03 121F    JMP RRNZ, L36_case_114_0053
-   10BE: FB 54      SEQ LL, #84
-   10C0: 03 1225    JMP RRNZ, L36_case_114_0054
-   10C3: 02 122B    JMP L36_deflt_114
-L36_case_114_000D:
-L36_case_114_000A:
-   10C6: 63 04      MOVE 4(SP), RS
-   10C8: 17 64      SEQ RR, #100
-   10CA: 04 10E8    JMP RRZ, L36_endif_115
-   10CD: 61 02      MOVE 2(SP), RR
-   10CF: F4 0100    ADD RR, #256
-   10D2: 5D 02      MOVE RR, 2(SP)
-   10D4: F9 0D      MOVE #13, RR
-   10D6: 0F         MOVE R, -(SP)
-   10D7: 05 03FF    CALL Cputchr
-   10DA: 2B 01      ADD SP, #1
-   10DC: 61 02      MOVE 2(SP), RR
-   10DE: 0E         MOVE RR, -(SP)
-   10DF: 05 0F55    CALL Cdisplay_memory
-   10E2: 2B 02      ADD SP, #2
-   10E4: F9 64      MOVE #100, RR
-   10E6: 5D 05      MOVE RR, 5(SP)
+   1028: 2C         CLRW -(SP)
+   1029: 2D         CLRB -(SP)
+   102A: 2C         CLRW -(SP)
+   102B: 2C         CLRW -(SP)
+   102C: 77         EI 
+   102D: 05 0AC8    CALL Cinit_stack
+L36_loop_113:
+   1030: F8 0034    MOVE #Cserial_out, RR
+   1033: 0E         MOVE RR, -(SP)
+   1034: 05 0092    CALL CP
+   1037: 2B 02      ADD SP, #2
+   1039: F8 1AF9    MOVE #Cstr_83, RR
+   103C: 0E         MOVE RR, -(SP)
+   103D: 05 0654    CALL Cprintf
+   1040: 2B 02      ADD SP, #2
+   1042: F8 0034    MOVE #Cserial_out, RR
+   1045: 0E         MOVE RR, -(SP)
+   1046: 05 01B9    CALL CV
+   1049: 2B 02      ADD SP, #2
+   104B: 61 05      MOVE 5(SP), RR
+   104D: 5F 04      MOVE R, 4(SP)
+   104F: F8 EA60    MOVE #60000, RR
+   1052: 0E         MOVE RR, -(SP)
+   1053: 05 09D8    CALL Cgetchr_timed
+   1056: 2B 02      ADD SP, #2
+   1058: 5D 05      MOVE RR, 5(SP)
+   105A: 61 05      MOVE 5(SP), RR
+   105C: 16 FFFF    SEQ RR, #65535
+   105F: 04 1086    JMP RRZ, L36_endif_115
+   1062: F8 0034    MOVE #Cserial_out, RR
+   1065: 0E         MOVE RR, -(SP)
+   1066: 05 0092    CALL CP
+   1069: 2B 02      ADD SP, #2
+   106B: 49 1926    MOVE (Ccurrent_task), RR
+   106E: A6         ADD RR, #6
+   106F: 46         MOVE (RR), RR
+   1070: 0E         MOVE RR, -(SP)
+   1071: F8 1B00    MOVE #Cstr_84, RR
+   1074: 0E         MOVE RR, -(SP)
+   1075: 05 0654    CALL Cprintf
+   1078: 2B 04      ADD SP, #4
+   107A: F8 0034    MOVE #Cserial_out, RR
+   107D: 0E         MOVE RR, -(SP)
+   107E: 05 01B9    CALL CV
+   1081: 2B 02      ADD SP, #2
+   1083: 02 1257    JMP L36_cont_113
 L36_endif_115:
-   10E8: 02 1234    JMP L36_brk_114
-L36_case_114_0032:
-   10EB: F8 0024    MOVE #Ct2_control, RR
-   10EE: 0E         MOVE RR, -(SP)
-   10EF: 05 01B9    CALL CV
-   10F2: 2B 02      ADD SP, #2
-   10F4: F8 1AF3    MOVE #Cstr_81, RR
-   10F7: 0E         MOVE RR, -(SP)
-   10F8: 05 0654    CALL Cprintf
-   10FB: 2B 02      ADD SP, #2
-   10FD: 02 1234    JMP L36_brk_114
-L36_case_114_0033:
-   1100: F8 002C    MOVE #Ct3_control, RR
-   1103: 0E         MOVE RR, -(SP)
-   1104: 05 01B9    CALL CV
-   1107: 2B 02      ADD SP, #2
-   1109: F9 64      MOVE #100, RR
-   110B: 0E         MOVE RR, -(SP)
-   110C: 05 03C1    CALL Csleep
-   110F: 2B 02      ADD SP, #2
-   1111: F8 002C    MOVE #Ct3_control, RR
-   1114: 0E         MOVE RR, -(SP)
-   1115: 05 0092    CALL CP
-   1118: 2B 02      ADD SP, #2
-   111A: F8 1B03    MOVE #Cstr_82, RR
+   1086: F8 0034    MOVE #Cserial_out, RR
+   1089: 0E         MOVE RR, -(SP)
+   108A: 05 0092    CALL CP
+   108D: 2B 02      ADD SP, #2
+   108F: 61 05      MOVE 5(SP), RR
+   1091: 43         MOVE RR, LL
+   1092: FB 0D      SEQ LL, #13
+   1094: 03 10E0    JMP RRNZ, L36_case_116_000D
+   1097: FB 0A      SEQ LL, #10
+   1099: 03 10E0    JMP RRNZ, L36_case_116_000A
+   109C: FB 32      SEQ LL, #50
+   109E: 03 1105    JMP RRNZ, L36_case_116_0032
+   10A1: FB 33      SEQ LL, #51
+   10A3: 03 111A    JMP RRNZ, L36_case_116_0033
+   10A6: FB 62      SEQ LL, #98
+   10A8: 03 1140    JMP RRNZ, L36_case_116_0062
+   10AB: FB 63      SEQ LL, #99
+   10AD: 03 1170    JMP RRNZ, L36_case_116_0063
+   10B0: FB 64      SEQ LL, #100
+   10B2: 03 1176    JMP RRNZ, L36_case_116_0064
+   10B5: FB 65      SEQ LL, #101
+   10B7: 03 11A3    JMP RRNZ, L36_case_116_0065
+   10BA: FB 6D      SEQ LL, #109
+   10BC: 03 11C4    JMP RRNZ, L36_case_116_006D
+   10BF: FB 73      SEQ LL, #115
+   10C1: 03 11FE    JMP RRNZ, L36_case_116_0073
+   10C4: FB 74      SEQ LL, #116
+   10C6: 03 120D    JMP RRNZ, L36_case_116_0074
+   10C9: FB 48      SEQ LL, #72
+   10CB: 03 121C    JMP RRNZ, L36_case_116_0048
+   10CE: FB 49      SEQ LL, #73
+   10D0: 03 1233    JMP RRNZ, L36_case_116_0049
+   10D3: FB 53      SEQ LL, #83
+   10D5: 03 1239    JMP RRNZ, L36_case_116_0053
+   10D8: FB 54      SEQ LL, #84
+   10DA: 03 123F    JMP RRNZ, L36_case_116_0054
+   10DD: 02 1245    JMP L36_deflt_116
+L36_case_116_000D:
+L36_case_116_000A:
+   10E0: 63 04      MOVE 4(SP), RS
+   10E2: 17 64      SEQ RR, #100
+   10E4: 04 1102    JMP RRZ, L36_endif_117
+   10E7: 61 02      MOVE 2(SP), RR
+   10E9: F4 0100    ADD RR, #256
+   10EC: 5D 02      MOVE RR, 2(SP)
+   10EE: F9 0D      MOVE #13, RR
+   10F0: 0F         MOVE R, -(SP)
+   10F1: 05 03FF    CALL Cputchr
+   10F4: 2B 01      ADD SP, #1
+   10F6: 61 02      MOVE 2(SP), RR
+   10F8: 0E         MOVE RR, -(SP)
+   10F9: 05 0F55    CALL Cdisplay_memory
+   10FC: 2B 02      ADD SP, #2
+   10FE: F9 64      MOVE #100, RR
+   1100: 5D 05      MOVE RR, 5(SP)
+L36_endif_117:
+   1102: 02 124E    JMP L36_brk_116
+L36_case_116_0032:
+   1105: F8 0024    MOVE #Ct2_control, RR
+   1108: 0E         MOVE RR, -(SP)
+   1109: 05 01B9    CALL CV
+   110C: 2B 02      ADD SP, #2
+   110E: F8 1B0F    MOVE #Cstr_85, RR
+   1111: 0E         MOVE RR, -(SP)
+   1112: 05 0654    CALL Cprintf
+   1115: 2B 02      ADD SP, #2
+   1117: 02 124E    JMP L36_brk_116
+L36_case_116_0033:
+   111A: F8 002C    MOVE #Ct3_control, RR
    111D: 0E         MOVE RR, -(SP)
-   111E: 05 0654    CALL Cprintf
+   111E: 05 01B9    CALL CV
    1121: 2B 02      ADD SP, #2
-   1123: 02 1234    JMP L36_brk_114
-L36_case_114_0062:
-   1126: C0         MOVE #0, RR
-   1127: 2F 05      OUT R, (OUT_START_CLK_CTR)
-   1129: 05 03DB    CALL Cdeschedule
-   112C: 2F 06      OUT R, (OUT_STOP_CLK_CTR)
-   112E: 2E 06      IN (IN_CLK_CTR_HIGH), RU
-   1130: 52 08      LSL RR, #8
-   1132: 0E         MOVE RR, -(SP)
-   1133: 2E 05      IN (IN_CLK_CTR_LOW), RU
-   1135: 0B         MOVE (SP)+, LL
-   1136: 31         OR LL, RR
-   1137: 5D 00      MOVE RR, 0(SP)
-   1139: 61 00      MOVE 0(SP), RR
-   113B: AA         ADD RR, #10
-   113C: 43         MOVE RR, LL
-   113D: F9 14      MOVE #20, RR
-   113F: 79         DI 
-   1140: 72         DIV_IS 
-   1141: 05 000B    CALL mult_div
-   1144: 75         MD_FIN 
-   1145: 77         EI 
-   1146: 0E         MOVE RR, -(SP)
-   1147: 61 02      MOVE 2(SP), RR
-   1149: 0E         MOVE RR, -(SP)
-   114A: F8 1B1F    MOVE #Cstr_87, RR
-   114D: 0E         MOVE RR, -(SP)
-   114E: 05 0654    CALL Cprintf
-   1151: 2B 06      ADD SP, #6
-   1153: 02 1234    JMP L36_brk_114
-L36_case_114_0063:
-   1156: 05 0F24    CALL Cshow_time
-   1159: 02 1234    JMP L36_brk_114
-L36_case_114_0064:
-   115C: F9 64      MOVE #100, RR
-   115E: 5F 04      MOVE R, 4(SP)
-   1160: F8 1B41    MOVE #Cstr_88, RR
+   1123: F9 64      MOVE #100, RR
+   1125: 0E         MOVE RR, -(SP)
+   1126: 05 03C1    CALL Csleep
+   1129: 2B 02      ADD SP, #2
+   112B: F8 002C    MOVE #Ct3_control, RR
+   112E: 0E         MOVE RR, -(SP)
+   112F: 05 0092    CALL CP
+   1132: 2B 02      ADD SP, #2
+   1134: F8 1B1F    MOVE #Cstr_86, RR
+   1137: 0E         MOVE RR, -(SP)
+   1138: 05 0654    CALL Cprintf
+   113B: 2B 02      ADD SP, #2
+   113D: 02 124E    JMP L36_brk_116
+L36_case_116_0062:
+   1140: C0         MOVE #0, RR
+   1141: 2F 05      OUT R, (OUT_START_CLK_CTR)
+   1143: 05 03DB    CALL Cdeschedule
+   1146: 2F 06      OUT R, (OUT_STOP_CLK_CTR)
+   1148: 2E 06      IN (IN_CLK_CTR_HIGH), RU
+   114A: 52 08      LSL RR, #8
+   114C: 0E         MOVE RR, -(SP)
+   114D: 2E 05      IN (IN_CLK_CTR_LOW), RU
+   114F: 0B         MOVE (SP)+, LL
+   1150: 31         OR LL, RR
+   1151: 5D 00      MOVE RR, 0(SP)
+   1153: 61 00      MOVE 0(SP), RR
+   1155: AA         ADD RR, #10
+   1156: 43         MOVE RR, LL
+   1157: F9 14      MOVE #20, RR
+   1159: 79         DI 
+   115A: 72         DIV_IS 
+   115B: 05 000B    CALL mult_div
+   115E: 75         MD_FIN 
+   115F: 77         EI 
+   1160: 0E         MOVE RR, -(SP)
+   1161: 61 02      MOVE 2(SP), RR
    1163: 0E         MOVE RR, -(SP)
-   1164: 05 0654    CALL Cprintf
-   1167: 2B 02      ADD SP, #2
-   1169: C1         MOVE #1, RR
-   116A: 0F         MOVE R, -(SP)
-   116B: 05 0AA1    CALL Cgethex
-   116E: 2B 01      ADD SP, #1
-   1170: 5D 02      MOVE RR, 2(SP)
-   1172: F8 1B4A    MOVE #Cstr_89, RR
-   1175: 0E         MOVE RR, -(SP)
-   1176: 05 0654    CALL Cprintf
-   1179: 2B 02      ADD SP, #2
-   117B: 05 09AD    CALL Cgetchr
-   117E: 61 02      MOVE 2(SP), RR
-   1180: 0E         MOVE RR, -(SP)
-   1181: 05 0F55    CALL Cdisplay_memory
-   1184: 2B 02      ADD SP, #2
-   1186: 02 1234    JMP L36_brk_114
-L36_case_114_0065:
-   1189: F8 1B4D    MOVE #Cstr_90, RR
-   118C: 0E         MOVE RR, -(SP)
-   118D: 05 0654    CALL Cprintf
-   1190: 2B 02      ADD SP, #2
-   1192: C1         MOVE #1, RR
-   1193: 0F         MOVE R, -(SP)
-   1194: 05 0AA1    CALL Cgethex
-   1197: 2B 01      ADD SP, #1
-   1199: 2F 02      OUT R, (OUT_LEDS)
-   119B: F8 1B53    MOVE #Cstr_92, RR
-   119E: 0E         MOVE RR, -(SP)
-   119F: 05 0654    CALL Cprintf
-   11A2: 2B 02      ADD SP, #2
-   11A4: 05 09AD    CALL Cgetchr
-   11A7: 02 1234    JMP L36_brk_114
-L36_case_114_006D:
-   11AA: F8 1B56    MOVE #Cstr_93, RR
-   11AD: 0E         MOVE RR, -(SP)
-   11AE: 05 0654    CALL Cprintf
-   11B1: 2B 02      ADD SP, #2
-   11B3: C1         MOVE #1, RR
-   11B4: 0F         MOVE R, -(SP)
-   11B5: 05 0AA1    CALL Cgethex
-   11B8: 2B 01      ADD SP, #1
-   11BA: 5D 02      MOVE RR, 2(SP)
-   11BC: F8 1B5E    MOVE #Cstr_94, RR
-   11BF: 0E         MOVE RR, -(SP)
-   11C0: 05 0654    CALL Cprintf
-   11C3: 2B 02      ADD SP, #2
-   11C5: 05 09AD    CALL Cgetchr
-   11C8: C1         MOVE #1, RR
-   11C9: 0F         MOVE R, -(SP)
-   11CA: 05 0AA1    CALL Cgethex
-   11CD: 2B 01      ADD SP, #1
-   11CF: 0F         MOVE R, -(SP)
-   11D0: 61 03      MOVE 3(SP), RR
-   11D2: 43         MOVE RR, LL
-   11D3: 0A         MOVE (SP)+, RU
-   11D4: 45         MOVE R, (LL)
-   11D5: 05 09AD    CALL Cgetchr
-   11D8: F8 1B66    MOVE #Cstr_95, RR
-   11DB: 0E         MOVE RR, -(SP)
-   11DC: 05 0654    CALL Cprintf
-   11DF: 2B 02      ADD SP, #2
-   11E1: 02 1234    JMP L36_brk_114
-L36_case_114_0073:
-   11E4: 2E 03      IN (IN_DIP_SWITCH), RU
-   11E6: 0E         MOVE RR, -(SP)
-   11E7: F8 1B69    MOVE #Cstr_96, RR
-   11EA: 0E         MOVE RR, -(SP)
-   11EB: 05 0654    CALL Cprintf
-   11EE: 2B 04      ADD SP, #4
-   11F0: 02 1234    JMP L36_brk_114
-L36_case_114_0074:
-   11F3: 2E 02      IN (IN_TEMPERAT), RU
+   1164: F8 1B3B    MOVE #Cstr_91, RR
+   1167: 0E         MOVE RR, -(SP)
+   1168: 05 0654    CALL Cprintf
+   116B: 2B 06      ADD SP, #6
+   116D: 02 124E    JMP L36_brk_116
+L36_case_116_0063:
+   1170: 05 0F24    CALL Cshow_time
+   1173: 02 124E    JMP L36_brk_116
+L36_case_116_0064:
+   1176: F9 64      MOVE #100, RR
+   1178: 5F 04      MOVE R, 4(SP)
+   117A: F8 1B5D    MOVE #Cstr_92, RR
+   117D: 0E         MOVE RR, -(SP)
+   117E: 05 0654    CALL Cprintf
+   1181: 2B 02      ADD SP, #2
+   1183: C1         MOVE #1, RR
+   1184: 0F         MOVE R, -(SP)
+   1185: 05 0AA1    CALL Cgethex
+   1188: 2B 01      ADD SP, #1
+   118A: 5D 02      MOVE RR, 2(SP)
+   118C: F8 1B66    MOVE #Cstr_93, RR
+   118F: 0E         MOVE RR, -(SP)
+   1190: 05 0654    CALL Cprintf
+   1193: 2B 02      ADD SP, #2
+   1195: 05 09AD    CALL Cgetchr
+   1198: 61 02      MOVE 2(SP), RR
+   119A: 0E         MOVE RR, -(SP)
+   119B: 05 0F55    CALL Cdisplay_memory
+   119E: 2B 02      ADD SP, #2
+   11A0: 02 124E    JMP L36_brk_116
+L36_case_116_0065:
+   11A3: F8 1B69    MOVE #Cstr_94, RR
+   11A6: 0E         MOVE RR, -(SP)
+   11A7: 05 0654    CALL Cprintf
+   11AA: 2B 02      ADD SP, #2
+   11AC: C1         MOVE #1, RR
+   11AD: 0F         MOVE R, -(SP)
+   11AE: 05 0AA1    CALL Cgethex
+   11B1: 2B 01      ADD SP, #1
+   11B3: 2F 02      OUT R, (OUT_LEDS)
+   11B5: F8 1B6F    MOVE #Cstr_96, RR
+   11B8: 0E         MOVE RR, -(SP)
+   11B9: 05 0654    CALL Cprintf
+   11BC: 2B 02      ADD SP, #2
+   11BE: 05 09AD    CALL Cgetchr
+   11C1: 02 124E    JMP L36_brk_116
+L36_case_116_006D:
+   11C4: F8 1B72    MOVE #Cstr_97, RR
+   11C7: 0E         MOVE RR, -(SP)
+   11C8: 05 0654    CALL Cprintf
+   11CB: 2B 02      ADD SP, #2
+   11CD: C1         MOVE #1, RR
+   11CE: 0F         MOVE R, -(SP)
+   11CF: 05 0AA1    CALL Cgethex
+   11D2: 2B 01      ADD SP, #1
+   11D4: 5D 02      MOVE RR, 2(SP)
+   11D6: F8 1B7A    MOVE #Cstr_98, RR
+   11D9: 0E         MOVE RR, -(SP)
+   11DA: 05 0654    CALL Cprintf
+   11DD: 2B 02      ADD SP, #2
+   11DF: 05 09AD    CALL Cgetchr
+   11E2: C1         MOVE #1, RR
+   11E3: 0F         MOVE R, -(SP)
+   11E4: 05 0AA1    CALL Cgethex
+   11E7: 2B 01      ADD SP, #1
+   11E9: 0F         MOVE R, -(SP)
+   11EA: 61 03      MOVE 3(SP), RR
+   11EC: 43         MOVE RR, LL
+   11ED: 0A         MOVE (SP)+, RU
+   11EE: 45         MOVE R, (LL)
+   11EF: 05 09AD    CALL Cgetchr
+   11F2: F8 1B82    MOVE #Cstr_99, RR
    11F5: 0E         MOVE RR, -(SP)
-   11F6: F8 1B7E    MOVE #Cstr_98, RR
-   11F9: 0E         MOVE RR, -(SP)
-   11FA: 05 0654    CALL Cprintf
-   11FD: 2B 04      ADD SP, #4
-   11FF: 02 1234    JMP L36_brk_114
-L36_case_114_0048:
-   1202: F8 1BA2    MOVE #Cstr_100, RR
-   1205: 0E         MOVE RR, -(SP)
-   1206: 05 0654    CALL Cprintf
-   1209: 2B 02      ADD SP, #2
-L36_loop_116:
-L36_cont_116:
-   120B: F8 003C    MOVE #Ctx_sema, RR
-   120E: 46         MOVE (RR), RR
-   120F: 21 10      SLT RR, #16
-   1211: 03 120B    JMP RRNZ, L36_loop_116
-L36_brk_117:
-   1214: 79         DI 
-   1215: 00         HALT 
-   1216: 02 1234    JMP L36_brk_114
-L36_case_114_0049:
-   1219: 05 0D65    CALL Cload_image
-   121C: 02 1234    JMP L36_brk_114
-L36_case_114_0053:
-   121F: 05 0DB1    CALL Cshow_semas
-   1222: 02 1234    JMP L36_brk_114
-L36_case_114_0054:
-   1225: 05 0E23    CALL Cshow_tasks
-   1228: 02 1234    JMP L36_brk_114
-L36_deflt_114:
-   122B: F8 1BAC    MOVE #Cstr_103, RR
-   122E: 0E         MOVE RR, -(SP)
-   122F: 05 0654    CALL Cprintf
-   1232: 2B 02      ADD SP, #2
+   11F6: 05 0654    CALL Cprintf
+   11F9: 2B 02      ADD SP, #2
+   11FB: 02 124E    JMP L36_brk_116
+L36_case_116_0073:
+   11FE: 2E 03      IN (IN_DIP_SWITCH), RU
+   1200: 0E         MOVE RR, -(SP)
+   1201: F8 1B85    MOVE #Cstr_100, RR
+   1204: 0E         MOVE RR, -(SP)
+   1205: 05 0654    CALL Cprintf
+   1208: 2B 04      ADD SP, #4
+   120A: 02 124E    JMP L36_brk_116
+L36_case_116_0074:
+   120D: 2E 02      IN (IN_TEMPERAT), RU
+   120F: 0E         MOVE RR, -(SP)
+   1210: F8 1B9A    MOVE #Cstr_102, RR
+   1213: 0E         MOVE RR, -(SP)
+   1214: 05 0654    CALL Cprintf
+   1217: 2B 04      ADD SP, #4
+   1219: 02 124E    JMP L36_brk_116
+L36_case_116_0048:
+   121C: F8 1BBE    MOVE #Cstr_104, RR
+   121F: 0E         MOVE RR, -(SP)
+   1220: 05 0654    CALL Cprintf
+   1223: 2B 02      ADD SP, #2
+L36_loop_118:
+L36_cont_118:
+   1225: F8 003C    MOVE #Ctx_sema, RR
+   1228: 46         MOVE (RR), RR
+   1229: 21 10      SLT RR, #16
+   122B: 03 1225    JMP RRNZ, L36_loop_118
+L36_brk_119:
+   122E: 79         DI 
+   122F: 00         HALT 
+   1230: 02 124E    JMP L36_brk_116
+L36_case_116_0049:
+   1233: 05 0D65    CALL Cload_image
+   1236: 02 124E    JMP L36_brk_116
+L36_case_116_0053:
+   1239: 05 0DB1    CALL Cshow_semas
+   123C: 02 124E    JMP L36_brk_116
+L36_case_116_0054:
+   123F: 05 0E23    CALL Cshow_tasks
+   1242: 02 124E    JMP L36_brk_116
+L36_deflt_116:
+   1245: F8 1BC8    MOVE #Cstr_107, RR
+   1248: 0E         MOVE RR, -(SP)
+   1249: 05 0654    CALL Cprintf
+   124C: 2B 02      ADD SP, #2
+L36_brk_116:
+   124E: F8 0034    MOVE #Cserial_out, RR
+   1251: 0E         MOVE RR, -(SP)
+   1252: 05 01B9    CALL CV
+   1255: 2B 02      ADD SP, #2
+L36_cont_113:
+   1257: 02 1030    JMP L36_loop_113
 L36_brk_114:
-   1234: F8 0034    MOVE #Cserial_out, RR
-   1237: 0E         MOVE RR, -(SP)
-   1238: 05 01B9    CALL CV
-   123B: 2B 02      ADD SP, #2
-L36_cont_111:
-   123D: 02 1016    JMP L36_loop_111
-L36_brk_112:
-   1240: 2B 07      ADD SP, #7
-   1242: 07         RET 
+   125A: 2B 07      ADD SP, #7
+   125C: 07         RET 
 Cmain_2:
-   1243: 2C         CLRW -(SP)
-   1244: 2C         CLRW -(SP)
-   1245: 2C         CLRW -(SP)
-   1246: 2C         CLRW -(SP)
-   1247: 2C         CLRW -(SP)
-   1248: 2C         CLRW -(SP)
-   1249: 05 0AC8    CALL Cinit_stack
-L37_loop_118:
-   124C: F8 0024    MOVE #Ct2_control, RR
-   124F: 0E         MOVE RR, -(SP)
-   1250: 05 0092    CALL CP
-   1253: 2B 02      ADD SP, #2
-   1255: C0         MOVE #0, RR
-   1256: 5D 0A      MOVE RR, 10(SP)
-   1258: C0         MOVE #0, RR
-   1259: 5D 08      MOVE RR, 8(SP)
-   125B: C0         MOVE #0, RR
-   125C: 5D 06      MOVE RR, 6(SP)
-   125E: C0         MOVE #0, RR
-   125F: 5D 04      MOVE RR, 4(SP)
-   1261: F8 0034    MOVE #Cserial_out, RR
-   1264: 0E         MOVE RR, -(SP)
-   1265: 05 0092    CALL CP
-   1268: 2B 02      ADD SP, #2
-   126A: F8 1CB8    MOVE #Cstr_118, RR
-   126D: 0E         MOVE RR, -(SP)
-   126E: 05 0654    CALL Cprintf
-   1271: 2B 02      ADD SP, #2
-   1273: F8 0034    MOVE #Cserial_out, RR
-   1276: 0E         MOVE RR, -(SP)
-   1277: 05 01B9    CALL CV
-   127A: 2B 02      ADD SP, #2
-   127C: F8 002C    MOVE #Ct3_control, RR
-   127F: 0E         MOVE RR, -(SP)
-   1280: 05 01B9    CALL CV
-   1283: 2B 02      ADD SP, #2
-   1285: C0         MOVE #0, RR
-   1286: 5D 02      MOVE RR, 2(SP)
-   1288: 02 12F1    JMP L37_tst_120
+   125D: 2C         CLRW -(SP)
+   125E: 2C         CLRW -(SP)
+   125F: 2C         CLRW -(SP)
+   1260: 2C         CLRW -(SP)
+   1261: 2C         CLRW -(SP)
+   1262: 2C         CLRW -(SP)
+   1263: 77         EI 
+   1264: 05 0AC8    CALL Cinit_stack
 L37_loop_120:
-   128B: C1         MOVE #1, RR
-   128C: 0E         MOVE RR, -(SP)
-   128D: 05 03C1    CALL Csleep
-   1290: 2B 02      ADD SP, #2
-   1292: C0         MOVE #0, RR
-   1293: 2F 05      OUT R, (OUT_START_CLK_CTR)
-   1295: C1         MOVE #1, RR
-   1296: 0E         MOVE RR, -(SP)
-   1297: 05 03C1    CALL Csleep
-   129A: 2B 02      ADD SP, #2
-   129C: 2F 06      OUT R, (OUT_STOP_CLK_CTR)
-   129E: 2E 06      IN (IN_CLK_CTR_HIGH), RU
-   12A0: 52 08      LSL RR, #8
-   12A2: 0E         MOVE RR, -(SP)
-   12A3: 2E 05      IN (IN_CLK_CTR_LOW), RU
-   12A5: 0B         MOVE (SP)+, LL
-   12A6: 31         OR LL, RR
-   12A7: 67 0A      MOVE 10(SP), LL
-   12A9: 58         ADD LL, RR
-   12AA: 5D 0A      MOVE RR, 10(SP)
-   12AC: 61 0A      MOVE 10(SP), RR
-   12AE: 53 08      ASR RR, #8
-   12B0: 67 06      MOVE 6(SP), LL
-   12B2: 58         ADD LL, RR
-   12B3: 5D 06      MOVE RR, 6(SP)
-   12B5: 61 0A      MOVE 10(SP), RR
-   12B7: 11 FF      AND RR, #255
-   12B9: 5D 0A      MOVE RR, 10(SP)
-   12BB: C1         MOVE #1, RR
-   12BC: 0E         MOVE RR, -(SP)
-   12BD: 05 03C1    CALL Csleep
-   12C0: 2B 02      ADD SP, #2
-   12C2: C3         MOVE #3, RR
-   12C3: 2F 05      OUT R, (OUT_START_CLK_CTR)
-   12C5: C1         MOVE #1, RR
-   12C6: 0E         MOVE RR, -(SP)
-   12C7: 05 03C1    CALL Csleep
-   12CA: 2B 02      ADD SP, #2
-   12CC: 2F 06      OUT R, (OUT_STOP_CLK_CTR)
-   12CE: 2E 06      IN (IN_CLK_CTR_HIGH), RU
-   12D0: 52 08      LSL RR, #8
-   12D2: 0E         MOVE RR, -(SP)
-   12D3: 2E 05      IN (IN_CLK_CTR_LOW), RU
-   12D5: 0B         MOVE (SP)+, LL
-   12D6: 31         OR LL, RR
-   12D7: 67 08      MOVE 8(SP), LL
-   12D9: 58         ADD LL, RR
-   12DA: 5D 08      MOVE RR, 8(SP)
-   12DC: 61 08      MOVE 8(SP), RR
-   12DE: 53 08      ASR RR, #8
-   12E0: 67 04      MOVE 4(SP), LL
-   12E2: 58         ADD LL, RR
-   12E3: 5D 04      MOVE RR, 4(SP)
-   12E5: 61 08      MOVE 8(SP), RR
-   12E7: 11 FF      AND RR, #255
-   12E9: 5D 08      MOVE RR, 8(SP)
+   1267: F8 0024    MOVE #Ct2_control, RR
+   126A: 0E         MOVE RR, -(SP)
+   126B: 05 0092    CALL CP
+   126E: 2B 02      ADD SP, #2
+   1270: C0         MOVE #0, RR
+   1271: 5D 0A      MOVE RR, 10(SP)
+   1273: C0         MOVE #0, RR
+   1274: 5D 08      MOVE RR, 8(SP)
+   1276: C0         MOVE #0, RR
+   1277: 5D 06      MOVE RR, 6(SP)
+   1279: C0         MOVE #0, RR
+   127A: 5D 04      MOVE RR, 4(SP)
+   127C: F8 0034    MOVE #Cserial_out, RR
+   127F: 0E         MOVE RR, -(SP)
+   1280: 05 0092    CALL CP
+   1283: 2B 02      ADD SP, #2
+   1285: F8 1CD4    MOVE #Cstr_123, RR
+   1288: 0E         MOVE RR, -(SP)
+   1289: 05 0654    CALL Cprintf
+   128C: 2B 02      ADD SP, #2
+   128E: F8 0034    MOVE #Cserial_out, RR
+   1291: 0E         MOVE RR, -(SP)
+   1292: 05 01B9    CALL CV
+   1295: 2B 02      ADD SP, #2
+   1297: F8 002C    MOVE #Ct3_control, RR
+   129A: 0E         MOVE RR, -(SP)
+   129B: 05 01B9    CALL CV
+   129E: 2B 02      ADD SP, #2
+   12A0: C0         MOVE #0, RR
+   12A1: 5D 02      MOVE RR, 2(SP)
+   12A3: 02 130C    JMP L37_tst_122
+L37_loop_122:
+   12A6: C1         MOVE #1, RR
+   12A7: 0E         MOVE RR, -(SP)
+   12A8: 05 03C1    CALL Csleep
+   12AB: 2B 02      ADD SP, #2
+   12AD: C0         MOVE #0, RR
+   12AE: 2F 05      OUT R, (OUT_START_CLK_CTR)
+   12B0: C1         MOVE #1, RR
+   12B1: 0E         MOVE RR, -(SP)
+   12B2: 05 03C1    CALL Csleep
+   12B5: 2B 02      ADD SP, #2
+   12B7: 2F 06      OUT R, (OUT_STOP_CLK_CTR)
+   12B9: 2E 06      IN (IN_CLK_CTR_HIGH), RU
+   12BB: 52 08      LSL RR, #8
+   12BD: 0E         MOVE RR, -(SP)
+   12BE: 2E 05      IN (IN_CLK_CTR_LOW), RU
+   12C0: 0B         MOVE (SP)+, LL
+   12C1: 31         OR LL, RR
+   12C2: 67 0A      MOVE 10(SP), LL
+   12C4: 58         ADD LL, RR
+   12C5: 5D 0A      MOVE RR, 10(SP)
+   12C7: 61 0A      MOVE 10(SP), RR
+   12C9: 53 08      ASR RR, #8
+   12CB: 67 06      MOVE 6(SP), LL
+   12CD: 58         ADD LL, RR
+   12CE: 5D 06      MOVE RR, 6(SP)
+   12D0: 61 0A      MOVE 10(SP), RR
+   12D2: 11 FF      AND RR, #255
+   12D4: 5D 0A      MOVE RR, 10(SP)
+   12D6: C1         MOVE #1, RR
+   12D7: 0E         MOVE RR, -(SP)
+   12D8: 05 03C1    CALL Csleep
+   12DB: 2B 02      ADD SP, #2
+   12DD: C3         MOVE #3, RR
+   12DE: 2F 05      OUT R, (OUT_START_CLK_CTR)
+   12E0: C1         MOVE #1, RR
+   12E1: 0E         MOVE RR, -(SP)
+   12E2: 05 03C1    CALL Csleep
+   12E5: 2B 02      ADD SP, #2
+   12E7: 2F 06      OUT R, (OUT_STOP_CLK_CTR)
+   12E9: 2E 06      IN (IN_CLK_CTR_HIGH), RU
+   12EB: 52 08      LSL RR, #8
+   12ED: 0E         MOVE RR, -(SP)
+   12EE: 2E 05      IN (IN_CLK_CTR_LOW), RU
+   12F0: 0B         MOVE (SP)+, LL
+   12F1: 31         OR LL, RR
+   12F2: 67 08      MOVE 8(SP), LL
+   12F4: 58         ADD LL, RR
+   12F5: 5D 08      MOVE RR, 8(SP)
+   12F7: 61 08      MOVE 8(SP), RR
+   12F9: 53 08      ASR RR, #8
+   12FB: 67 04      MOVE 4(SP), LL
+   12FD: 58         ADD LL, RR
+   12FE: 5D 04      MOVE RR, 4(SP)
+   1300: 61 08      MOVE 8(SP), RR
+   1302: 11 FF      AND RR, #255
+   1304: 5D 08      MOVE RR, 8(SP)
+L37_cont_122:
+   1306: 61 02      MOVE 2(SP), RR
+   1308: A1         ADD RR, #1
+   1309: 5D 02      MOVE RR, 2(SP)
+   130B: B1         SUB RR, #1
+L37_tst_122:
+   130C: 61 02      MOVE 2(SP), RR
+   130E: 21 64      SLT RR, #100
+   1310: 03 12A6    JMP RRNZ, L37_loop_122
+L37_brk_123:
+   1313: F8 002C    MOVE #Ct3_control, RR
+   1316: 0E         MOVE RR, -(SP)
+   1317: 05 0092    CALL CP
+   131A: 2B 02      ADD SP, #2
+   131C: F8 0034    MOVE #Cserial_out, RR
+   131F: 0E         MOVE RR, -(SP)
+   1320: 05 0092    CALL CP
+   1323: 2B 02      ADD SP, #2
+   1325: 61 06      MOVE 6(SP), RR
+   1327: 0E         MOVE RR, -(SP)
+   1328: F8 1CE3    MOVE #Cstr_132, RR
+   132B: 0E         MOVE RR, -(SP)
+   132C: 05 0654    CALL Cprintf
+   132F: 2B 04      ADD SP, #4
+   1331: 61 04      MOVE 4(SP), RR
+   1333: 0E         MOVE RR, -(SP)
+   1334: F8 1CF7    MOVE #Cstr_133, RR
+   1337: 0E         MOVE RR, -(SP)
+   1338: 05 0654    CALL Cprintf
+   133B: 2B 04      ADD SP, #4
+   133D: 61 04      MOVE 4(SP), RR
+   133F: 53 08      ASR RR, #8
+   1341: 43         MOVE RR, LL
+   1342: F9 64      MOVE #100, RR
+   1344: 79         DI 
+   1345: 70         MUL_IS 
+   1346: 05 000B    CALL mult_div
+   1349: 75         MD_FIN 
+   134A: 77         EI 
+   134B: 0E         MOVE RR, -(SP)
+   134C: 61 08      MOVE 8(SP), RR
+   134E: 53 08      ASR RR, #8
+   1350: 0B         MOVE (SP)+, LL
+   1351: 79         DI 
+   1352: 72         DIV_IS 
+   1353: 05 000B    CALL mult_div
+   1356: 75         MD_FIN 
+   1357: 77         EI 
+   1358: 5D 00      MOVE RR, 0(SP)
+   135A: 61 00      MOVE 0(SP), RR
+   135C: 0E         MOVE RR, -(SP)
+   135D: F8 1D0B    MOVE #Cstr_134, RR
+   1360: 0E         MOVE RR, -(SP)
+   1361: 05 0654    CALL Cprintf
+   1364: 2B 04      ADD SP, #4
+   1366: 61 00      MOVE 0(SP), RR
+   1368: FD 64      MOVE #100, LL
+   136A: 59         SUB LL, RR
+   136B: 0E         MOVE RR, -(SP)
+   136C: F8 1D1B    MOVE #Cstr_135, RR
+   136F: 0E         MOVE RR, -(SP)
+   1370: 05 0654    CALL Cprintf
+   1373: 2B 04      ADD SP, #4
+   1375: F8 0034    MOVE #Cserial_out, RR
+   1378: 0E         MOVE RR, -(SP)
+   1379: 05 01B9    CALL CV
+   137C: 2B 02      ADD SP, #2
 L37_cont_120:
-   12EB: 61 02      MOVE 2(SP), RR
-   12ED: A1         ADD RR, #1
-   12EE: 5D 02      MOVE RR, 2(SP)
-   12F0: B1         SUB RR, #1
-L37_tst_120:
-   12F1: 61 02      MOVE 2(SP), RR
-   12F3: 21 64      SLT RR, #100
-   12F5: 03 128B    JMP RRNZ, L37_loop_120
+   137E: 02 1267    JMP L37_loop_120
 L37_brk_121:
-   12F8: F8 002C    MOVE #Ct3_control, RR
-   12FB: 0E         MOVE RR, -(SP)
-   12FC: 05 0092    CALL CP
-   12FF: 2B 02      ADD SP, #2
-   1301: F8 0034    MOVE #Cserial_out, RR
-   1304: 0E         MOVE RR, -(SP)
-   1305: 05 0092    CALL CP
-   1308: 2B 02      ADD SP, #2
-   130A: 61 06      MOVE 6(SP), RR
-   130C: 0E         MOVE RR, -(SP)
-   130D: F8 1CC7    MOVE #Cstr_127, RR
-   1310: 0E         MOVE RR, -(SP)
-   1311: 05 0654    CALL Cprintf
-   1314: 2B 04      ADD SP, #4
-   1316: 61 04      MOVE 4(SP), RR
-   1318: 0E         MOVE RR, -(SP)
-   1319: F8 1CDB    MOVE #Cstr_128, RR
-   131C: 0E         MOVE RR, -(SP)
-   131D: 05 0654    CALL Cprintf
-   1320: 2B 04      ADD SP, #4
-   1322: 61 04      MOVE 4(SP), RR
-   1324: 53 08      ASR RR, #8
-   1326: 43         MOVE RR, LL
-   1327: F9 64      MOVE #100, RR
-   1329: 79         DI 
-   132A: 70         MUL_IS 
-   132B: 05 000B    CALL mult_div
-   132E: 75         MD_FIN 
-   132F: 77         EI 
-   1330: 0E         MOVE RR, -(SP)
-   1331: 61 08      MOVE 8(SP), RR
-   1333: 53 08      ASR RR, #8
-   1335: 0B         MOVE (SP)+, LL
-   1336: 79         DI 
-   1337: 72         DIV_IS 
-   1338: 05 000B    CALL mult_div
-   133B: 75         MD_FIN 
-   133C: 77         EI 
-   133D: 5D 00      MOVE RR, 0(SP)
-   133F: 61 00      MOVE 0(SP), RR
-   1341: 0E         MOVE RR, -(SP)
-   1342: F8 1CEF    MOVE #Cstr_129, RR
-   1345: 0E         MOVE RR, -(SP)
-   1346: 05 0654    CALL Cprintf
-   1349: 2B 04      ADD SP, #4
-   134B: 61 00      MOVE 0(SP), RR
-   134D: FD 64      MOVE #100, LL
-   134F: 59         SUB LL, RR
-   1350: 0E         MOVE RR, -(SP)
-   1351: F8 1CFF    MOVE #Cstr_130, RR
-   1354: 0E         MOVE RR, -(SP)
-   1355: 05 0654    CALL Cprintf
-   1358: 2B 04      ADD SP, #4
-   135A: F8 0034    MOVE #Cserial_out, RR
-   135D: 0E         MOVE RR, -(SP)
-   135E: 05 01B9    CALL CV
-   1361: 2B 02      ADD SP, #2
-L37_cont_118:
-   1363: 02 124C    JMP L37_loop_118
-L37_brk_119:
-   1366: 2B 0C      ADD SP, #12
-   1368: 07         RET 
+   1381: 2B 0C      ADD SP, #12
+   1383: 07         RET 
 Cmain_3:
-   1369: 2D         CLRB -(SP)
-   136A: 05 0AC8    CALL Cinit_stack
-L38_loop_122:
-   136D: F8 002C    MOVE #Ct3_control, RR
-   1370: 0E         MOVE RR, -(SP)
-   1371: 05 0092    CALL CP
-   1374: 2B 02      ADD SP, #2
-   1376: F8 002C    MOVE #Ct3_control, RR
-   1379: 0E         MOVE RR, -(SP)
-   137A: 05 01B9    CALL CV
-   137D: 2B 02      ADD SP, #2
-   137F: F8 0034    MOVE #Cserial_out, RR
-   1382: 0E         MOVE RR, -(SP)
-   1383: 05 0092    CALL CP
-   1386: 2B 02      ADD SP, #2
-   1388: F9 30      MOVE #48, RR
-   138A: 5F 00      MOVE R, 0(SP)
-   138C: 02 139C    JMP L38_tst_124
+   1384: 2D         CLRB -(SP)
+   1385: 77         EI 
+   1386: 05 0AC8    CALL Cinit_stack
 L38_loop_124:
-   138F: 63 00      MOVE 0(SP), RS
-   1391: 0F         MOVE R, -(SP)
-   1392: 05 03FF    CALL Cputchr
-   1395: 2B 01      ADD SP, #1
-L38_cont_124:
-   1397: 63 00      MOVE 0(SP), RS
-   1399: A1         ADD RR, #1
-   139A: 5F 00      MOVE R, 0(SP)
-L38_tst_124:
-   139C: 63 00      MOVE 0(SP), RS
-   139E: 1F 39      SLE RR, #57
-   13A0: 03 138F    JMP RRNZ, L38_loop_124
-L38_brk_125:
-   13A3: F9 41      MOVE #65, RR
-   13A5: 5F 00      MOVE R, 0(SP)
-   13A7: 02 13B7    JMP L38_tst_126
+   1389: F8 002C    MOVE #Ct3_control, RR
+   138C: 0E         MOVE RR, -(SP)
+   138D: 05 0092    CALL CP
+   1390: 2B 02      ADD SP, #2
+   1392: F8 002C    MOVE #Ct3_control, RR
+   1395: 0E         MOVE RR, -(SP)
+   1396: 05 01B9    CALL CV
+   1399: 2B 02      ADD SP, #2
+   139B: F8 0034    MOVE #Cserial_out, RR
+   139E: 0E         MOVE RR, -(SP)
+   139F: 05 0092    CALL CP
+   13A2: 2B 02      ADD SP, #2
+   13A4: F9 30      MOVE #48, RR
+   13A6: 5F 00      MOVE R, 0(SP)
+   13A8: 02 13B8    JMP L38_tst_126
 L38_loop_126:
-   13AA: 63 00      MOVE 0(SP), RS
-   13AC: 0F         MOVE R, -(SP)
-   13AD: 05 03FF    CALL Cputchr
-   13B0: 2B 01      ADD SP, #1
+   13AB: 63 00      MOVE 0(SP), RS
+   13AD: 0F         MOVE R, -(SP)
+   13AE: 05 03FF    CALL Cputchr
+   13B1: 2B 01      ADD SP, #1
 L38_cont_126:
-   13B2: 63 00      MOVE 0(SP), RS
-   13B4: A1         ADD RR, #1
-   13B5: 5F 00      MOVE R, 0(SP)
+   13B3: 63 00      MOVE 0(SP), RS
+   13B5: A1         ADD RR, #1
+   13B6: 5F 00      MOVE R, 0(SP)
 L38_tst_126:
-   13B7: 63 00      MOVE 0(SP), RS
-   13B9: 1F 5A      SLE RR, #90
-   13BB: 03 13AA    JMP RRNZ, L38_loop_126
+   13B8: 63 00      MOVE 0(SP), RS
+   13BA: 1F 39      SLE RR, #57
+   13BC: 03 13AB    JMP RRNZ, L38_loop_126
 L38_brk_127:
-   13BE: F9 61      MOVE #97, RR
-   13C0: 5F 00      MOVE R, 0(SP)
-   13C2: 02 13D2    JMP L38_tst_128
+   13BF: F9 41      MOVE #65, RR
+   13C1: 5F 00      MOVE R, 0(SP)
+   13C3: 02 13D3    JMP L38_tst_128
 L38_loop_128:
-   13C5: 63 00      MOVE 0(SP), RS
-   13C7: 0F         MOVE R, -(SP)
-   13C8: 05 03FF    CALL Cputchr
-   13CB: 2B 01      ADD SP, #1
+   13C6: 63 00      MOVE 0(SP), RS
+   13C8: 0F         MOVE R, -(SP)
+   13C9: 05 03FF    CALL Cputchr
+   13CC: 2B 01      ADD SP, #1
 L38_cont_128:
-   13CD: 63 00      MOVE 0(SP), RS
-   13CF: A1         ADD RR, #1
-   13D0: 5F 00      MOVE R, 0(SP)
+   13CE: 63 00      MOVE 0(SP), RS
+   13D0: A1         ADD RR, #1
+   13D1: 5F 00      MOVE R, 0(SP)
 L38_tst_128:
-   13D2: 63 00      MOVE 0(SP), RS
-   13D4: 1F 7A      SLE RR, #122
-   13D6: 03 13C5    JMP RRNZ, L38_loop_128
+   13D3: 63 00      MOVE 0(SP), RS
+   13D5: 1F 5A      SLE RR, #90
+   13D7: 03 13C6    JMP RRNZ, L38_loop_128
 L38_brk_129:
-   13D9: F9 0D      MOVE #13, RR
-   13DB: 0F         MOVE R, -(SP)
-   13DC: 05 03FF    CALL Cputchr
-   13DF: 2B 01      ADD SP, #1
-   13E1: F9 0A      MOVE #10, RR
+   13DA: F9 61      MOVE #97, RR
+   13DC: 5F 00      MOVE R, 0(SP)
+   13DE: 02 13EE    JMP L38_tst_130
+L38_loop_130:
+   13E1: 63 00      MOVE 0(SP), RS
    13E3: 0F         MOVE R, -(SP)
    13E4: 05 03FF    CALL Cputchr
    13E7: 2B 01      ADD SP, #1
-   13E9: F8 0034    MOVE #Cserial_out, RR
-   13EC: 0E         MOVE RR, -(SP)
-   13ED: 05 01B9    CALL CV
-   13F0: 2B 02      ADD SP, #2
-L38_cont_122:
-   13F2: 02 136D    JMP L38_loop_122
-L38_brk_123:
-   13F5: 2B 01      ADD SP, #1
-   13F7: 07         RET 
+L38_cont_130:
+   13E9: 63 00      MOVE 0(SP), RS
+   13EB: A1         ADD RR, #1
+   13EC: 5F 00      MOVE R, 0(SP)
+L38_tst_130:
+   13EE: 63 00      MOVE 0(SP), RS
+   13F0: 1F 7A      SLE RR, #122
+   13F2: 03 13E1    JMP RRNZ, L38_loop_130
+L38_brk_131:
+   13F5: F9 0D      MOVE #13, RR
+   13F7: 0F         MOVE R, -(SP)
+   13F8: 05 03FF    CALL Cputchr
+   13FB: 2B 01      ADD SP, #1
+   13FD: F9 0A      MOVE #10, RR
+   13FF: 0F         MOVE R, -(SP)
+   1400: 05 03FF    CALL Cputchr
+   1403: 2B 01      ADD SP, #1
+   1405: F8 0034    MOVE #Cserial_out, RR
+   1408: 0E         MOVE RR, -(SP)
+   1409: 05 01B9    CALL CV
+   140C: 2B 02      ADD SP, #2
+L38_cont_124:
+   140E: 02 1389    JMP L38_loop_124
+L38_brk_125:
+   1411: 2B 01      ADD SP, #1
+   1413: 07         RET 
 Cstack_1:
-   13F8: 00         .BYTE 0
-   13F9: 00         .BYTE 0
-   13FA: 00         .BYTE 0
-   13FB: 00         .BYTE 0
-   13FC: 00         .BYTE 0
-   13FD: 00         .BYTE 0
-   13FE: 00         .BYTE 0
-   13FF: 00         .BYTE 0
-   1400: 00         .BYTE 0
-   1401: 00         .BYTE 0
-   1402: 00         .BYTE 0
-   1403: 00         .BYTE 0
-   1404: 00         .BYTE 0
-   1405: 00         .BYTE 0
-   1406: 00         .BYTE 0
-   1407: 00         .BYTE 0
-   1408: 00         .BYTE 0
-   1409: 00         .BYTE 0
-   140A: 00         .BYTE 0
-   140B: 00         .BYTE 0
-   140C: 00         .BYTE 0
-   140D: 00         .BYTE 0
-   140E: 00         .BYTE 0
-   140F: 00         .BYTE 0
-   1410: 00         .BYTE 0
-   1411: 00         .BYTE 0
-   1412: 00         .BYTE 0
-   1413: 00         .BYTE 0
    1414: 00         .BYTE 0
    1415: 00         .BYTE 0
    1416: 00         .BYTE 0
@@ -3764,12 +3757,12 @@ Cstack_1:
    1585: 00         .BYTE 0
    1586: 00         .BYTE 0
    1587: 00         .BYTE 0
-Ctos_1:
-   1588: 0000       .WORD 0
-   158A: 0000       .WORD 0
-   158C: 100F       .WORD Cmain_1
-Ctop_1:
-Cstack_2:
+   1588: 00         .BYTE 0
+   1589: 00         .BYTE 0
+   158A: 00         .BYTE 0
+   158B: 00         .BYTE 0
+   158C: 00         .BYTE 0
+   158D: 00         .BYTE 0
    158E: 00         .BYTE 0
    158F: 00         .BYTE 0
    1590: 00         .BYTE 0
@@ -3792,12 +3785,12 @@ Cstack_2:
    15A1: 00         .BYTE 0
    15A2: 00         .BYTE 0
    15A3: 00         .BYTE 0
-   15A4: 00         .BYTE 0
-   15A5: 00         .BYTE 0
-   15A6: 00         .BYTE 0
-   15A7: 00         .BYTE 0
-   15A8: 00         .BYTE 0
-   15A9: 00         .BYTE 0
+Ctos_1:
+   15A4: 0000       .WORD 0
+   15A6: 0000       .WORD 0
+   15A8: 1028       .WORD Cmain_1
+Ctop_1:
+Cstack_2:
    15AA: 00         .BYTE 0
    15AB: 00         .BYTE 0
    15AC: 00         .BYTE 0
@@ -4170,12 +4163,12 @@ Cstack_2:
    171B: 00         .BYTE 0
    171C: 00         .BYTE 0
    171D: 00         .BYTE 0
-Ctos_2:
-   171E: 0000       .WORD 0
-   1720: 0000       .WORD 0
-   1722: 1243       .WORD Cmain_2
-Ctop_2:
-Cstack_3:
+   171E: 00         .BYTE 0
+   171F: 00         .BYTE 0
+   1720: 00         .BYTE 0
+   1721: 00         .BYTE 0
+   1722: 00         .BYTE 0
+   1723: 00         .BYTE 0
    1724: 00         .BYTE 0
    1725: 00         .BYTE 0
    1726: 00         .BYTE 0
@@ -4198,12 +4191,12 @@ Cstack_3:
    1737: 00         .BYTE 0
    1738: 00         .BYTE 0
    1739: 00         .BYTE 0
-   173A: 00         .BYTE 0
-   173B: 00         .BYTE 0
-   173C: 00         .BYTE 0
-   173D: 00         .BYTE 0
-   173E: 00         .BYTE 0
-   173F: 00         .BYTE 0
+Ctos_2:
+   173A: 0000       .WORD 0
+   173C: 0000       .WORD 0
+   173E: 125D       .WORD Cmain_2
+Ctop_2:
+Cstack_3:
    1740: 00         .BYTE 0
    1741: 00         .BYTE 0
    1742: 00         .BYTE 0
@@ -4576,1194 +4569,1222 @@ Cstack_3:
    18B1: 00         .BYTE 0
    18B2: 00         .BYTE 0
    18B3: 00         .BYTE 0
-Ctos_3:
-   18B4: 0000       .WORD 0
-   18B6: 0000       .WORD 0
-   18B8: 1369       .WORD Cmain_3
-Ctop_3:
-Ctask_3:
-   18BA: 18F6       .WORD Ctask_idle
-   18BC: 18B4       .WORD Ctos_3
+   18B4: 00         .BYTE 0
+   18B5: 00         .BYTE 0
+   18B6: 00         .BYTE 0
+   18B7: 00         .BYTE 0
+   18B8: 00         .BYTE 0
+   18B9: 00         .BYTE 0
+   18BA: 00         .BYTE 0
+   18BB: 00         .BYTE 0
+   18BC: 00         .BYTE 0
+   18BD: 00         .BYTE 0
    18BE: 00         .BYTE 0
-   18BF: 1E         .BYTE 30
-   18C0: 1D0F       .WORD Cstr_131
-   18C2: 1724       .WORD Cstack_3
-   18C4: 18BA       .WORD Ctop_3
+   18BF: 00         .BYTE 0
+   18C0: 00         .BYTE 0
+   18C1: 00         .BYTE 0
+   18C2: 00         .BYTE 0
+   18C3: 00         .BYTE 0
+   18C4: 00         .BYTE 0
+   18C5: 00         .BYTE 0
    18C6: 00         .BYTE 0
    18C7: 00         .BYTE 0
-   18C8: 0000       .WORD 0
-   18CA: 0000       .WORD 0
-   18CC: 0000       .WORD 0
-Ctask_2:
-   18CE: 18BA       .WORD Ctask_3
-   18D0: 171E       .WORD Ctos_2
-   18D2: 00         .BYTE 0
-   18D3: 28         .BYTE 40
-   18D4: 1D1A       .WORD Cstr_132
-   18D6: 158E       .WORD Cstack_2
-   18D8: 1724       .WORD Ctop_2
+   18C8: 00         .BYTE 0
+   18C9: 00         .BYTE 0
+   18CA: 00         .BYTE 0
+   18CB: 00         .BYTE 0
+   18CC: 00         .BYTE 0
+   18CD: 00         .BYTE 0
+   18CE: 00         .BYTE 0
+   18CF: 00         .BYTE 0
+Ctos_3:
+   18D0: 0000       .WORD 0
+   18D2: 0000       .WORD 0
+   18D4: 1384       .WORD Cmain_3
+Ctop_3:
+Ctask_3:
+   18D6: 1912       .WORD Ctask_idle
+   18D8: 18D0       .WORD Ctos_3
    18DA: 00         .BYTE 0
-   18DB: 00         .BYTE 0
-   18DC: 0000       .WORD 0
-   18DE: 0000       .WORD 0
-   18E0: 0000       .WORD 0
-Ctask_1:
-   18E2: 18CE       .WORD Ctask_2
-   18E4: 1588       .WORD Ctos_1
-   18E6: 00         .BYTE 0
-   18E7: 32         .BYTE 50
-   18E8: 1D26       .WORD Cstr_133
-   18EA: 13F8       .WORD Cstack_1
-   18EC: 158E       .WORD Ctop_1
+   18DB: 1E         .BYTE 30
+   18DC: 1D2B       .WORD Cstr_137
+   18DE: 1740       .WORD Cstack_3
+   18E0: 18D6       .WORD Ctop_3
+   18E2: 00         .BYTE 0
+   18E3: 00         .BYTE 0
+   18E4: 0000       .WORD 0
+   18E6: 0000       .WORD 0
+   18E8: 0000       .WORD 0
+Ctask_2:
+   18EA: 18D6       .WORD Ctask_3
+   18EC: 173A       .WORD Ctos_2
    18EE: 00         .BYTE 0
-   18EF: 00         .BYTE 0
-   18F0: 0000       .WORD 0
-   18F2: 0000       .WORD 0
-   18F4: 0000       .WORD 0
-Ctask_idle:
-   18F6: 18E2       .WORD Ctask_1
+   18EF: 28         .BYTE 40
+   18F0: 1D36       .WORD Cstr_138
+   18F2: 15AA       .WORD Cstack_2
+   18F4: 1740       .WORD Ctop_2
+   18F6: 00         .BYTE 0
+   18F7: 00         .BYTE 0
    18F8: 0000       .WORD 0
-   18FA: 00         .BYTE 0
-   18FB: 00         .BYTE 0
-   18FC: 1D2E       .WORD Cstr_134
-   18FE: 1F80       .WORD 8064
-   1900: 2000       .WORD 8192
+   18FA: 0000       .WORD 0
+   18FC: 0000       .WORD 0
+Ctask_1:
+   18FE: 18EA       .WORD Ctask_2
+   1900: 15A4       .WORD Ctos_1
    1902: 00         .BYTE 0
-   1903: 00         .BYTE 0
-   1904: 0000       .WORD 0
-   1906: 0000       .WORD 0
-   1908: 0000       .WORD 0
+   1903: 32         .BYTE 50
+   1904: 1D42       .WORD Cstr_139
+   1906: 1414       .WORD Cstack_1
+   1908: 15AA       .WORD Ctop_1
+   190A: 00         .BYTE 0
+   190B: 00         .BYTE 0
+   190C: 0000       .WORD 0
+   190E: 0000       .WORD 0
+   1910: 0000       .WORD 0
+Ctask_idle:
+   1912: 18FE       .WORD Ctask_1
+   1914: 0000       .WORD 0
+   1916: 00         .BYTE 0
+   1917: 00         .BYTE 0
+   1918: 1D4A       .WORD Cstr_140
+   191A: 1F80       .WORD 8064
+   191C: 2000       .WORD 8192
+   191E: 00         .BYTE 0
+   191F: 00         .BYTE 0
+   1920: 0000       .WORD 0
+   1922: 0000       .WORD 0
+   1924: 0000       .WORD 0
 Ccurrent_task:
-   190A: 18F6       .WORD Ctask_idle
+   1926: 1912       .WORD Ctask_idle
 Cstr_0:
-   190C: 72         .BYTE 114
-   190D: 78         .BYTE 120
-   190E: 5F         .BYTE 95
-   190F: 73         .BYTE 115
-   1910: 65         .BYTE 101
-   1911: 6D         .BYTE 109
-   1912: 61         .BYTE 97
-   1913: 70         .BYTE 112
-   1914: 68         .BYTE 104
-   1915: 6F         .BYTE 111
-   1916: 72         .BYTE 114
-   1917: 65         .BYTE 101
-   1918: 00         .BYTE 0
+   1928: 72         .BYTE 114
+   1929: 78         .BYTE 120
+   192A: 5F         .BYTE 95
+   192B: 73         .BYTE 115
+   192C: 65         .BYTE 101
+   192D: 6D         .BYTE 109
+   192E: 61         .BYTE 97
+   192F: 70         .BYTE 112
+   1930: 68         .BYTE 104
+   1931: 6F         .BYTE 111
+   1932: 72         .BYTE 114
+   1933: 65         .BYTE 101
+   1934: 00         .BYTE 0
 Cstr_1:
-   1919: 74         .BYTE 116
-   191A: 61         .BYTE 97
-   191B: 73         .BYTE 115
-   191C: 6B         .BYTE 107
-   191D: 20         .BYTE 32
-   191E: 32         .BYTE 50
-   191F: 20         .BYTE 32
-   1920: 63         .BYTE 99
-   1921: 6F         .BYTE 111
-   1922: 6E         .BYTE 110
-   1923: 74         .BYTE 116
-   1924: 72         .BYTE 114
-   1925: 6F         .BYTE 111
-   1926: 6C         .BYTE 108
-   1927: 00         .BYTE 0
-Cstr_2:
-   1928: 74         .BYTE 116
-   1929: 61         .BYTE 97
-   192A: 73         .BYTE 115
-   192B: 6B         .BYTE 107
-   192C: 20         .BYTE 32
-   192D: 33         .BYTE 51
-   192E: 20         .BYTE 32
-   192F: 63         .BYTE 99
-   1930: 6F         .BYTE 111
-   1931: 6E         .BYTE 110
-   1932: 74         .BYTE 116
-   1933: 72         .BYTE 114
-   1934: 6F         .BYTE 111
-   1935: 6C         .BYTE 108
-   1936: 00         .BYTE 0
-Cstr_3:
+   1935: 74         .BYTE 116
+   1936: 61         .BYTE 97
    1937: 73         .BYTE 115
-   1938: 65         .BYTE 101
-   1939: 72         .BYTE 114
-   193A: 69         .BYTE 105
-   193B: 61         .BYTE 97
-   193C: 6C         .BYTE 108
-   193D: 20         .BYTE 32
-   193E: 6F         .BYTE 111
-   193F: 75         .BYTE 117
-   1940: 74         .BYTE 116
-   1941: 00         .BYTE 0
+   1938: 6B         .BYTE 107
+   1939: 20         .BYTE 32
+   193A: 32         .BYTE 50
+   193B: 20         .BYTE 32
+   193C: 63         .BYTE 99
+   193D: 6F         .BYTE 111
+   193E: 6E         .BYTE 110
+   193F: 74         .BYTE 116
+   1940: 72         .BYTE 114
+   1941: 6F         .BYTE 111
+   1942: 6C         .BYTE 108
+   1943: 00         .BYTE 0
+Cstr_2:
+   1944: 74         .BYTE 116
+   1945: 61         .BYTE 97
+   1946: 73         .BYTE 115
+   1947: 6B         .BYTE 107
+   1948: 20         .BYTE 32
+   1949: 33         .BYTE 51
+   194A: 20         .BYTE 32
+   194B: 63         .BYTE 99
+   194C: 6F         .BYTE 111
+   194D: 6E         .BYTE 110
+   194E: 74         .BYTE 116
+   194F: 72         .BYTE 114
+   1950: 6F         .BYTE 111
+   1951: 6C         .BYTE 108
+   1952: 00         .BYTE 0
+Cstr_3:
+   1953: 73         .BYTE 115
+   1954: 65         .BYTE 101
+   1955: 72         .BYTE 114
+   1956: 69         .BYTE 105
+   1957: 61         .BYTE 97
+   1958: 6C         .BYTE 108
+   1959: 20         .BYTE 32
+   195A: 6F         .BYTE 111
+   195B: 75         .BYTE 117
+   195C: 74         .BYTE 116
+   195D: 00         .BYTE 0
 Cstr_4:
-   1942: 74         .BYTE 116
-   1943: 78         .BYTE 120
-   1944: 5F         .BYTE 95
-   1945: 73         .BYTE 115
-   1946: 65         .BYTE 101
-   1947: 6D         .BYTE 109
-   1948: 61         .BYTE 97
-   1949: 70         .BYTE 112
-   194A: 68         .BYTE 104
-   194B: 6F         .BYTE 111
-   194C: 72         .BYTE 114
-   194D: 65         .BYTE 101
-   194E: 00         .BYTE 0
+   195E: 74         .BYTE 116
+   195F: 78         .BYTE 120
+   1960: 5F         .BYTE 95
+   1961: 73         .BYTE 115
+   1962: 65         .BYTE 101
+   1963: 6D         .BYTE 109
+   1964: 61         .BYTE 97
+   1965: 70         .BYTE 112
+   1966: 68         .BYTE 104
+   1967: 6F         .BYTE 111
+   1968: 72         .BYTE 114
+   1969: 65         .BYTE 101
+   196A: 00         .BYTE 0
 Cstr_36:
-   194F: 30         .BYTE 48
-   1950: 31         .BYTE 49
-   1951: 32         .BYTE 50
-   1952: 33         .BYTE 51
-   1953: 34         .BYTE 52
-   1954: 35         .BYTE 53
-   1955: 36         .BYTE 54
-   1956: 37         .BYTE 55
-   1957: 38         .BYTE 56
-   1958: 39         .BYTE 57
-   1959: 41         .BYTE 65
-   195A: 42         .BYTE 66
-   195B: 43         .BYTE 67
-   195C: 44         .BYTE 68
-   195D: 45         .BYTE 69
-   195E: 46         .BYTE 70
-   195F: 00         .BYTE 0
+   196B: 30         .BYTE 48
+   196C: 31         .BYTE 49
+   196D: 32         .BYTE 50
+   196E: 33         .BYTE 51
+   196F: 34         .BYTE 52
+   1970: 35         .BYTE 53
+   1971: 36         .BYTE 54
+   1972: 37         .BYTE 55
+   1973: 38         .BYTE 56
+   1974: 39         .BYTE 57
+   1975: 41         .BYTE 65
+   1976: 42         .BYTE 66
+   1977: 43         .BYTE 67
+   1978: 44         .BYTE 68
+   1979: 45         .BYTE 69
+   197A: 46         .BYTE 70
+   197B: 00         .BYTE 0
 Cstr_37:
-   1960: 30         .BYTE 48
-   1961: 58         .BYTE 88
-   1962: 00         .BYTE 0
+   197C: 30         .BYTE 48
+   197D: 58         .BYTE 88
+   197E: 00         .BYTE 0
 Cstr_38:
-   1963: 00         .BYTE 0
+   197F: 00         .BYTE 0
 Cstr_39:
-   1964: 00         .BYTE 0
+   1980: 00         .BYTE 0
 Cstr_40:
-   1965: 00         .BYTE 0
+   1981: 00         .BYTE 0
 Cstr_41:
-   1966: 30         .BYTE 48
-   1967: 31         .BYTE 49
-   1968: 32         .BYTE 50
-   1969: 33         .BYTE 51
-   196A: 34         .BYTE 52
-   196B: 35         .BYTE 53
-   196C: 36         .BYTE 54
-   196D: 37         .BYTE 55
-   196E: 38         .BYTE 56
-   196F: 39         .BYTE 57
-   1970: 61         .BYTE 97
-   1971: 62         .BYTE 98
-   1972: 63         .BYTE 99
-   1973: 64         .BYTE 100
-   1974: 65         .BYTE 101
-   1975: 66         .BYTE 102
-   1976: 00         .BYTE 0
+   1982: 30         .BYTE 48
+   1983: 31         .BYTE 49
+   1984: 32         .BYTE 50
+   1985: 33         .BYTE 51
+   1986: 34         .BYTE 52
+   1987: 35         .BYTE 53
+   1988: 36         .BYTE 54
+   1989: 37         .BYTE 55
+   198A: 38         .BYTE 56
+   198B: 39         .BYTE 57
+   198C: 61         .BYTE 97
+   198D: 62         .BYTE 98
+   198E: 63         .BYTE 99
+   198F: 64         .BYTE 100
+   1990: 65         .BYTE 101
+   1991: 66         .BYTE 102
+   1992: 00         .BYTE 0
 Cstr_42:
-   1977: 30         .BYTE 48
-   1978: 78         .BYTE 120
-   1979: 00         .BYTE 0
+   1993: 30         .BYTE 48
+   1994: 78         .BYTE 120
+   1995: 00         .BYTE 0
 Cstr_44:
-   197A: 25         .BYTE 37
-   197B: 2D         .BYTE 45
-   197C: 32         .BYTE 50
-   197D: 30         .BYTE 48
-   197E: 73         .BYTE 115
-   197F: 20         .BYTE 32
-   1980: 25         .BYTE 37
-   1981: 34         .BYTE 52
-   1982: 64         .BYTE 100
-   1983: 20         .BYTE 32
-   1984: 00         .BYTE 0
+   1996: 25         .BYTE 37
+   1997: 2D         .BYTE 45
+   1998: 32         .BYTE 50
+   1999: 30         .BYTE 48
+   199A: 73         .BYTE 115
+   199B: 20         .BYTE 32
+   199C: 25         .BYTE 37
+   199D: 34         .BYTE 52
+   199E: 64         .BYTE 100
+   199F: 20         .BYTE 32
+   19A0: 00         .BYTE 0
 Cstr_45:
-   1985: 25         .BYTE 37
-   1986: 73         .BYTE 115
-   1987: 20         .BYTE 32
-   1988: 2D         .BYTE 45
-   1989: 3E         .BYTE 62
-   198A: 20         .BYTE 32
-   198B: 00         .BYTE 0
+   19A1: 25         .BYTE 37
+   19A2: 73         .BYTE 115
+   19A3: 20         .BYTE 32
+   19A4: 2D         .BYTE 45
+   19A5: 3E         .BYTE 62
+   19A6: 20         .BYTE 32
+   19A7: 00         .BYTE 0
 Cstr_46:
-   198C: 30         .BYTE 48
-   198D: 00         .BYTE 0
-Cstr_47:
-   198E: 6E         .BYTE 110
-   198F: 6F         .BYTE 111
-   1990: 6E         .BYTE 110
-   1991: 65         .BYTE 101
-   1992: 2E         .BYTE 46
-   1993: 00         .BYTE 0
-Cstr_48:
-   1994: 0D         .BYTE 13
-   1995: 0A         .BYTE 10
-   1996: 00         .BYTE 0
-Cstr_49:
-   1997: 4C         .BYTE 76
-   1998: 6F         .BYTE 111
-   1999: 61         .BYTE 97
-   199A: 64         .BYTE 100
-   199B: 69         .BYTE 105
-   199C: 6E         .BYTE 110
-   199D: 67         .BYTE 103
-   199E: 20         .BYTE 32
-   199F: 69         .BYTE 105
-   19A0: 6D         .BYTE 109
-   19A1: 61         .BYTE 97
-   19A2: 67         .BYTE 103
-   19A3: 65         .BYTE 101
-   19A4: 2E         .BYTE 46
-   19A5: 2E         .BYTE 46
-   19A6: 2E         .BYTE 46
-   19A7: 0D         .BYTE 13
-   19A8: 0A         .BYTE 10
+   19A8: 30         .BYTE 48
    19A9: 00         .BYTE 0
-Cstr_55:
-   19AA: 0D         .BYTE 13
-   19AB: 0A         .BYTE 10
-   19AC: 53         .BYTE 83
+Cstr_47:
+   19AA: 6E         .BYTE 110
+   19AB: 6F         .BYTE 111
+   19AC: 6E         .BYTE 110
    19AD: 65         .BYTE 101
-   19AE: 6D         .BYTE 109
-   19AF: 61         .BYTE 97
-   19B0: 70         .BYTE 112
-   19B1: 68         .BYTE 104
-   19B2: 6F         .BYTE 111
-   19B3: 72         .BYTE 114
-   19B4: 65         .BYTE 101
-   19B5: 20         .BYTE 32
-   19B6: 20         .BYTE 32
-   19B7: 20         .BYTE 32
-   19B8: 20         .BYTE 32
-   19B9: 20         .BYTE 32
+   19AE: 2E         .BYTE 46
+   19AF: 00         .BYTE 0
+Cstr_48:
+   19B0: 0D         .BYTE 13
+   19B1: 0A         .BYTE 10
+   19B2: 00         .BYTE 0
+Cstr_49:
+   19B3: 4C         .BYTE 76
+   19B4: 6F         .BYTE 111
+   19B5: 61         .BYTE 97
+   19B6: 64         .BYTE 100
+   19B7: 69         .BYTE 105
+   19B8: 6E         .BYTE 110
+   19B9: 67         .BYTE 103
    19BA: 20         .BYTE 32
-   19BB: 20         .BYTE 32
-   19BC: 20         .BYTE 32
-   19BD: 20         .BYTE 32
-   19BE: 20         .BYTE 32
-   19BF: 20         .BYTE 32
-   19C0: 43         .BYTE 67
-   19C1: 6F         .BYTE 111
-   19C2: 75         .BYTE 117
-   19C3: 6E         .BYTE 110
-   19C4: 74         .BYTE 116
-   19C5: 20         .BYTE 32
-   19C6: 57         .BYTE 87
-   19C7: 61         .BYTE 97
-   19C8: 69         .BYTE 105
-   19C9: 74         .BYTE 116
-   19CA: 69         .BYTE 105
-   19CB: 6E         .BYTE 110
-   19CC: 67         .BYTE 103
-   19CD: 20         .BYTE 32
-   19CE: 74         .BYTE 116
-   19CF: 61         .BYTE 97
-   19D0: 73         .BYTE 115
-   19D1: 6B         .BYTE 107
-   19D2: 73         .BYTE 115
-   19D3: 0D         .BYTE 13
-   19D4: 0A         .BYTE 10
-   19D5: 00         .BYTE 0
+   19BB: 69         .BYTE 105
+   19BC: 6D         .BYTE 109
+   19BD: 61         .BYTE 97
+   19BE: 67         .BYTE 103
+   19BF: 65         .BYTE 101
+   19C0: 2E         .BYTE 46
+   19C1: 2E         .BYTE 46
+   19C2: 2E         .BYTE 46
+   19C3: 0D         .BYTE 13
+   19C4: 0A         .BYTE 10
+   19C5: 00         .BYTE 0
+Cstr_55:
+   19C6: 0D         .BYTE 13
+   19C7: 0A         .BYTE 10
+   19C8: 53         .BYTE 83
+   19C9: 65         .BYTE 101
+   19CA: 6D         .BYTE 109
+   19CB: 61         .BYTE 97
+   19CC: 70         .BYTE 112
+   19CD: 68         .BYTE 104
+   19CE: 6F         .BYTE 111
+   19CF: 72         .BYTE 114
+   19D0: 65         .BYTE 101
+   19D1: 20         .BYTE 32
+   19D2: 20         .BYTE 32
+   19D3: 20         .BYTE 32
+   19D4: 20         .BYTE 32
+   19D5: 20         .BYTE 32
+   19D6: 20         .BYTE 32
+   19D7: 20         .BYTE 32
+   19D8: 20         .BYTE 32
+   19D9: 20         .BYTE 32
+   19DA: 20         .BYTE 32
+   19DB: 20         .BYTE 32
+   19DC: 43         .BYTE 67
+   19DD: 6F         .BYTE 111
+   19DE: 75         .BYTE 117
+   19DF: 6E         .BYTE 110
+   19E0: 74         .BYTE 116
+   19E1: 20         .BYTE 32
+   19E2: 57         .BYTE 87
+   19E3: 61         .BYTE 97
+   19E4: 69         .BYTE 105
+   19E5: 74         .BYTE 116
+   19E6: 69         .BYTE 105
+   19E7: 6E         .BYTE 110
+   19E8: 67         .BYTE 103
+   19E9: 20         .BYTE 32
+   19EA: 74         .BYTE 116
+   19EB: 61         .BYTE 97
+   19EC: 73         .BYTE 115
+   19ED: 6B         .BYTE 107
+   19EE: 73         .BYTE 115
+   19EF: 0D         .BYTE 13
+   19F0: 0A         .BYTE 10
+   19F1: 00         .BYTE 0
 Cstr_56:
-   19D6: 0D         .BYTE 13
-   19D7: 0A         .BYTE 10
-   19D8: 00         .BYTE 0
+   19F2: 0D         .BYTE 13
+   19F3: 0A         .BYTE 10
+   19F4: 00         .BYTE 0
 Cstr_57:
-   19D9: 0D         .BYTE 13
-   19DA: 0A         .BYTE 10
-   19DB: 00         .BYTE 0
+   19F5: 0D         .BYTE 13
+   19F6: 0A         .BYTE 10
+   19F7: 00         .BYTE 0
 Cstr_58:
-   19DC: 0D         .BYTE 13
-   19DD: 0A         .BYTE 10
-   19DE: 0D         .BYTE 13
-   19DF: 0A         .BYTE 10
-   19E0: 53         .BYTE 83
-   19E1: 65         .BYTE 101
-   19E2: 72         .BYTE 114
-   19E3: 69         .BYTE 105
-   19E4: 61         .BYTE 97
-   19E5: 6C         .BYTE 108
-   19E6: 20         .BYTE 32
-   19E7: 4F         .BYTE 79
-   19E8: 76         .BYTE 118
-   19E9: 65         .BYTE 101
-   19EA: 72         .BYTE 114
-   19EB: 66         .BYTE 102
-   19EC: 6C         .BYTE 108
-   19ED: 6F         .BYTE 111
-   19EE: 77         .BYTE 119
-   19EF: 73         .BYTE 115
-   19F0: 3A         .BYTE 58
-   19F1: 20         .BYTE 32
-   19F2: 25         .BYTE 37
-   19F3: 75         .BYTE 117
-   19F4: 0D         .BYTE 13
-   19F5: 0A         .BYTE 10
-   19F6: 0D         .BYTE 13
-   19F7: 0A         .BYTE 10
-   19F8: 00         .BYTE 0
+   19F8: 0D         .BYTE 13
+   19F9: 0A         .BYTE 10
+   19FA: 0D         .BYTE 13
+   19FB: 0A         .BYTE 10
+   19FC: 53         .BYTE 83
+   19FD: 65         .BYTE 101
+   19FE: 72         .BYTE 114
+   19FF: 69         .BYTE 105
+   1A00: 61         .BYTE 97
+   1A01: 6C         .BYTE 108
+   1A02: 20         .BYTE 32
+   1A03: 4F         .BYTE 79
+   1A04: 76         .BYTE 118
+   1A05: 65         .BYTE 101
+   1A06: 72         .BYTE 114
+   1A07: 66         .BYTE 102
+   1A08: 6C         .BYTE 108
+   1A09: 6F         .BYTE 111
+   1A0A: 77         .BYTE 119
+   1A0B: 73         .BYTE 115
+   1A0C: 3A         .BYTE 58
+   1A0D: 20         .BYTE 32
+   1A0E: 25         .BYTE 37
+   1A0F: 75         .BYTE 117
+   1A10: 0D         .BYTE 13
+   1A11: 0A         .BYTE 10
+   1A12: 0D         .BYTE 13
+   1A13: 0A         .BYTE 10
+   1A14: 00         .BYTE 0
 Cstr_59:
-   19F9: 0D         .BYTE 13
-   19FA: 0A         .BYTE 10
-   19FB: 54         .BYTE 84
-   19FC: 61         .BYTE 97
-   19FD: 73         .BYTE 115
-   19FE: 6B         .BYTE 107
-   19FF: 20         .BYTE 32
-   1A00: 6E         .BYTE 110
-   1A01: 61         .BYTE 97
-   1A02: 6D         .BYTE 109
-   1A03: 65         .BYTE 101
-   1A04: 20         .BYTE 32
-   1A05: 20         .BYTE 32
-   1A06: 20         .BYTE 32
-   1A07: 20         .BYTE 32
-   1A08: 20         .BYTE 32
-   1A09: 20         .BYTE 32
-   1A0A: 20         .BYTE 32
-   1A0B: 20         .BYTE 32
-   1A0C: 50         .BYTE 80
-   1A0D: 72         .BYTE 114
-   1A0E: 69         .BYTE 105
-   1A0F: 6F         .BYTE 111
-   1A10: 20         .BYTE 32
-   1A11: 20         .BYTE 32
-   1A12: 20         .BYTE 32
-   1A13: 50         .BYTE 80
-   1A14: 43         .BYTE 67
-   1A15: 20         .BYTE 32
-   1A16: 53         .BYTE 83
-   1A17: 74         .BYTE 116
+   1A15: 0D         .BYTE 13
+   1A16: 0A         .BYTE 10
+   1A17: 54         .BYTE 84
    1A18: 61         .BYTE 97
-   1A19: 63         .BYTE 99
+   1A19: 73         .BYTE 115
    1A1A: 6B         .BYTE 107
    1A1B: 20         .BYTE 32
-   1A1C: 20         .BYTE 32
-   1A1D: 53         .BYTE 83
-   1A1E: 69         .BYTE 105
-   1A1F: 7A         .BYTE 122
-   1A20: 65         .BYTE 101
+   1A1C: 6E         .BYTE 110
+   1A1D: 61         .BYTE 97
+   1A1E: 6D         .BYTE 109
+   1A1F: 65         .BYTE 101
+   1A20: 20         .BYTE 32
    1A21: 20         .BYTE 32
    1A22: 20         .BYTE 32
-   1A23: 55         .BYTE 85
-   1A24: 73         .BYTE 115
-   1A25: 65         .BYTE 101
-   1A26: 64         .BYTE 100
+   1A23: 20         .BYTE 32
+   1A24: 20         .BYTE 32
+   1A25: 20         .BYTE 32
+   1A26: 20         .BYTE 32
    1A27: 20         .BYTE 32
-   1A28: 4E         .BYTE 78
-   1A29: 65         .BYTE 101
-   1A2A: 78         .BYTE 120
-   1A2B: 74         .BYTE 116
+   1A28: 50         .BYTE 80
+   1A29: 72         .BYTE 114
+   1A2A: 69         .BYTE 105
+   1A2B: 6F         .BYTE 111
    1A2C: 20         .BYTE 32
-   1A2D: 77         .BYTE 119
-   1A2E: 61         .BYTE 97
-   1A2F: 69         .BYTE 105
-   1A30: 74         .BYTE 116
-   1A31: 69         .BYTE 105
-   1A32: 6E         .BYTE 110
-   1A33: 67         .BYTE 103
-   1A34: 20         .BYTE 32
-   1A35: 20         .BYTE 32
-   1A36: 20         .BYTE 32
+   1A2D: 20         .BYTE 32
+   1A2E: 20         .BYTE 32
+   1A2F: 50         .BYTE 80
+   1A30: 43         .BYTE 67
+   1A31: 20         .BYTE 32
+   1A32: 53         .BYTE 83
+   1A33: 74         .BYTE 116
+   1A34: 61         .BYTE 97
+   1A35: 63         .BYTE 99
+   1A36: 6B         .BYTE 107
    1A37: 20         .BYTE 32
    1A38: 20         .BYTE 32
    1A39: 53         .BYTE 83
-   1A3A: 74         .BYTE 116
-   1A3B: 61         .BYTE 97
-   1A3C: 74         .BYTE 116
-   1A3D: 75         .BYTE 117
-   1A3E: 73         .BYTE 115
-   1A3F: 0D         .BYTE 13
-   1A40: 0A         .BYTE 10
-   1A41: 00         .BYTE 0
-Cstr_61:
-   1A42: 0D         .BYTE 13
-   1A43: 0A         .BYTE 10
-   1A44: 00         .BYTE 0
-Cstr_62:
-   1A45: 25         .BYTE 37
-   1A46: 2D         .BYTE 45
-   1A47: 31         .BYTE 49
-   1A48: 36         .BYTE 54
-   1A49: 73         .BYTE 115
-   1A4A: 20         .BYTE 32
-   1A4B: 25         .BYTE 37
-   1A4C: 34         .BYTE 52
-   1A4D: 64         .BYTE 100
-   1A4E: 20         .BYTE 32
-   1A4F: 20         .BYTE 32
-   1A50: 25         .BYTE 37
-   1A51: 34         .BYTE 52
-   1A52: 58         .BYTE 88
+   1A3A: 69         .BYTE 105
+   1A3B: 7A         .BYTE 122
+   1A3C: 65         .BYTE 101
+   1A3D: 20         .BYTE 32
+   1A3E: 20         .BYTE 32
+   1A3F: 55         .BYTE 85
+   1A40: 73         .BYTE 115
+   1A41: 65         .BYTE 101
+   1A42: 64         .BYTE 100
+   1A43: 20         .BYTE 32
+   1A44: 4E         .BYTE 78
+   1A45: 65         .BYTE 101
+   1A46: 78         .BYTE 120
+   1A47: 74         .BYTE 116
+   1A48: 20         .BYTE 32
+   1A49: 77         .BYTE 119
+   1A4A: 61         .BYTE 97
+   1A4B: 69         .BYTE 105
+   1A4C: 74         .BYTE 116
+   1A4D: 69         .BYTE 105
+   1A4E: 6E         .BYTE 110
+   1A4F: 67         .BYTE 103
+   1A50: 20         .BYTE 32
+   1A51: 20         .BYTE 32
+   1A52: 20         .BYTE 32
    1A53: 20         .BYTE 32
-   1A54: 25         .BYTE 37
-   1A55: 34         .BYTE 52
-   1A56: 58         .BYTE 88
-   1A57: 20         .BYTE 32
-   1A58: 25         .BYTE 37
-   1A59: 35         .BYTE 53
-   1A5A: 64         .BYTE 100
-   1A5B: 20         .BYTE 32
-   1A5C: 25         .BYTE 37
-   1A5D: 35         .BYTE 53
-   1A5E: 64         .BYTE 100
-   1A5F: 20         .BYTE 32
+   1A54: 20         .BYTE 32
+   1A55: 53         .BYTE 83
+   1A56: 74         .BYTE 116
+   1A57: 61         .BYTE 97
+   1A58: 74         .BYTE 116
+   1A59: 75         .BYTE 117
+   1A5A: 73         .BYTE 115
+   1A5B: 0D         .BYTE 13
+   1A5C: 0A         .BYTE 10
+   1A5D: 00         .BYTE 0
+Cstr_61:
+   1A5E: 0D         .BYTE 13
+   1A5F: 0A         .BYTE 10
    1A60: 00         .BYTE 0
-Cstr_63:
+Cstr_62:
    1A61: 25         .BYTE 37
    1A62: 2D         .BYTE 45
    1A63: 31         .BYTE 49
    1A64: 36         .BYTE 54
    1A65: 73         .BYTE 115
    1A66: 20         .BYTE 32
-   1A67: 00         .BYTE 0
-Cstr_64:
-   1A68: 6E         .BYTE 110
-   1A69: 6F         .BYTE 111
-   1A6A: 6E         .BYTE 110
-   1A6B: 65         .BYTE 101
-   1A6C: 2E         .BYTE 46
-   1A6D: 20         .BYTE 32
-   1A6E: 20         .BYTE 32
+   1A67: 25         .BYTE 37
+   1A68: 34         .BYTE 52
+   1A69: 64         .BYTE 100
+   1A6A: 20         .BYTE 32
+   1A6B: 20         .BYTE 32
+   1A6C: 25         .BYTE 37
+   1A6D: 34         .BYTE 52
+   1A6E: 58         .BYTE 88
    1A6F: 20         .BYTE 32
-   1A70: 20         .BYTE 32
-   1A71: 20         .BYTE 32
-   1A72: 20         .BYTE 32
+   1A70: 25         .BYTE 37
+   1A71: 34         .BYTE 52
+   1A72: 58         .BYTE 88
    1A73: 20         .BYTE 32
-   1A74: 20         .BYTE 32
-   1A75: 20         .BYTE 32
-   1A76: 20         .BYTE 32
+   1A74: 25         .BYTE 37
+   1A75: 35         .BYTE 53
+   1A76: 64         .BYTE 100
    1A77: 20         .BYTE 32
-   1A78: 20         .BYTE 32
-   1A79: 00         .BYTE 0
-Cstr_65:
-   1A7A: 52         .BYTE 82
-   1A7B: 55         .BYTE 85
-   1A7C: 4E         .BYTE 78
-   1A7D: 20         .BYTE 32
-   1A7E: 00         .BYTE 0
-Cstr_66:
-   1A7F: 53         .BYTE 83
-   1A80: 55         .BYTE 85
-   1A81: 53         .BYTE 83
-   1A82: 50         .BYTE 80
-   1A83: 20         .BYTE 32
-   1A84: 00         .BYTE 0
-Cstr_67:
-   1A85: 53         .BYTE 83
-   1A86: 4C         .BYTE 76
-   1A87: 45         .BYTE 69
-   1A88: 45         .BYTE 69
-   1A89: 50         .BYTE 80
+   1A78: 25         .BYTE 37
+   1A79: 35         .BYTE 53
+   1A7A: 64         .BYTE 100
+   1A7B: 20         .BYTE 32
+   1A7C: 00         .BYTE 0
+Cstr_63:
+   1A7D: 25         .BYTE 37
+   1A7E: 2D         .BYTE 45
+   1A7F: 31         .BYTE 49
+   1A80: 36         .BYTE 54
+   1A81: 73         .BYTE 115
+   1A82: 20         .BYTE 32
+   1A83: 00         .BYTE 0
+Cstr_64:
+   1A84: 6E         .BYTE 110
+   1A85: 6F         .BYTE 111
+   1A86: 6E         .BYTE 110
+   1A87: 65         .BYTE 101
+   1A88: 2E         .BYTE 46
+   1A89: 20         .BYTE 32
    1A8A: 20         .BYTE 32
-   1A8B: 25         .BYTE 37
-   1A8C: 64         .BYTE 100
+   1A8B: 20         .BYTE 32
+   1A8C: 20         .BYTE 32
    1A8D: 20         .BYTE 32
-   1A8E: 6D         .BYTE 109
-   1A8F: 73         .BYTE 115
+   1A8E: 20         .BYTE 32
+   1A8F: 20         .BYTE 32
    1A90: 20         .BYTE 32
-   1A91: 00         .BYTE 0
-Cstr_68:
-   1A92: 42         .BYTE 66
-   1A93: 4C         .BYTE 76
-   1A94: 4B         .BYTE 75
-   1A95: 44         .BYTE 68
-   1A96: 20         .BYTE 32
-   1A97: 6F         .BYTE 111
-   1A98: 6E         .BYTE 110
+   1A91: 20         .BYTE 32
+   1A92: 20         .BYTE 32
+   1A93: 20         .BYTE 32
+   1A94: 20         .BYTE 32
+   1A95: 00         .BYTE 0
+Cstr_65:
+   1A96: 52         .BYTE 82
+   1A97: 55         .BYTE 85
+   1A98: 4E         .BYTE 78
    1A99: 20         .BYTE 32
-   1A9A: 25         .BYTE 37
-   1A9B: 73         .BYTE 115
-   1A9C: 20         .BYTE 32
-   1A9D: 00         .BYTE 0
-Cstr_69:
-   1A9E: 0D         .BYTE 13
-   1A9F: 0A         .BYTE 10
+   1A9A: 00         .BYTE 0
+Cstr_66:
+   1A9B: 53         .BYTE 83
+   1A9C: 55         .BYTE 85
+   1A9D: 53         .BYTE 83
+   1A9E: 50         .BYTE 80
+   1A9F: 20         .BYTE 32
    1AA0: 00         .BYTE 0
+Cstr_67:
+   1AA1: 53         .BYTE 83
+   1AA2: 4C         .BYTE 76
+   1AA3: 45         .BYTE 69
+   1AA4: 45         .BYTE 69
+   1AA5: 50         .BYTE 80
+   1AA6: 20         .BYTE 32
+   1AA7: 25         .BYTE 37
+   1AA8: 64         .BYTE 100
+   1AA9: 20         .BYTE 32
+   1AAA: 6D         .BYTE 109
+   1AAB: 73         .BYTE 115
+   1AAC: 20         .BYTE 32
+   1AAD: 00         .BYTE 0
+Cstr_68:
+   1AAE: 42         .BYTE 66
+   1AAF: 4C         .BYTE 76
+   1AB0: 4B         .BYTE 75
+   1AB1: 44         .BYTE 68
+   1AB2: 20         .BYTE 32
+   1AB3: 6F         .BYTE 111
+   1AB4: 6E         .BYTE 110
+   1AB5: 20         .BYTE 32
+   1AB6: 25         .BYTE 37
+   1AB7: 73         .BYTE 115
+   1AB8: 20         .BYTE 32
+   1AB9: 00         .BYTE 0
+Cstr_69:
+   1ABA: 0D         .BYTE 13
+   1ABB: 0A         .BYTE 10
+   1ABC: 00         .BYTE 0
 Cstr_70:
-   1AA1: 0D         .BYTE 13
-   1AA2: 0A         .BYTE 10
-   1AA3: 00         .BYTE 0
+   1ABD: 0D         .BYTE 13
+   1ABE: 0A         .BYTE 10
+   1ABF: 00         .BYTE 0
 Cstr_71:
-   1AA4: 55         .BYTE 85
-   1AA5: 70         .BYTE 112
-   1AA6: 74         .BYTE 116
-   1AA7: 69         .BYTE 105
-   1AA8: 6D         .BYTE 109
-   1AA9: 65         .BYTE 101
-   1AAA: 20         .BYTE 32
-   1AAB: 69         .BYTE 105
-   1AAC: 73         .BYTE 115
-   1AAD: 20         .BYTE 32
-   1AAE: 25         .BYTE 37
-   1AAF: 34         .BYTE 52
-   1AB0: 2E         .BYTE 46
-   1AB1: 34         .BYTE 52
-   1AB2: 58         .BYTE 88
-   1AB3: 25         .BYTE 37
-   1AB4: 34         .BYTE 52
-   1AB5: 2E         .BYTE 46
-   1AB6: 34         .BYTE 52
-   1AB7: 58         .BYTE 88
-   1AB8: 25         .BYTE 37
-   1AB9: 34         .BYTE 52
-   1ABA: 2E         .BYTE 46
-   1ABB: 34         .BYTE 52
-   1ABC: 58         .BYTE 88
-   1ABD: 20         .BYTE 32
-   1ABE: 73         .BYTE 115
-   1ABF: 65         .BYTE 101
-   1AC0: 63         .BYTE 99
-   1AC1: 6F         .BYTE 111
-   1AC2: 6E         .BYTE 110
-   1AC3: 64         .BYTE 100
-   1AC4: 73         .BYTE 115
-   1AC5: 0D         .BYTE 13
-   1AC6: 0A         .BYTE 10
-   1AC7: 00         .BYTE 0
-Cstr_72:
-   1AC8: 25         .BYTE 37
-   1AC9: 34         .BYTE 52
-   1ACA: 2E         .BYTE 46
+   1AC0: 55         .BYTE 85
+   1AC1: 70         .BYTE 112
+   1AC2: 74         .BYTE 116
+   1AC3: 69         .BYTE 105
+   1AC4: 6D         .BYTE 109
+   1AC5: 65         .BYTE 101
+   1AC6: 20         .BYTE 32
+   1AC7: 69         .BYTE 105
+   1AC8: 73         .BYTE 115
+   1AC9: 20         .BYTE 32
+   1ACA: 25         .BYTE 37
    1ACB: 34         .BYTE 52
-   1ACC: 58         .BYTE 88
-   1ACD: 3A         .BYTE 58
-   1ACE: 00         .BYTE 0
-Cstr_73:
-   1ACF: 20         .BYTE 32
-   1AD0: 25         .BYTE 37
-   1AD1: 32         .BYTE 50
-   1AD2: 2E         .BYTE 46
-   1AD3: 32         .BYTE 50
-   1AD4: 58         .BYTE 88
-   1AD5: 00         .BYTE 0
-Cstr_74:
-   1AD6: 20         .BYTE 32
-   1AD7: 2D         .BYTE 45
-   1AD8: 20         .BYTE 32
-   1AD9: 00         .BYTE 0
-Cstr_75:
-   1ADA: 0D         .BYTE 13
-   1ADB: 0A         .BYTE 10
-   1ADC: 00         .BYTE 0
-Cstr_79:
-   1ADD: 52         .BYTE 82
-   1ADE: 45         .BYTE 69
-   1ADF: 41         .BYTE 65
-   1AE0: 44         .BYTE 68
-   1AE1: 59         .BYTE 89
-   1AE2: 0D         .BYTE 13
+   1ACC: 2E         .BYTE 46
+   1ACD: 34         .BYTE 52
+   1ACE: 58         .BYTE 88
+   1ACF: 25         .BYTE 37
+   1AD0: 34         .BYTE 52
+   1AD1: 2E         .BYTE 46
+   1AD2: 34         .BYTE 52
+   1AD3: 58         .BYTE 88
+   1AD4: 25         .BYTE 37
+   1AD5: 34         .BYTE 52
+   1AD6: 2E         .BYTE 46
+   1AD7: 34         .BYTE 52
+   1AD8: 58         .BYTE 88
+   1AD9: 20         .BYTE 32
+   1ADA: 73         .BYTE 115
+   1ADB: 65         .BYTE 101
+   1ADC: 63         .BYTE 99
+   1ADD: 6F         .BYTE 111
+   1ADE: 6E         .BYTE 110
+   1ADF: 64         .BYTE 100
+   1AE0: 73         .BYTE 115
+   1AE1: 0D         .BYTE 13
+   1AE2: 0A         .BYTE 10
    1AE3: 00         .BYTE 0
-Cstr_80:
+Cstr_72:
    1AE4: 25         .BYTE 37
-   1AE5: 73         .BYTE 115
-   1AE6: 20         .BYTE 32
-   1AE7: 69         .BYTE 105
-   1AE8: 73         .BYTE 115
-   1AE9: 20         .BYTE 32
-   1AEA: 62         .BYTE 98
-   1AEB: 6F         .BYTE 111
-   1AEC: 72         .BYTE 114
-   1AED: 65         .BYTE 101
-   1AEE: 64         .BYTE 100
-   1AEF: 2E         .BYTE 46
-   1AF0: 0D         .BYTE 13
-   1AF1: 0A         .BYTE 10
-   1AF2: 00         .BYTE 0
-Cstr_81:
-   1AF3: 54         .BYTE 84
-   1AF4: 61         .BYTE 97
-   1AF5: 73         .BYTE 115
-   1AF6: 6B         .BYTE 107
-   1AF7: 20         .BYTE 32
-   1AF8: 32         .BYTE 50
-   1AF9: 20         .BYTE 32
-   1AFA: 6B         .BYTE 107
-   1AFB: 69         .BYTE 105
-   1AFC: 63         .BYTE 99
-   1AFD: 6B         .BYTE 107
-   1AFE: 65         .BYTE 101
-   1AFF: 64         .BYTE 100
-   1B00: 0D         .BYTE 13
-   1B01: 0A         .BYTE 10
-   1B02: 00         .BYTE 0
-Cstr_82:
-   1B03: 54         .BYTE 84
-   1B04: 61         .BYTE 97
-   1B05: 73         .BYTE 115
-   1B06: 6B         .BYTE 107
-   1B07: 20         .BYTE 32
-   1B08: 33         .BYTE 51
-   1B09: 20         .BYTE 32
-   1B0A: 65         .BYTE 101
-   1B0B: 6E         .BYTE 110
-   1B0C: 61         .BYTE 97
-   1B0D: 62         .BYTE 98
-   1B0E: 6C         .BYTE 108
-   1B0F: 65         .BYTE 101
-   1B10: 64         .BYTE 100
-   1B11: 20         .BYTE 32
-   1B12: 66         .BYTE 102
-   1B13: 6F         .BYTE 111
-   1B14: 72         .BYTE 114
+   1AE5: 34         .BYTE 52
+   1AE6: 2E         .BYTE 46
+   1AE7: 34         .BYTE 52
+   1AE8: 58         .BYTE 88
+   1AE9: 3A         .BYTE 58
+   1AEA: 00         .BYTE 0
+Cstr_73:
+   1AEB: 20         .BYTE 32
+   1AEC: 25         .BYTE 37
+   1AED: 32         .BYTE 50
+   1AEE: 2E         .BYTE 46
+   1AEF: 32         .BYTE 50
+   1AF0: 58         .BYTE 88
+   1AF1: 00         .BYTE 0
+Cstr_74:
+   1AF2: 20         .BYTE 32
+   1AF3: 2D         .BYTE 45
+   1AF4: 20         .BYTE 32
+   1AF5: 00         .BYTE 0
+Cstr_75:
+   1AF6: 0D         .BYTE 13
+   1AF7: 0A         .BYTE 10
+   1AF8: 00         .BYTE 0
+Cstr_83:
+   1AF9: 52         .BYTE 82
+   1AFA: 45         .BYTE 69
+   1AFB: 41         .BYTE 65
+   1AFC: 44         .BYTE 68
+   1AFD: 59         .BYTE 89
+   1AFE: 0D         .BYTE 13
+   1AFF: 00         .BYTE 0
+Cstr_84:
+   1B00: 25         .BYTE 37
+   1B01: 73         .BYTE 115
+   1B02: 20         .BYTE 32
+   1B03: 69         .BYTE 105
+   1B04: 73         .BYTE 115
+   1B05: 20         .BYTE 32
+   1B06: 62         .BYTE 98
+   1B07: 6F         .BYTE 111
+   1B08: 72         .BYTE 114
+   1B09: 65         .BYTE 101
+   1B0A: 64         .BYTE 100
+   1B0B: 2E         .BYTE 46
+   1B0C: 0D         .BYTE 13
+   1B0D: 0A         .BYTE 10
+   1B0E: 00         .BYTE 0
+Cstr_85:
+   1B0F: 54         .BYTE 84
+   1B10: 61         .BYTE 97
+   1B11: 73         .BYTE 115
+   1B12: 6B         .BYTE 107
+   1B13: 20         .BYTE 32
+   1B14: 32         .BYTE 50
    1B15: 20         .BYTE 32
-   1B16: 31         .BYTE 49
-   1B17: 30         .BYTE 48
-   1B18: 30         .BYTE 48
-   1B19: 20         .BYTE 32
-   1B1A: 6D         .BYTE 109
-   1B1B: 73         .BYTE 115
+   1B16: 6B         .BYTE 107
+   1B17: 69         .BYTE 105
+   1B18: 63         .BYTE 99
+   1B19: 6B         .BYTE 107
+   1B1A: 65         .BYTE 101
+   1B1B: 64         .BYTE 100
    1B1C: 0D         .BYTE 13
    1B1D: 0A         .BYTE 10
    1B1E: 00         .BYTE 0
-Cstr_87:
-   1B1F: 64         .BYTE 100
-   1B20: 65         .BYTE 101
+Cstr_86:
+   1B1F: 54         .BYTE 84
+   1B20: 61         .BYTE 97
    1B21: 73         .BYTE 115
-   1B22: 63         .BYTE 99
-   1B23: 68         .BYTE 104
-   1B24: 65         .BYTE 101
-   1B25: 64         .BYTE 100
-   1B26: 75         .BYTE 117
-   1B27: 6C         .BYTE 108
-   1B28: 65         .BYTE 101
-   1B29: 20         .BYTE 32
-   1B2A: 74         .BYTE 116
-   1B2B: 6F         .BYTE 111
-   1B2C: 6F         .BYTE 111
-   1B2D: 6B         .BYTE 107
-   1B2E: 20         .BYTE 32
-   1B2F: 25         .BYTE 37
-   1B30: 64         .BYTE 100
+   1B22: 6B         .BYTE 107
+   1B23: 20         .BYTE 32
+   1B24: 33         .BYTE 51
+   1B25: 20         .BYTE 32
+   1B26: 65         .BYTE 101
+   1B27: 6E         .BYTE 110
+   1B28: 61         .BYTE 97
+   1B29: 62         .BYTE 98
+   1B2A: 6C         .BYTE 108
+   1B2B: 65         .BYTE 101
+   1B2C: 64         .BYTE 100
+   1B2D: 20         .BYTE 32
+   1B2E: 66         .BYTE 102
+   1B2F: 6F         .BYTE 111
+   1B30: 72         .BYTE 114
    1B31: 20         .BYTE 32
-   1B32: 43         .BYTE 67
-   1B33: 4C         .BYTE 76
-   1B34: 4B         .BYTE 75
-   1B35: 73         .BYTE 115
-   1B36: 20         .BYTE 32
-   1B37: 3D         .BYTE 61
-   1B38: 20         .BYTE 32
-   1B39: 25         .BYTE 37
-   1B3A: 64         .BYTE 100
-   1B3B: 20         .BYTE 32
-   1B3C: 75         .BYTE 117
+   1B32: 31         .BYTE 49
+   1B33: 30         .BYTE 48
+   1B34: 30         .BYTE 48
+   1B35: 20         .BYTE 32
+   1B36: 6D         .BYTE 109
+   1B37: 73         .BYTE 115
+   1B38: 0D         .BYTE 13
+   1B39: 0A         .BYTE 10
+   1B3A: 00         .BYTE 0
+Cstr_91:
+   1B3B: 64         .BYTE 100
+   1B3C: 65         .BYTE 101
    1B3D: 73         .BYTE 115
-   1B3E: 0D         .BYTE 13
-   1B3F: 0A         .BYTE 10
-   1B40: 00         .BYTE 0
-Cstr_88:
-   1B41: 44         .BYTE 68
-   1B42: 69         .BYTE 105
-   1B43: 73         .BYTE 115
-   1B44: 70         .BYTE 112
-   1B45: 6C         .BYTE 108
-   1B46: 61         .BYTE 97
-   1B47: 79         .BYTE 121
-   1B48: 20         .BYTE 32
-   1B49: 00         .BYTE 0
-Cstr_89:
-   1B4A: 0D         .BYTE 13
-   1B4B: 0A         .BYTE 10
-   1B4C: 00         .BYTE 0
-Cstr_90:
-   1B4D: 4C         .BYTE 76
-   1B4E: 45         .BYTE 69
-   1B4F: 44         .BYTE 68
-   1B50: 73         .BYTE 115
-   1B51: 20         .BYTE 32
-   1B52: 00         .BYTE 0
+   1B3E: 63         .BYTE 99
+   1B3F: 68         .BYTE 104
+   1B40: 65         .BYTE 101
+   1B41: 64         .BYTE 100
+   1B42: 75         .BYTE 117
+   1B43: 6C         .BYTE 108
+   1B44: 65         .BYTE 101
+   1B45: 20         .BYTE 32
+   1B46: 74         .BYTE 116
+   1B47: 6F         .BYTE 111
+   1B48: 6F         .BYTE 111
+   1B49: 6B         .BYTE 107
+   1B4A: 20         .BYTE 32
+   1B4B: 25         .BYTE 37
+   1B4C: 64         .BYTE 100
+   1B4D: 20         .BYTE 32
+   1B4E: 43         .BYTE 67
+   1B4F: 4C         .BYTE 76
+   1B50: 4B         .BYTE 75
+   1B51: 73         .BYTE 115
+   1B52: 20         .BYTE 32
+   1B53: 3D         .BYTE 61
+   1B54: 20         .BYTE 32
+   1B55: 25         .BYTE 37
+   1B56: 64         .BYTE 100
+   1B57: 20         .BYTE 32
+   1B58: 75         .BYTE 117
+   1B59: 73         .BYTE 115
+   1B5A: 0D         .BYTE 13
+   1B5B: 0A         .BYTE 10
+   1B5C: 00         .BYTE 0
 Cstr_92:
-   1B53: 0D         .BYTE 13
-   1B54: 0A         .BYTE 10
-   1B55: 00         .BYTE 0
-Cstr_93:
-   1B56: 4D         .BYTE 77
-   1B57: 65         .BYTE 101
-   1B58: 6D         .BYTE 109
-   1B59: 6F         .BYTE 111
-   1B5A: 72         .BYTE 114
-   1B5B: 79         .BYTE 121
-   1B5C: 20         .BYTE 32
-   1B5D: 00         .BYTE 0
-Cstr_94:
-   1B5E: 20         .BYTE 32
-   1B5F: 56         .BYTE 86
-   1B60: 61         .BYTE 97
+   1B5D: 44         .BYTE 68
+   1B5E: 69         .BYTE 105
+   1B5F: 73         .BYTE 115
+   1B60: 70         .BYTE 112
    1B61: 6C         .BYTE 108
-   1B62: 75         .BYTE 117
-   1B63: 65         .BYTE 101
+   1B62: 61         .BYTE 97
+   1B63: 79         .BYTE 121
    1B64: 20         .BYTE 32
    1B65: 00         .BYTE 0
-Cstr_95:
+Cstr_93:
    1B66: 0D         .BYTE 13
    1B67: 0A         .BYTE 10
    1B68: 00         .BYTE 0
+Cstr_94:
+   1B69: 4C         .BYTE 76
+   1B6A: 45         .BYTE 69
+   1B6B: 44         .BYTE 68
+   1B6C: 73         .BYTE 115
+   1B6D: 20         .BYTE 32
+   1B6E: 00         .BYTE 0
 Cstr_96:
-   1B69: 44         .BYTE 68
-   1B6A: 49         .BYTE 73
-   1B6B: 50         .BYTE 80
-   1B6C: 20         .BYTE 32
-   1B6D: 73         .BYTE 115
-   1B6E: 77         .BYTE 119
-   1B6F: 69         .BYTE 105
-   1B70: 74         .BYTE 116
-   1B71: 63         .BYTE 99
-   1B72: 68         .BYTE 104
-   1B73: 20         .BYTE 32
-   1B74: 69         .BYTE 105
-   1B75: 73         .BYTE 115
-   1B76: 20         .BYTE 32
-   1B77: 30         .BYTE 48
-   1B78: 78         .BYTE 120
-   1B79: 25         .BYTE 37
-   1B7A: 58         .BYTE 88
-   1B7B: 0D         .BYTE 13
-   1B7C: 0A         .BYTE 10
-   1B7D: 00         .BYTE 0
+   1B6F: 0D         .BYTE 13
+   1B70: 0A         .BYTE 10
+   1B71: 00         .BYTE 0
+Cstr_97:
+   1B72: 4D         .BYTE 77
+   1B73: 65         .BYTE 101
+   1B74: 6D         .BYTE 109
+   1B75: 6F         .BYTE 111
+   1B76: 72         .BYTE 114
+   1B77: 79         .BYTE 121
+   1B78: 20         .BYTE 32
+   1B79: 00         .BYTE 0
 Cstr_98:
-   1B7E: 54         .BYTE 84
+   1B7A: 20         .BYTE 32
+   1B7B: 56         .BYTE 86
+   1B7C: 61         .BYTE 97
+   1B7D: 6C         .BYTE 108
+   1B7E: 75         .BYTE 117
    1B7F: 65         .BYTE 101
-   1B80: 6D         .BYTE 109
-   1B81: 70         .BYTE 112
-   1B82: 65         .BYTE 101
-   1B83: 72         .BYTE 114
-   1B84: 61         .BYTE 97
-   1B85: 74         .BYTE 116
-   1B86: 75         .BYTE 117
-   1B87: 72         .BYTE 114
-   1B88: 65         .BYTE 101
-   1B89: 20         .BYTE 32
-   1B8A: 69         .BYTE 105
-   1B8B: 73         .BYTE 115
-   1B8C: 20         .BYTE 32
-   1B8D: 25         .BYTE 37
-   1B8E: 64         .BYTE 100
-   1B8F: 20         .BYTE 32
-   1B90: 64         .BYTE 100
-   1B91: 65         .BYTE 101
-   1B92: 67         .BYTE 103
-   1B93: 72         .BYTE 114
-   1B94: 65         .BYTE 101
-   1B95: 65         .BYTE 101
-   1B96: 73         .BYTE 115
-   1B97: 20         .BYTE 32
-   1B98: 43         .BYTE 67
-   1B99: 65         .BYTE 101
-   1B9A: 6C         .BYTE 108
-   1B9B: 73         .BYTE 115
-   1B9C: 69         .BYTE 105
-   1B9D: 75         .BYTE 117
-   1B9E: 73         .BYTE 115
-   1B9F: 0D         .BYTE 13
-   1BA0: 0A         .BYTE 10
-   1BA1: 00         .BYTE 0
+   1B80: 20         .BYTE 32
+   1B81: 00         .BYTE 0
+Cstr_99:
+   1B82: 0D         .BYTE 13
+   1B83: 0A         .BYTE 10
+   1B84: 00         .BYTE 0
 Cstr_100:
-   1BA2: 48         .BYTE 72
-   1BA3: 61         .BYTE 97
-   1BA4: 6C         .BYTE 108
-   1BA5: 74         .BYTE 116
-   1BA6: 65         .BYTE 101
-   1BA7: 64         .BYTE 100
-   1BA8: 2E         .BYTE 46
-   1BA9: 0D         .BYTE 13
-   1BAA: 0A         .BYTE 10
-   1BAB: 00         .BYTE 0
-Cstr_103:
-   1BAC: 48         .BYTE 72
+   1B85: 44         .BYTE 68
+   1B86: 49         .BYTE 73
+   1B87: 50         .BYTE 80
+   1B88: 20         .BYTE 32
+   1B89: 73         .BYTE 115
+   1B8A: 77         .BYTE 119
+   1B8B: 69         .BYTE 105
+   1B8C: 74         .BYTE 116
+   1B8D: 63         .BYTE 99
+   1B8E: 68         .BYTE 104
+   1B8F: 20         .BYTE 32
+   1B90: 69         .BYTE 105
+   1B91: 73         .BYTE 115
+   1B92: 20         .BYTE 32
+   1B93: 30         .BYTE 48
+   1B94: 78         .BYTE 120
+   1B95: 25         .BYTE 37
+   1B96: 58         .BYTE 88
+   1B97: 0D         .BYTE 13
+   1B98: 0A         .BYTE 10
+   1B99: 00         .BYTE 0
+Cstr_102:
+   1B9A: 54         .BYTE 84
+   1B9B: 65         .BYTE 101
+   1B9C: 6D         .BYTE 109
+   1B9D: 70         .BYTE 112
+   1B9E: 65         .BYTE 101
+   1B9F: 72         .BYTE 114
+   1BA0: 61         .BYTE 97
+   1BA1: 74         .BYTE 116
+   1BA2: 75         .BYTE 117
+   1BA3: 72         .BYTE 114
+   1BA4: 65         .BYTE 101
+   1BA5: 20         .BYTE 32
+   1BA6: 69         .BYTE 105
+   1BA7: 73         .BYTE 115
+   1BA8: 20         .BYTE 32
+   1BA9: 25         .BYTE 37
+   1BAA: 64         .BYTE 100
+   1BAB: 20         .BYTE 32
+   1BAC: 64         .BYTE 100
    1BAD: 65         .BYTE 101
-   1BAE: 6C         .BYTE 108
-   1BAF: 70         .BYTE 112
-   1BB0: 3A         .BYTE 58
-   1BB1: 20         .BYTE 32
-   1BB2: 20         .BYTE 32
-   1BB3: 0D         .BYTE 13
-   1BB4: 0A         .BYTE 10
-   1BB5: 32         .BYTE 50
-   1BB6: 20         .BYTE 32
-   1BB7: 2D         .BYTE 45
-   1BB8: 20         .BYTE 32
-   1BB9: 6B         .BYTE 107
-   1BBA: 69         .BYTE 105
-   1BBB: 63         .BYTE 99
-   1BBC: 6B         .BYTE 107
-   1BBD: 20         .BYTE 32
-   1BBE: 74         .BYTE 116
+   1BAE: 67         .BYTE 103
+   1BAF: 72         .BYTE 114
+   1BB0: 65         .BYTE 101
+   1BB1: 65         .BYTE 101
+   1BB2: 73         .BYTE 115
+   1BB3: 20         .BYTE 32
+   1BB4: 43         .BYTE 67
+   1BB5: 65         .BYTE 101
+   1BB6: 6C         .BYTE 108
+   1BB7: 73         .BYTE 115
+   1BB8: 69         .BYTE 105
+   1BB9: 75         .BYTE 117
+   1BBA: 73         .BYTE 115
+   1BBB: 0D         .BYTE 13
+   1BBC: 0A         .BYTE 10
+   1BBD: 00         .BYTE 0
+Cstr_104:
+   1BBE: 48         .BYTE 72
    1BBF: 61         .BYTE 97
-   1BC0: 73         .BYTE 115
-   1BC1: 6B         .BYTE 107
-   1BC2: 20         .BYTE 32
-   1BC3: 32         .BYTE 50
-   1BC4: 0D         .BYTE 13
-   1BC5: 0A         .BYTE 10
-   1BC6: 33         .BYTE 51
-   1BC7: 20         .BYTE 32
-   1BC8: 2D         .BYTE 45
-   1BC9: 20         .BYTE 32
-   1BCA: 6B         .BYTE 107
-   1BCB: 69         .BYTE 105
-   1BCC: 63         .BYTE 99
-   1BCD: 6B         .BYTE 107
+   1BC0: 6C         .BYTE 108
+   1BC1: 74         .BYTE 116
+   1BC2: 65         .BYTE 101
+   1BC3: 64         .BYTE 100
+   1BC4: 2E         .BYTE 46
+   1BC5: 0D         .BYTE 13
+   1BC6: 0A         .BYTE 10
+   1BC7: 00         .BYTE 0
+Cstr_107:
+   1BC8: 48         .BYTE 72
+   1BC9: 65         .BYTE 101
+   1BCA: 6C         .BYTE 108
+   1BCB: 70         .BYTE 112
+   1BCC: 3A         .BYTE 58
+   1BCD: 20         .BYTE 32
    1BCE: 20         .BYTE 32
-   1BCF: 74         .BYTE 116
-   1BD0: 61         .BYTE 97
-   1BD1: 73         .BYTE 115
-   1BD2: 6B         .BYTE 107
-   1BD3: 20         .BYTE 32
-   1BD4: 33         .BYTE 51
-   1BD5: 0D         .BYTE 13
-   1BD6: 0A         .BYTE 10
-   1BD7: 49         .BYTE 73
-   1BD8: 20         .BYTE 32
-   1BD9: 2D         .BYTE 45
-   1BDA: 20         .BYTE 32
-   1BDB: 6C         .BYTE 108
-   1BDC: 6F         .BYTE 111
-   1BDD: 61         .BYTE 97
-   1BDE: 64         .BYTE 100
-   1BDF: 20         .BYTE 32
-   1BE0: 69         .BYTE 105
-   1BE1: 6D         .BYTE 109
-   1BE2: 61         .BYTE 97
-   1BE3: 67         .BYTE 103
-   1BE4: 65         .BYTE 101
-   1BE5: 0D         .BYTE 13
-   1BE6: 0A         .BYTE 10
-   1BE7: 53         .BYTE 83
-   1BE8: 20         .BYTE 32
-   1BE9: 2D         .BYTE 45
+   1BCF: 0D         .BYTE 13
+   1BD0: 0A         .BYTE 10
+   1BD1: 32         .BYTE 50
+   1BD2: 20         .BYTE 32
+   1BD3: 2D         .BYTE 45
+   1BD4: 20         .BYTE 32
+   1BD5: 6B         .BYTE 107
+   1BD6: 69         .BYTE 105
+   1BD7: 63         .BYTE 99
+   1BD8: 6B         .BYTE 107
+   1BD9: 20         .BYTE 32
+   1BDA: 74         .BYTE 116
+   1BDB: 61         .BYTE 97
+   1BDC: 73         .BYTE 115
+   1BDD: 6B         .BYTE 107
+   1BDE: 20         .BYTE 32
+   1BDF: 32         .BYTE 50
+   1BE0: 0D         .BYTE 13
+   1BE1: 0A         .BYTE 10
+   1BE2: 33         .BYTE 51
+   1BE3: 20         .BYTE 32
+   1BE4: 2D         .BYTE 45
+   1BE5: 20         .BYTE 32
+   1BE6: 6B         .BYTE 107
+   1BE7: 69         .BYTE 105
+   1BE8: 63         .BYTE 99
+   1BE9: 6B         .BYTE 107
    1BEA: 20         .BYTE 32
-   1BEB: 73         .BYTE 115
-   1BEC: 68         .BYTE 104
-   1BED: 6F         .BYTE 111
-   1BEE: 77         .BYTE 119
+   1BEB: 74         .BYTE 116
+   1BEC: 61         .BYTE 97
+   1BED: 73         .BYTE 115
+   1BEE: 6B         .BYTE 107
    1BEF: 20         .BYTE 32
-   1BF0: 73         .BYTE 115
-   1BF1: 65         .BYTE 101
-   1BF2: 6D         .BYTE 109
-   1BF3: 61         .BYTE 97
-   1BF4: 70         .BYTE 112
-   1BF5: 68         .BYTE 104
-   1BF6: 6F         .BYTE 111
-   1BF7: 72         .BYTE 114
-   1BF8: 65         .BYTE 101
-   1BF9: 73         .BYTE 115
-   1BFA: 0D         .BYTE 13
-   1BFB: 0A         .BYTE 10
-   1BFC: 54         .BYTE 84
-   1BFD: 20         .BYTE 32
-   1BFE: 2D         .BYTE 45
-   1BFF: 20         .BYTE 32
-   1C00: 73         .BYTE 115
-   1C01: 68         .BYTE 104
-   1C02: 6F         .BYTE 111
-   1C03: 77         .BYTE 119
+   1BF0: 33         .BYTE 51
+   1BF1: 0D         .BYTE 13
+   1BF2: 0A         .BYTE 10
+   1BF3: 49         .BYTE 73
+   1BF4: 20         .BYTE 32
+   1BF5: 2D         .BYTE 45
+   1BF6: 20         .BYTE 32
+   1BF7: 6C         .BYTE 108
+   1BF8: 6F         .BYTE 111
+   1BF9: 61         .BYTE 97
+   1BFA: 64         .BYTE 100
+   1BFB: 20         .BYTE 32
+   1BFC: 69         .BYTE 105
+   1BFD: 6D         .BYTE 109
+   1BFE: 61         .BYTE 97
+   1BFF: 67         .BYTE 103
+   1C00: 65         .BYTE 101
+   1C01: 0D         .BYTE 13
+   1C02: 0A         .BYTE 10
+   1C03: 53         .BYTE 83
    1C04: 20         .BYTE 32
-   1C05: 74         .BYTE 116
-   1C06: 61         .BYTE 97
+   1C05: 2D         .BYTE 45
+   1C06: 20         .BYTE 32
    1C07: 73         .BYTE 115
-   1C08: 6B         .BYTE 107
-   1C09: 73         .BYTE 115
-   1C0A: 0D         .BYTE 13
-   1C0B: 0A         .BYTE 10
-   1C0C: 62         .BYTE 98
-   1C0D: 20         .BYTE 32
-   1C0E: 2D         .BYTE 45
-   1C0F: 20         .BYTE 32
-   1C10: 6D         .BYTE 109
-   1C11: 65         .BYTE 101
-   1C12: 61         .BYTE 97
-   1C13: 73         .BYTE 115
-   1C14: 75         .BYTE 117
-   1C15: 72         .BYTE 114
-   1C16: 65         .BYTE 101
-   1C17: 20         .BYTE 32
-   1C18: 74         .BYTE 116
-   1C19: 61         .BYTE 97
-   1C1A: 73         .BYTE 115
-   1C1B: 6B         .BYTE 107
-   1C1C: 20         .BYTE 32
-   1C1D: 73         .BYTE 115
-   1C1E: 77         .BYTE 119
-   1C1F: 69         .BYTE 105
-   1C20: 74         .BYTE 116
-   1C21: 63         .BYTE 99
-   1C22: 68         .BYTE 104
-   1C23: 20         .BYTE 32
-   1C24: 28         .BYTE 40
-   1C25: 64         .BYTE 100
-   1C26: 65         .BYTE 101
-   1C27: 73         .BYTE 115
-   1C28: 63         .BYTE 99
-   1C29: 68         .BYTE 104
-   1C2A: 65         .BYTE 101
-   1C2B: 64         .BYTE 100
-   1C2C: 75         .BYTE 117
-   1C2D: 6C         .BYTE 108
-   1C2E: 65         .BYTE 101
-   1C2F: 29         .BYTE 41
-   1C30: 0D         .BYTE 13
-   1C31: 0A         .BYTE 10
-   1C32: 63         .BYTE 99
+   1C08: 68         .BYTE 104
+   1C09: 6F         .BYTE 111
+   1C0A: 77         .BYTE 119
+   1C0B: 20         .BYTE 32
+   1C0C: 73         .BYTE 115
+   1C0D: 65         .BYTE 101
+   1C0E: 6D         .BYTE 109
+   1C0F: 61         .BYTE 97
+   1C10: 70         .BYTE 112
+   1C11: 68         .BYTE 104
+   1C12: 6F         .BYTE 111
+   1C13: 72         .BYTE 114
+   1C14: 65         .BYTE 101
+   1C15: 73         .BYTE 115
+   1C16: 0D         .BYTE 13
+   1C17: 0A         .BYTE 10
+   1C18: 54         .BYTE 84
+   1C19: 20         .BYTE 32
+   1C1A: 2D         .BYTE 45
+   1C1B: 20         .BYTE 32
+   1C1C: 73         .BYTE 115
+   1C1D: 68         .BYTE 104
+   1C1E: 6F         .BYTE 111
+   1C1F: 77         .BYTE 119
+   1C20: 20         .BYTE 32
+   1C21: 74         .BYTE 116
+   1C22: 61         .BYTE 97
+   1C23: 73         .BYTE 115
+   1C24: 6B         .BYTE 107
+   1C25: 73         .BYTE 115
+   1C26: 0D         .BYTE 13
+   1C27: 0A         .BYTE 10
+   1C28: 62         .BYTE 98
+   1C29: 20         .BYTE 32
+   1C2A: 2D         .BYTE 45
+   1C2B: 20         .BYTE 32
+   1C2C: 6D         .BYTE 109
+   1C2D: 65         .BYTE 101
+   1C2E: 61         .BYTE 97
+   1C2F: 73         .BYTE 115
+   1C30: 75         .BYTE 117
+   1C31: 72         .BYTE 114
+   1C32: 65         .BYTE 101
    1C33: 20         .BYTE 32
-   1C34: 2D         .BYTE 45
-   1C35: 20         .BYTE 32
+   1C34: 74         .BYTE 116
+   1C35: 61         .BYTE 97
    1C36: 73         .BYTE 115
-   1C37: 68         .BYTE 104
-   1C38: 6F         .BYTE 111
-   1C39: 77         .BYTE 119
-   1C3A: 20         .BYTE 32
-   1C3B: 74         .BYTE 116
-   1C3C: 69         .BYTE 105
-   1C3D: 6D         .BYTE 109
-   1C3E: 65         .BYTE 101
-   1C3F: 0D         .BYTE 13
-   1C40: 0A         .BYTE 10
+   1C37: 6B         .BYTE 107
+   1C38: 20         .BYTE 32
+   1C39: 73         .BYTE 115
+   1C3A: 77         .BYTE 119
+   1C3B: 69         .BYTE 105
+   1C3C: 74         .BYTE 116
+   1C3D: 63         .BYTE 99
+   1C3E: 68         .BYTE 104
+   1C3F: 20         .BYTE 32
+   1C40: 28         .BYTE 40
    1C41: 64         .BYTE 100
-   1C42: 20         .BYTE 32
-   1C43: 2D         .BYTE 45
-   1C44: 20         .BYTE 32
-   1C45: 64         .BYTE 100
-   1C46: 69         .BYTE 105
-   1C47: 73         .BYTE 115
-   1C48: 70         .BYTE 112
+   1C42: 65         .BYTE 101
+   1C43: 73         .BYTE 115
+   1C44: 63         .BYTE 99
+   1C45: 68         .BYTE 104
+   1C46: 65         .BYTE 101
+   1C47: 64         .BYTE 100
+   1C48: 75         .BYTE 117
    1C49: 6C         .BYTE 108
-   1C4A: 61         .BYTE 97
-   1C4B: 79         .BYTE 121
-   1C4C: 20         .BYTE 32
-   1C4D: 6D         .BYTE 109
-   1C4E: 65         .BYTE 101
-   1C4F: 6D         .BYTE 109
-   1C50: 6F         .BYTE 111
-   1C51: 72         .BYTE 114
-   1C52: 79         .BYTE 121
-   1C53: 0D         .BYTE 13
-   1C54: 0A         .BYTE 10
-   1C55: 65         .BYTE 101
+   1C4A: 65         .BYTE 101
+   1C4B: 29         .BYTE 41
+   1C4C: 0D         .BYTE 13
+   1C4D: 0A         .BYTE 10
+   1C4E: 63         .BYTE 99
+   1C4F: 20         .BYTE 32
+   1C50: 2D         .BYTE 45
+   1C51: 20         .BYTE 32
+   1C52: 73         .BYTE 115
+   1C53: 68         .BYTE 104
+   1C54: 6F         .BYTE 111
+   1C55: 77         .BYTE 119
    1C56: 20         .BYTE 32
-   1C57: 2D         .BYTE 45
-   1C58: 20         .BYTE 32
-   1C59: 73         .BYTE 115
+   1C57: 74         .BYTE 116
+   1C58: 69         .BYTE 105
+   1C59: 6D         .BYTE 109
    1C5A: 65         .BYTE 101
-   1C5B: 74         .BYTE 116
-   1C5C: 20         .BYTE 32
-   1C5D: 4C         .BYTE 76
-   1C5E: 45         .BYTE 69
-   1C5F: 44         .BYTE 68
-   1C60: 73         .BYTE 115
-   1C61: 0D         .BYTE 13
-   1C62: 0A         .BYTE 10
-   1C63: 6D         .BYTE 109
-   1C64: 20         .BYTE 32
-   1C65: 2D         .BYTE 45
-   1C66: 20         .BYTE 32
-   1C67: 6D         .BYTE 109
-   1C68: 6F         .BYTE 111
-   1C69: 64         .BYTE 100
-   1C6A: 69         .BYTE 105
-   1C6B: 66         .BYTE 102
-   1C6C: 79         .BYTE 121
-   1C6D: 20         .BYTE 32
-   1C6E: 6D         .BYTE 109
-   1C6F: 65         .BYTE 101
-   1C70: 6D         .BYTE 109
-   1C71: 6F         .BYTE 111
-   1C72: 72         .BYTE 114
-   1C73: 79         .BYTE 121
-   1C74: 0D         .BYTE 13
-   1C75: 0A         .BYTE 10
-   1C76: 73         .BYTE 115
-   1C77: 20         .BYTE 32
-   1C78: 2D         .BYTE 45
-   1C79: 20         .BYTE 32
-   1C7A: 72         .BYTE 114
-   1C7B: 65         .BYTE 101
-   1C7C: 61         .BYTE 97
-   1C7D: 64         .BYTE 100
-   1C7E: 20         .BYTE 32
-   1C7F: 44         .BYTE 68
-   1C80: 49         .BYTE 73
-   1C81: 50         .BYTE 80
+   1C5B: 0D         .BYTE 13
+   1C5C: 0A         .BYTE 10
+   1C5D: 64         .BYTE 100
+   1C5E: 20         .BYTE 32
+   1C5F: 2D         .BYTE 45
+   1C60: 20         .BYTE 32
+   1C61: 64         .BYTE 100
+   1C62: 69         .BYTE 105
+   1C63: 73         .BYTE 115
+   1C64: 70         .BYTE 112
+   1C65: 6C         .BYTE 108
+   1C66: 61         .BYTE 97
+   1C67: 79         .BYTE 121
+   1C68: 20         .BYTE 32
+   1C69: 6D         .BYTE 109
+   1C6A: 65         .BYTE 101
+   1C6B: 6D         .BYTE 109
+   1C6C: 6F         .BYTE 111
+   1C6D: 72         .BYTE 114
+   1C6E: 79         .BYTE 121
+   1C6F: 0D         .BYTE 13
+   1C70: 0A         .BYTE 10
+   1C71: 65         .BYTE 101
+   1C72: 20         .BYTE 32
+   1C73: 2D         .BYTE 45
+   1C74: 20         .BYTE 32
+   1C75: 73         .BYTE 115
+   1C76: 65         .BYTE 101
+   1C77: 74         .BYTE 116
+   1C78: 20         .BYTE 32
+   1C79: 4C         .BYTE 76
+   1C7A: 45         .BYTE 69
+   1C7B: 44         .BYTE 68
+   1C7C: 73         .BYTE 115
+   1C7D: 0D         .BYTE 13
+   1C7E: 0A         .BYTE 10
+   1C7F: 6D         .BYTE 109
+   1C80: 20         .BYTE 32
+   1C81: 2D         .BYTE 45
    1C82: 20         .BYTE 32
-   1C83: 73         .BYTE 115
-   1C84: 77         .BYTE 119
-   1C85: 69         .BYTE 105
-   1C86: 74         .BYTE 116
-   1C87: 63         .BYTE 99
-   1C88: 68         .BYTE 104
-   1C89: 0D         .BYTE 13
-   1C8A: 0A         .BYTE 10
-   1C8B: 74         .BYTE 116
-   1C8C: 20         .BYTE 32
-   1C8D: 2D         .BYTE 45
-   1C8E: 20         .BYTE 32
-   1C8F: 72         .BYTE 114
-   1C90: 65         .BYTE 101
-   1C91: 61         .BYTE 97
-   1C92: 64         .BYTE 100
+   1C83: 6D         .BYTE 109
+   1C84: 6F         .BYTE 111
+   1C85: 64         .BYTE 100
+   1C86: 69         .BYTE 105
+   1C87: 66         .BYTE 102
+   1C88: 79         .BYTE 121
+   1C89: 20         .BYTE 32
+   1C8A: 6D         .BYTE 109
+   1C8B: 65         .BYTE 101
+   1C8C: 6D         .BYTE 109
+   1C8D: 6F         .BYTE 111
+   1C8E: 72         .BYTE 114
+   1C8F: 79         .BYTE 121
+   1C90: 0D         .BYTE 13
+   1C91: 0A         .BYTE 10
+   1C92: 73         .BYTE 115
    1C93: 20         .BYTE 32
-   1C94: 74         .BYTE 116
-   1C95: 65         .BYTE 101
-   1C96: 6D         .BYTE 109
-   1C97: 70         .BYTE 112
-   1C98: 65         .BYTE 101
-   1C99: 72         .BYTE 114
-   1C9A: 61         .BYTE 97
-   1C9B: 74         .BYTE 116
-   1C9C: 75         .BYTE 117
-   1C9D: 72         .BYTE 114
-   1C9E: 65         .BYTE 101
-   1C9F: 0D         .BYTE 13
-   1CA0: 0A         .BYTE 10
-   1CA1: 48         .BYTE 72
-   1CA2: 20         .BYTE 32
-   1CA3: 2D         .BYTE 45
-   1CA4: 20         .BYTE 32
-   1CA5: 48         .BYTE 72
-   1CA6: 41         .BYTE 65
-   1CA7: 4C         .BYTE 76
-   1CA8: 54         .BYTE 84
-   1CA9: 20         .BYTE 32
-   1CAA: 28         .BYTE 40
-   1CAB: 66         .BYTE 102
-   1CAC: 6F         .BYTE 111
-   1CAD: 72         .BYTE 114
-   1CAE: 65         .BYTE 101
-   1CAF: 76         .BYTE 118
-   1CB0: 65         .BYTE 101
-   1CB1: 72         .BYTE 114
-   1CB2: 29         .BYTE 41
-   1CB3: 0D         .BYTE 13
-   1CB4: 0A         .BYTE 10
-   1CB5: 0D         .BYTE 13
-   1CB6: 0A         .BYTE 10
-   1CB7: 00         .BYTE 0
-Cstr_118:
-   1CB8: 4D         .BYTE 77
-   1CB9: 65         .BYTE 101
-   1CBA: 61         .BYTE 97
-   1CBB: 73         .BYTE 115
-   1CBC: 75         .BYTE 117
-   1CBD: 72         .BYTE 114
-   1CBE: 69         .BYTE 105
-   1CBF: 6E         .BYTE 110
-   1CC0: 67         .BYTE 103
-   1CC1: 2E         .BYTE 46
-   1CC2: 2E         .BYTE 46
-   1CC3: 2E         .BYTE 46
-   1CC4: 0D         .BYTE 13
-   1CC5: 0A         .BYTE 10
-   1CC6: 00         .BYTE 0
-Cstr_127:
-   1CC7: 74         .BYTE 116
+   1C94: 2D         .BYTE 45
+   1C95: 20         .BYTE 32
+   1C96: 72         .BYTE 114
+   1C97: 65         .BYTE 101
+   1C98: 61         .BYTE 97
+   1C99: 64         .BYTE 100
+   1C9A: 20         .BYTE 32
+   1C9B: 44         .BYTE 68
+   1C9C: 49         .BYTE 73
+   1C9D: 50         .BYTE 80
+   1C9E: 20         .BYTE 32
+   1C9F: 73         .BYTE 115
+   1CA0: 77         .BYTE 119
+   1CA1: 69         .BYTE 105
+   1CA2: 74         .BYTE 116
+   1CA3: 63         .BYTE 99
+   1CA4: 68         .BYTE 104
+   1CA5: 0D         .BYTE 13
+   1CA6: 0A         .BYTE 10
+   1CA7: 74         .BYTE 116
+   1CA8: 20         .BYTE 32
+   1CA9: 2D         .BYTE 45
+   1CAA: 20         .BYTE 32
+   1CAB: 72         .BYTE 114
+   1CAC: 65         .BYTE 101
+   1CAD: 61         .BYTE 97
+   1CAE: 64         .BYTE 100
+   1CAF: 20         .BYTE 32
+   1CB0: 74         .BYTE 116
+   1CB1: 65         .BYTE 101
+   1CB2: 6D         .BYTE 109
+   1CB3: 70         .BYTE 112
+   1CB4: 65         .BYTE 101
+   1CB5: 72         .BYTE 114
+   1CB6: 61         .BYTE 97
+   1CB7: 74         .BYTE 116
+   1CB8: 75         .BYTE 117
+   1CB9: 72         .BYTE 114
+   1CBA: 65         .BYTE 101
+   1CBB: 0D         .BYTE 13
+   1CBC: 0A         .BYTE 10
+   1CBD: 48         .BYTE 72
+   1CBE: 20         .BYTE 32
+   1CBF: 2D         .BYTE 45
+   1CC0: 20         .BYTE 32
+   1CC1: 48         .BYTE 72
+   1CC2: 41         .BYTE 65
+   1CC3: 4C         .BYTE 76
+   1CC4: 54         .BYTE 84
+   1CC5: 20         .BYTE 32
+   1CC6: 28         .BYTE 40
+   1CC7: 66         .BYTE 102
    1CC8: 6F         .BYTE 111
-   1CC9: 74         .BYTE 116
-   1CCA: 61         .BYTE 97
-   1CCB: 6C         .BYTE 108
-   1CCC: 3A         .BYTE 58
-   1CCD: 20         .BYTE 32
-   1CCE: 20         .BYTE 32
-   1CCF: 25         .BYTE 37
-   1CD0: 64         .BYTE 100
-   1CD1: 20         .BYTE 32
-   1CD2: 63         .BYTE 99
-   1CD3: 79         .BYTE 121
-   1CD4: 63         .BYTE 99
-   1CD5: 6C         .BYTE 108
-   1CD6: 65         .BYTE 101
+   1CC9: 72         .BYTE 114
+   1CCA: 65         .BYTE 101
+   1CCB: 76         .BYTE 118
+   1CCC: 65         .BYTE 101
+   1CCD: 72         .BYTE 114
+   1CCE: 29         .BYTE 41
+   1CCF: 0D         .BYTE 13
+   1CD0: 0A         .BYTE 10
+   1CD1: 0D         .BYTE 13
+   1CD2: 0A         .BYTE 10
+   1CD3: 00         .BYTE 0
+Cstr_123:
+   1CD4: 4D         .BYTE 77
+   1CD5: 65         .BYTE 101
+   1CD6: 61         .BYTE 97
    1CD7: 73         .BYTE 115
-   1CD8: 0D         .BYTE 13
-   1CD9: 0A         .BYTE 10
-   1CDA: 00         .BYTE 0
-Cstr_128:
-   1CDB: 68         .BYTE 104
-   1CDC: 61         .BYTE 97
-   1CDD: 6C         .BYTE 108
-   1CDE: 74         .BYTE 116
-   1CDF: 65         .BYTE 101
-   1CE0: 64         .BYTE 100
-   1CE1: 3A         .BYTE 58
-   1CE2: 20         .BYTE 32
-   1CE3: 25         .BYTE 37
-   1CE4: 64         .BYTE 100
-   1CE5: 20         .BYTE 32
-   1CE6: 63         .BYTE 99
-   1CE7: 79         .BYTE 121
-   1CE8: 63         .BYTE 99
-   1CE9: 6C         .BYTE 108
-   1CEA: 65         .BYTE 101
-   1CEB: 73         .BYTE 115
-   1CEC: 0D         .BYTE 13
-   1CED: 0A         .BYTE 10
-   1CEE: 00         .BYTE 0
-Cstr_129:
-   1CEF: 69         .BYTE 105
-   1CF0: 64         .BYTE 100
+   1CD8: 75         .BYTE 117
+   1CD9: 72         .BYTE 114
+   1CDA: 69         .BYTE 105
+   1CDB: 6E         .BYTE 110
+   1CDC: 67         .BYTE 103
+   1CDD: 2E         .BYTE 46
+   1CDE: 2E         .BYTE 46
+   1CDF: 2E         .BYTE 46
+   1CE0: 0D         .BYTE 13
+   1CE1: 0A         .BYTE 10
+   1CE2: 00         .BYTE 0
+Cstr_132:
+   1CE3: 74         .BYTE 116
+   1CE4: 6F         .BYTE 111
+   1CE5: 74         .BYTE 116
+   1CE6: 61         .BYTE 97
+   1CE7: 6C         .BYTE 108
+   1CE8: 3A         .BYTE 58
+   1CE9: 20         .BYTE 32
+   1CEA: 20         .BYTE 32
+   1CEB: 25         .BYTE 37
+   1CEC: 64         .BYTE 100
+   1CED: 20         .BYTE 32
+   1CEE: 63         .BYTE 99
+   1CEF: 79         .BYTE 121
+   1CF0: 63         .BYTE 99
    1CF1: 6C         .BYTE 108
    1CF2: 65         .BYTE 101
-   1CF3: 3A         .BYTE 58
-   1CF4: 20         .BYTE 32
-   1CF5: 20         .BYTE 32
-   1CF6: 20         .BYTE 32
-   1CF7: 25         .BYTE 37
-   1CF8: 64         .BYTE 100
-   1CF9: 20         .BYTE 32
-   1CFA: 25         .BYTE 37
-   1CFB: 25         .BYTE 37
-   1CFC: 0D         .BYTE 13
-   1CFD: 0A         .BYTE 10
-   1CFE: 00         .BYTE 0
-Cstr_130:
-   1CFF: 6C         .BYTE 108
-   1D00: 6F         .BYTE 111
-   1D01: 61         .BYTE 97
-   1D02: 64         .BYTE 100
-   1D03: 3A         .BYTE 58
-   1D04: 20         .BYTE 32
-   1D05: 20         .BYTE 32
-   1D06: 20         .BYTE 32
-   1D07: 25         .BYTE 37
-   1D08: 64         .BYTE 100
-   1D09: 20         .BYTE 32
-   1D0A: 25         .BYTE 37
-   1D0B: 25         .BYTE 37
-   1D0C: 0D         .BYTE 13
-   1D0D: 0A         .BYTE 10
-   1D0E: 00         .BYTE 0
-Cstr_131:
-   1D0F: 4C         .BYTE 76
-   1D10: 6F         .BYTE 111
-   1D11: 61         .BYTE 97
-   1D12: 64         .BYTE 100
-   1D13: 20         .BYTE 32
-   1D14: 54         .BYTE 84
-   1D15: 61         .BYTE 97
-   1D16: 73         .BYTE 115
-   1D17: 6B         .BYTE 107
-   1D18: 20         .BYTE 32
-   1D19: 00         .BYTE 0
-Cstr_132:
-   1D1A: 4D         .BYTE 77
-   1D1B: 65         .BYTE 101
-   1D1C: 61         .BYTE 97
-   1D1D: 73         .BYTE 115
-   1D1E: 75         .BYTE 117
-   1D1F: 72         .BYTE 114
-   1D20: 65         .BYTE 101
-   1D21: 6D         .BYTE 109
-   1D22: 65         .BYTE 101
-   1D23: 6E         .BYTE 110
-   1D24: 74         .BYTE 116
-   1D25: 00         .BYTE 0
+   1CF3: 73         .BYTE 115
+   1CF4: 0D         .BYTE 13
+   1CF5: 0A         .BYTE 10
+   1CF6: 00         .BYTE 0
 Cstr_133:
-   1D26: 4D         .BYTE 77
-   1D27: 6F         .BYTE 111
-   1D28: 6E         .BYTE 110
-   1D29: 69         .BYTE 105
-   1D2A: 74         .BYTE 116
-   1D2B: 6F         .BYTE 111
-   1D2C: 72         .BYTE 114
-   1D2D: 00         .BYTE 0
+   1CF7: 68         .BYTE 104
+   1CF8: 61         .BYTE 97
+   1CF9: 6C         .BYTE 108
+   1CFA: 74         .BYTE 116
+   1CFB: 65         .BYTE 101
+   1CFC: 64         .BYTE 100
+   1CFD: 3A         .BYTE 58
+   1CFE: 20         .BYTE 32
+   1CFF: 25         .BYTE 37
+   1D00: 64         .BYTE 100
+   1D01: 20         .BYTE 32
+   1D02: 63         .BYTE 99
+   1D03: 79         .BYTE 121
+   1D04: 63         .BYTE 99
+   1D05: 6C         .BYTE 108
+   1D06: 65         .BYTE 101
+   1D07: 73         .BYTE 115
+   1D08: 0D         .BYTE 13
+   1D09: 0A         .BYTE 10
+   1D0A: 00         .BYTE 0
 Cstr_134:
-   1D2E: 49         .BYTE 73
-   1D2F: 64         .BYTE 100
-   1D30: 6C         .BYTE 108
-   1D31: 65         .BYTE 101
-   1D32: 20         .BYTE 32
-   1D33: 54         .BYTE 84
-   1D34: 61         .BYTE 97
-   1D35: 73         .BYTE 115
-   1D36: 6B         .BYTE 107
-   1D37: 00         .BYTE 0
+   1D0B: 69         .BYTE 105
+   1D0C: 64         .BYTE 100
+   1D0D: 6C         .BYTE 108
+   1D0E: 65         .BYTE 101
+   1D0F: 3A         .BYTE 58
+   1D10: 20         .BYTE 32
+   1D11: 20         .BYTE 32
+   1D12: 20         .BYTE 32
+   1D13: 25         .BYTE 37
+   1D14: 64         .BYTE 100
+   1D15: 20         .BYTE 32
+   1D16: 25         .BYTE 37
+   1D17: 25         .BYTE 37
+   1D18: 0D         .BYTE 13
+   1D19: 0A         .BYTE 10
+   1D1A: 00         .BYTE 0
+Cstr_135:
+   1D1B: 6C         .BYTE 108
+   1D1C: 6F         .BYTE 111
+   1D1D: 61         .BYTE 97
+   1D1E: 64         .BYTE 100
+   1D1F: 3A         .BYTE 58
+   1D20: 20         .BYTE 32
+   1D21: 20         .BYTE 32
+   1D22: 20         .BYTE 32
+   1D23: 25         .BYTE 37
+   1D24: 64         .BYTE 100
+   1D25: 20         .BYTE 32
+   1D26: 25         .BYTE 37
+   1D27: 25         .BYTE 37
+   1D28: 0D         .BYTE 13
+   1D29: 0A         .BYTE 10
+   1D2A: 00         .BYTE 0
+Cstr_137:
+   1D2B: 4C         .BYTE 76
+   1D2C: 6F         .BYTE 111
+   1D2D: 61         .BYTE 97
+   1D2E: 64         .BYTE 100
+   1D2F: 20         .BYTE 32
+   1D30: 54         .BYTE 84
+   1D31: 61         .BYTE 97
+   1D32: 73         .BYTE 115
+   1D33: 6B         .BYTE 107
+   1D34: 20         .BYTE 32
+   1D35: 00         .BYTE 0
+Cstr_138:
+   1D36: 4D         .BYTE 77
+   1D37: 65         .BYTE 101
+   1D38: 61         .BYTE 97
+   1D39: 73         .BYTE 115
+   1D3A: 75         .BYTE 117
+   1D3B: 72         .BYTE 114
+   1D3C: 65         .BYTE 101
+   1D3D: 6D         .BYTE 109
+   1D3E: 65         .BYTE 101
+   1D3F: 6E         .BYTE 110
+   1D40: 74         .BYTE 116
+   1D41: 00         .BYTE 0
+Cstr_139:
+   1D42: 4D         .BYTE 77
+   1D43: 6F         .BYTE 111
+   1D44: 6E         .BYTE 110
+   1D45: 69         .BYTE 105
+   1D46: 74         .BYTE 116
+   1D47: 6F         .BYTE 111
+   1D48: 72         .BYTE 114
+   1D49: 00         .BYTE 0
+Cstr_140:
+   1D4A: 49         .BYTE 73
+   1D4B: 64         .BYTE 100
+   1D4C: 6C         .BYTE 108
+   1D4D: 65         .BYTE 101
+   1D4E: 20         .BYTE 32
+   1D4F: 54         .BYTE 84
+   1D50: 61         .BYTE 97
+   1D51: 73         .BYTE 115
+   1D52: 6B         .BYTE 107
+   1D53: 00         .BYTE 0
 Cend_text:

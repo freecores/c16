@@ -16195,32 +16195,17 @@ L34_brk_102:
 ;;;                                                                     } 34 List<DeclItem>
 Cmain:
 ;;;                                                                     { 34 CompoundStatement
+;;;                                                                       { 35 InitDeclarator
+;;;                                                                         { 36 List<DeclItem>
+;;;                                                                           { 37 DeclItem
+;;;                                                                             what = DECL_NAME
+;;;                                                                             name = i
+;;;                                                                           } 37 DeclItem
+;;;                                                                         } 36 List<DeclItem>
+;--	push_zero 2 bytes
+	CLRW	-(SP)
+;;;                                                                       } 35 InitDeclarator
 ;;;                                                                       { 35 List<ExpressionStatement>
-;;;                                                                         { 36 ExpressionStatement
-	MOVE #0x05, RR
-;;;                                                                         } 36 ExpressionStatement
-;;;                                                                         { 36 ExpressionStatement
-	OUT  R, (OUT_INT_MASK)
-;;;                                                                         } 36 ExpressionStatement
-;;;                                                                         { 36 ExpressionStatement
-;;;                                                                           { 37 Expr l(r)
-;;;                                                                             { 38 TypeName
-;;;                                                                               { 39 TypeSpecifier (all)
-;;;                                                                                 spec = void (10000)
-;;;                                                                               } 39 TypeSpecifier (all)
-;;;                                                                               { 39 List<DeclItem>
-;;;                                                                                 { 40 DeclItem
-;;;                                                                                   what = DECL_NAME
-;;;                                                                                   name = deschedule
-;;;                                                                                 } 40 DeclItem
-;;;                                                                               } 39 List<DeclItem>
-;;;                                                                             } 38 TypeName
-;--	push 0 bytes
-;--	call
-	CALL	Cdeschedule
-;--	pop 0 bytes
-;;;                                                                           } 37 Expr l(r)
-;;;                                                                         } 36 ExpressionStatement
 ;;;                                                                         { 36 ExpressionStatement
 ;;;                                                                           { 37 Expr l(r)
 ;;;                                                                             { 38 TypeName
@@ -16259,20 +16244,111 @@ Cmain:
 ;--	pop 0 bytes
 ;;;                                                                           } 37 Expr l(r)
 ;;;                                                                         } 36 ExpressionStatement
+;;;                                                                         { 36 ExpressionStatement
+	MOVE #0x00, RR
+;;;                                                                         } 36 ExpressionStatement
+;;;                                                                         { 36 ExpressionStatement
+	OUT  R, (OUT_INT_MASK)
+;;;                                                                         } 36 ExpressionStatement
+;;;                                                                         { 36 for Statement
+;;;                                                                           { 37 ExpressionStatement
+;;;                                                                             { 38 Expr l = r
+;;;                                                                               { 39 TypeName
+;;;                                                                                 { 40 TypeSpecifier (all)
+;;;                                                                                   spec = int (80000)
+;;;                                                                                 } 40 TypeSpecifier (all)
+;;;                                                                                 { 40 List<DeclItem>
+;;;                                                                                   { 41 DeclItem
+;;;                                                                                     what = DECL_NAME
+;;;                                                                                     name = i
+;;;                                                                                   } 41 DeclItem
+;;;                                                                                 } 40 List<DeclItem>
+;;;                                                                               } 39 TypeName
+;;;                                                                               { 39 NumericExpression (constant 0 = 0x0)
+;--	load_rr_constant
+	MOVE	#0x0000, RR
+;;;                                                                               } 39 NumericExpression (constant 0 = 0x0)
+;--	store_rr_var i = -2(FP), SP at -2
+	MOVE	RR, 0(SP)
+;;;                                                                             } 38 Expr l = r
+;;;                                                                           } 37 ExpressionStatement
+;--	branch
+	JMP	L35_tst_109
+L35_loop_109:
+;;;                                                                           { 37 ExpressionStatement
+	EI
+;;;                                                                           } 37 ExpressionStatement
+L35_cont_109:
+;;;                                                                           { 37 Expr ++r
+;;;                                                                             { 38 Expression (variable name)
+;;;                                                                               expr_type = "identifier" (i)
+;--	load_rr_var i = -2(FP), SP at -2 (16 bit)
+	MOVE	0(SP), RR
+;;;                                                                             } 38 Expression (variable name)
+;--	++
+	ADD	RR, #0x0001
+;--	store_rr_var i = -2(FP), SP at -2
+	MOVE	RR, 0(SP)
+;;;                                                                           } 37 Expr ++r
+L35_tst_109:
+;;;                                                                           { 37 Expr l < r
+;;;                                                                             { 38 TypeName (internal)
+;;;                                                                               { 39 TypeSpecifier (all)
+;;;                                                                                 spec = int (80000)
+;;;                                                                               } 39 TypeSpecifier (all)
+;;;                                                                             } 38 TypeName (internal)
+;;;                                                                             { 38 Expression (variable name)
+;;;                                                                               expr_type = "identifier" (i)
+;--	load_rr_var i = -2(FP), SP at -2 (16 bit)
+	MOVE	0(SP), RR
+;;;                                                                             } 38 Expression (variable name)
+;--	l < r
+	SLT	RR, #0x0010
+;;;                                                                           } 37 Expr l < r
+;--	branch_true
+	JMP	RRNZ, L35_loop_109
+L35_brk_110:
+;;;                                                                         } 36 for Statement
+;;;                                                                         { 36 ExpressionStatement
+	MOVE #0x05, RR
+;;;                                                                         } 36 ExpressionStatement
+;;;                                                                         { 36 ExpressionStatement
+	OUT  R, (OUT_INT_MASK)
+;;;                                                                         } 36 ExpressionStatement
+;;;                                                                         { 36 ExpressionStatement
+;;;                                                                           { 37 Expr l(r)
+;;;                                                                             { 38 TypeName
+;;;                                                                               { 39 TypeSpecifier (all)
+;;;                                                                                 spec = void (10000)
+;;;                                                                               } 39 TypeSpecifier (all)
+;;;                                                                               { 39 List<DeclItem>
+;;;                                                                                 { 40 DeclItem
+;;;                                                                                   what = DECL_NAME
+;;;                                                                                   name = deschedule
+;;;                                                                                 } 40 DeclItem
+;;;                                                                               } 39 List<DeclItem>
+;;;                                                                             } 38 TypeName
+;--	push 0 bytes
+;--	call
+	CALL	Cdeschedule
+;--	pop 0 bytes
+;;;                                                                           } 37 Expr l(r)
+;;;                                                                         } 36 ExpressionStatement
 ;;;                                                                         { 36 for Statement
 ;;;                                                                           { 37 ExpressionStatement
 ;;;                                                                           } 37 ExpressionStatement
-L35_loop_109:
+L35_loop_111:
 ;;;                                                                           { 37 ExpressionStatement
 	HALT
 ;;;                                                                           } 37 ExpressionStatement
-L35_cont_109:
+L35_cont_111:
 ;--	branch
-	JMP	L35_loop_109
-L35_brk_110:
+	JMP	L35_loop_111
+L35_brk_112:
 ;;;                                                                         } 36 for Statement
 ;;;                                                                       } 35 List<ExpressionStatement>
-;--	pop 0 bytes
+;--	pop 2 bytes
+	ADD	SP, #2
 ;;;                                                                     } 34 CompoundStatement
 ;--	ret
 	RET
@@ -16389,6 +16465,9 @@ Cmain_1:
 ;;;                                                                         } 36 InitDeclarator
 ;;;                                                                         { 36 List<ExpressionStatement>
 ;;;                                                                           { 37 ExpressionStatement
+	EI
+;;;                                                                           } 37 ExpressionStatement
+;;;                                                                           { 37 ExpressionStatement
 ;;;                                                                             { 38 Expr l(r)
 ;;;                                                                               { 39 TypeName
 ;;;                                                                                 { 40 TypeSpecifier (all)
@@ -16410,7 +16489,7 @@ Cmain_1:
 ;;;                                                                           { 37 for Statement
 ;;;                                                                             { 38 ExpressionStatement
 ;;;                                                                             } 38 ExpressionStatement
-L36_loop_111:
+L36_loop_113:
 ;;;                                                                             { 38 CompoundStatement
 ;;;                                                                               { 39 List<ExpressionStatement>
 ;;;                                                                                 { 40 ExpressionStatement
@@ -16497,7 +16576,7 @@ L36_loop_111:
 ;;;                                                                                     } 42 ParameterDeclaration
 ;;;                                                                                     { 42 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_79, RR
+	MOVE	#Cstr_83, RR
 ;;;                                                                                     } 42 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -16649,7 +16728,7 @@ L36_loop_111:
 	SEQ	RR, #0xFFFF
 ;;;                                                                                   } 41 Expr l == r
 ;--	branch_false
-	JMP	RRZ, L36_endif_113
+	JMP	RRZ, L36_endif_115
 ;;;                                                                                   { 41 CompoundStatement
 ;;;                                                                                     { 42 List<ExpressionStatement>
 ;;;                                                                                       { 43 ExpressionStatement
@@ -16771,7 +16850,7 @@ L36_loop_111:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_80, RR
+	MOVE	#Cstr_84, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -16833,12 +16912,12 @@ L36_loop_111:
 ;;;                                                                                       } 43 ExpressionStatement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_cont_111
+	JMP	L36_cont_113
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                     } 42 List<ExpressionStatement>
 ;--	pop 0 bytes
 ;;;                                                                                   } 41 CompoundStatement
-L36_endif_113:
+L36_endif_115:
 ;;;                                                                                 } 40 IfElseStatement
 ;;;                                                                                 { 40 ExpressionStatement
 ;;;                                                                                   { 41 Expr l(r)
@@ -16898,57 +16977,57 @@ L36_endif_113:
 	MOVE	RR, LL
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x000D
-	JMP	RRNZ, L36_case_114_000D
+	JMP	RRNZ, L36_case_116_000D
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x000A
-	JMP	RRNZ, L36_case_114_000A
+	JMP	RRNZ, L36_case_116_000A
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0032
-	JMP	RRNZ, L36_case_114_0032
+	JMP	RRNZ, L36_case_116_0032
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0033
-	JMP	RRNZ, L36_case_114_0033
+	JMP	RRNZ, L36_case_116_0033
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0062
-	JMP	RRNZ, L36_case_114_0062
+	JMP	RRNZ, L36_case_116_0062
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0063
-	JMP	RRNZ, L36_case_114_0063
+	JMP	RRNZ, L36_case_116_0063
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0064
-	JMP	RRNZ, L36_case_114_0064
+	JMP	RRNZ, L36_case_116_0064
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0065
-	JMP	RRNZ, L36_case_114_0065
+	JMP	RRNZ, L36_case_116_0065
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x006D
-	JMP	RRNZ, L36_case_114_006D
+	JMP	RRNZ, L36_case_116_006D
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0073
-	JMP	RRNZ, L36_case_114_0073
+	JMP	RRNZ, L36_case_116_0073
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0074
-	JMP	RRNZ, L36_case_114_0074
+	JMP	RRNZ, L36_case_116_0074
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0048
-	JMP	RRNZ, L36_case_114_0048
+	JMP	RRNZ, L36_case_116_0048
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0049
-	JMP	RRNZ, L36_case_114_0049
+	JMP	RRNZ, L36_case_116_0049
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0053
-	JMP	RRNZ, L36_case_114_0053
+	JMP	RRNZ, L36_case_116_0053
 ;--	branch_case (16 bit)
 	SEQ	LL, #0x0054
-	JMP	RRNZ, L36_case_114_0054
+	JMP	RRNZ, L36_case_116_0054
 ;--	branch
-	JMP	L36_deflt_114
+	JMP	L36_deflt_116
 ;;;                                                                                   { 41 CompoundStatement
 ;;;                                                                                     { 42 List<case Statement>
 ;;;                                                                                       { 43 case Statement
-L36_case_114_000D:
+L36_case_116_000D:
 ;;;                                                                                         { 44 case Statement
-L36_case_114_000A:
+L36_case_116_000A:
 ;;;                                                                                           { 45 IfElseStatement
 ;;;                                                                                             { 46 Expr l == r
 ;;;                                                                                               { 47 TypeName (internal)
@@ -16965,7 +17044,7 @@ L36_case_114_000A:
 	SEQ	RR, #0x0064
 ;;;                                                                                             } 46 Expr l == r
 ;--	branch_false
-	JMP	RRZ, L36_endif_115
+	JMP	RRZ, L36_endif_117
 ;;;                                                                                             { 46 CompoundStatement
 ;;;                                                                                               { 47 List<ExpressionStatement>
 ;;;                                                                                                 { 48 ExpressionStatement
@@ -17113,16 +17192,16 @@ L36_case_114_000A:
 ;;;                                                                                               } 47 List<ExpressionStatement>
 ;--	pop 0 bytes
 ;;;                                                                                             } 46 CompoundStatement
-L36_endif_115:
+L36_endif_117:
 ;;;                                                                                           } 45 IfElseStatement
 ;;;                                                                                         } 44 case Statement
 ;;;                                                                                       } 43 case Statement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0032:
+L36_case_116_0032:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -17208,7 +17287,7 @@ L36_case_114_0032:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_81, RR
+	MOVE	#Cstr_85, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17221,10 +17300,10 @@ L36_case_114_0032:
 ;;;                                                                                       } 43 ExpressionStatement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0033:
+L36_case_116_0033:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -17398,7 +17477,7 @@ L36_case_114_0033:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_82, RR
+	MOVE	#Cstr_86, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17411,10 +17490,10 @@ L36_case_114_0033:
 ;;;                                                                                       } 43 ExpressionStatement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0062:
+L36_case_116_0062:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 NumericExpression (constant 0 = 0x0)
 ;--	load_rr_constant
@@ -17602,7 +17681,7 @@ L36_case_114_0062:
 ;;;                                                                                               } 47 ParameterDeclaration
 ;;;                                                                                               { 47 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_87, RR
+	MOVE	#Cstr_91, RR
 ;;;                                                                                               } 47 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17617,10 +17696,10 @@ L36_case_114_0062:
 ;;;                                                                                       } 43 ExpressionStatement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0063:
+L36_case_116_0063:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -17643,10 +17722,10 @@ L36_case_114_0063:
 ;;;                                                                                       } 43 case Statement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0064:
+L36_case_116_0064:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l = r
 ;;;                                                                                             { 46 TypeName
@@ -17705,7 +17784,7 @@ L36_case_114_0064:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_88, RR
+	MOVE	#Cstr_92, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17816,7 +17895,7 @@ L36_case_114_0064:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_89, RR
+	MOVE	#Cstr_93, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17896,10 +17975,10 @@ L36_case_114_0064:
 ;;;                                                                                       } 43 ExpressionStatement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0065:
+L36_case_116_0065:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -17936,7 +18015,7 @@ L36_case_114_0065:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_90, RR
+	MOVE	#Cstr_94, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18027,7 +18106,7 @@ L36_case_114_0065:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_92, RR
+	MOVE	#Cstr_96, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18059,10 +18138,10 @@ L36_case_114_0065:
 ;;;                                                                                       } 43 ExpressionStatement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_006D:
+L36_case_116_006D:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -18099,7 +18178,7 @@ L36_case_114_006D:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_93, RR
+	MOVE	#Cstr_97, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18211,7 +18290,7 @@ L36_case_114_006D:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_94, RR
+	MOVE	#Cstr_98, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18364,7 +18443,7 @@ L36_case_114_006D:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_95, RR
+	MOVE	#Cstr_99, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18377,10 +18456,10 @@ L36_case_114_006D:
 ;;;                                                                                       } 43 ExpressionStatement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0073:
+L36_case_116_0073:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -18442,7 +18521,7 @@ L36_case_114_0073:
 ;;;                                                                                               } 47 ParameterDeclaration
 ;;;                                                                                               { 47 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_96, RR
+	MOVE	#Cstr_100, RR
 ;;;                                                                                               } 47 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18457,10 +18536,10 @@ L36_case_114_0073:
 ;;;                                                                                       } 43 case Statement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0074:
+L36_case_116_0074:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -18522,7 +18601,7 @@ L36_case_114_0074:
 ;;;                                                                                               } 47 ParameterDeclaration
 ;;;                                                                                               { 47 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_98, RR
+	MOVE	#Cstr_102, RR
 ;;;                                                                                               } 47 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18537,10 +18616,10 @@ L36_case_114_0074:
 ;;;                                                                                       } 43 case Statement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0048:
+L36_case_116_0048:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -18577,7 +18656,7 @@ L36_case_114_0048:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_100, RR
+	MOVE	#Cstr_104, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18590,10 +18669,10 @@ L36_case_114_0048:
 ;;;                                                                                         } 44 ExpressionStatement
 ;;;                                                                                       } 43 case Statement
 ;;;                                                                                       { 43 while Statement
-L36_loop_116:
+L36_loop_118:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                         } 44 ExpressionStatement
-L36_cont_116:
+L36_cont_118:
 ;;;                                                                                         { 44 Expr l < r
 ;;;                                                                                           { 45 TypeName (internal)
 ;;;                                                                                             { 46 TypeSpecifier (all)
@@ -18609,8 +18688,8 @@ L36_cont_116:
 	SLT	RR, #0x0010
 ;;;                                                                                         } 44 Expr l < r
 ;--	branch_true
-	JMP	RRNZ, L36_loop_116
-L36_brk_117:
+	JMP	RRNZ, L36_loop_118
+L36_brk_119:
 ;;;                                                                                       } 43 while Statement
 ;;;                                                                                       { 43 ExpressionStatement
 	DI
@@ -18620,10 +18699,10 @@ L36_brk_117:
 ;;;                                                                                       } 43 ExpressionStatement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0049:
+L36_case_116_0049:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -18646,10 +18725,10 @@ L36_case_114_0049:
 ;;;                                                                                       } 43 case Statement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0053:
+L36_case_116_0053:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -18672,10 +18751,10 @@ L36_case_114_0053:
 ;;;                                                                                       } 43 case Statement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_case_114_0054:
+L36_case_116_0054:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -18698,10 +18777,10 @@ L36_case_114_0054:
 ;;;                                                                                       } 43 case Statement
 ;;;                                                                                       { 43 break/continue Statement
 ;--	branch
-	JMP	L36_brk_114
+	JMP	L36_brk_116
 ;;;                                                                                       } 43 break/continue Statement
 ;;;                                                                                       { 43 case Statement
-L36_deflt_114:
+L36_deflt_116:
 ;;;                                                                                         { 44 ExpressionStatement
 ;;;                                                                                           { 45 Expr l(r)
 ;;;                                                                                             { 46 TypeName
@@ -18738,7 +18817,7 @@ L36_deflt_114:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_103, RR
+	MOVE	#Cstr_107, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18753,7 +18832,7 @@ L36_deflt_114:
 ;;;                                                                                     } 42 List<case Statement>
 ;--	pop 0 bytes
 ;;;                                                                                   } 41 CompoundStatement
-L36_brk_114:
+L36_brk_116:
 ;;;                                                                                 } 40 SwitchStatement
 ;;;                                                                                 { 40 ExpressionStatement
 ;;;                                                                                   { 41 Expr l(r)
@@ -18806,10 +18885,10 @@ L36_brk_114:
 ;;;                                                                               } 39 List<ExpressionStatement>
 ;--	pop 0 bytes
 ;;;                                                                             } 38 CompoundStatement
-L36_cont_111:
+L36_cont_113:
 ;--	branch
-	JMP	L36_loop_111
-L36_brk_112:
+	JMP	L36_loop_113
+L36_brk_114:
 ;;;                                                                           } 37 for Statement
 ;;;                                                                         } 36 List<ExpressionStatement>
 ;--	pop 7 bytes
@@ -18903,6 +18982,9 @@ Cmain_2:
 ;;;                                                                           } 37 InitDeclarator
 ;;;                                                                           { 37 List<ExpressionStatement>
 ;;;                                                                             { 38 ExpressionStatement
+	EI
+;;;                                                                             } 38 ExpressionStatement
+;;;                                                                             { 38 ExpressionStatement
 ;;;                                                                               { 39 Expr l(r)
 ;;;                                                                                 { 40 TypeName
 ;;;                                                                                   { 41 TypeSpecifier (all)
@@ -18924,7 +19006,7 @@ Cmain_2:
 ;;;                                                                             { 38 for Statement
 ;;;                                                                               { 39 ExpressionStatement
 ;;;                                                                               } 39 ExpressionStatement
-L37_loop_118:
+L37_loop_120:
 ;;;                                                                               { 39 CompoundStatement
 ;;;                                                                                 { 40 List<ExpressionStatement>
 ;;;                                                                                   { 41 ExpressionStatement
@@ -19143,7 +19225,7 @@ L37_loop_118:
 ;;;                                                                                       } 43 ParameterDeclaration
 ;;;                                                                                       { 43 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_118, RR
+	MOVE	#Cstr_123, RR
 ;;;                                                                                       } 43 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -19273,8 +19355,8 @@ L37_loop_118:
 ;;;                                                                                       } 43 Expr l = r
 ;;;                                                                                     } 42 ExpressionStatement
 ;--	branch
-	JMP	L37_tst_120
-L37_loop_120:
+	JMP	L37_tst_122
+L37_loop_122:
 ;;;                                                                                     { 42 CompoundStatement
 ;;;                                                                                       { 43 List<ExpressionStatement>
 ;;;                                                                                         { 44 ExpressionStatement
@@ -19710,7 +19792,7 @@ L37_loop_120:
 ;;;                                                                                       } 43 List<ExpressionStatement>
 ;--	pop 0 bytes
 ;;;                                                                                     } 42 CompoundStatement
-L37_cont_120:
+L37_cont_122:
 ;;;                                                                                     { 42 Expr l - r
 ;;;                                                                                       { 43 Expr ++r
 ;;;                                                                                         { 44 Expression (variable name)
@@ -19726,7 +19808,7 @@ L37_cont_120:
 ;--	l - r
 	SUB	RR, #0x0001
 ;;;                                                                                     } 42 Expr l - r
-L37_tst_120:
+L37_tst_122:
 ;;;                                                                                     { 42 Expr l < r
 ;;;                                                                                       { 43 TypeName (internal)
 ;;;                                                                                         { 44 TypeSpecifier (all)
@@ -19742,8 +19824,8 @@ L37_tst_120:
 	SLT	RR, #0x0064
 ;;;                                                                                     } 42 Expr l < r
 ;--	branch_true
-	JMP	RRNZ, L37_loop_120
-L37_brk_121:
+	JMP	RRNZ, L37_loop_122
+L37_brk_123:
 ;;;                                                                                   } 41 for Statement
 ;;;                                                                                   { 41 ExpressionStatement
 ;;;                                                                                     { 42 Expr l(r)
@@ -19906,7 +19988,7 @@ L37_brk_121:
 ;;;                                                                                         } 44 ParameterDeclaration
 ;;;                                                                                         { 44 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_127, RR
+	MOVE	#Cstr_132, RR
 ;;;                                                                                         } 44 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -19983,7 +20065,7 @@ L37_brk_121:
 ;;;                                                                                         } 44 ParameterDeclaration
 ;;;                                                                                         { 44 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_128, RR
+	MOVE	#Cstr_133, RR
 ;;;                                                                                         } 44 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -20138,7 +20220,7 @@ L37_brk_121:
 ;;;                                                                                         } 44 ParameterDeclaration
 ;;;                                                                                         { 44 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_129, RR
+	MOVE	#Cstr_134, RR
 ;;;                                                                                         } 44 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -20220,7 +20302,7 @@ L37_brk_121:
 ;;;                                                                                         } 44 ParameterDeclaration
 ;;;                                                                                         { 44 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_130, RR
+	MOVE	#Cstr_135, RR
 ;;;                                                                                         } 44 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -20283,10 +20365,10 @@ L37_brk_121:
 ;;;                                                                                 } 40 List<ExpressionStatement>
 ;--	pop 0 bytes
 ;;;                                                                               } 39 CompoundStatement
-L37_cont_118:
+L37_cont_120:
 ;--	branch
-	JMP	L37_loop_118
-L37_brk_119:
+	JMP	L37_loop_120
+L37_brk_121:
 ;;;                                                                             } 38 for Statement
 ;;;                                                                           } 37 List<ExpressionStatement>
 ;--	pop 12 bytes
@@ -20330,6 +20412,9 @@ Cmain_3:
 ;;;                                                                             } 38 InitDeclarator
 ;;;                                                                             { 38 List<ExpressionStatement>
 ;;;                                                                               { 39 ExpressionStatement
+	EI
+;;;                                                                               } 39 ExpressionStatement
+;;;                                                                               { 39 ExpressionStatement
 ;;;                                                                                 { 40 Expr l(r)
 ;;;                                                                                   { 41 TypeName
 ;;;                                                                                     { 42 TypeSpecifier (all)
@@ -20351,7 +20436,7 @@ Cmain_3:
 ;;;                                                                               { 39 for Statement
 ;;;                                                                                 { 40 ExpressionStatement
 ;;;                                                                                 } 40 ExpressionStatement
-L38_loop_122:
+L38_loop_124:
 ;;;                                                                                 { 40 CompoundStatement
 ;;;                                                                                   { 41 List<ExpressionStatement>
 ;;;                                                                                     { 42 ExpressionStatement
@@ -20521,103 +20606,6 @@ L38_loop_122:
 ;;;                                                                                         } 44 Expr l = r
 ;;;                                                                                       } 43 ExpressionStatement
 ;--	branch
-	JMP	L38_tst_124
-L38_loop_124:
-;;;                                                                                       { 43 ExpressionStatement
-;;;                                                                                         { 44 Expr l(r)
-;;;                                                                                           { 45 TypeName
-;;;                                                                                             { 46 TypeSpecifier (all)
-;;;                                                                                               spec = int (80000)
-;;;                                                                                             } 46 TypeSpecifier (all)
-;;;                                                                                             { 46 List<DeclItem>
-;;;                                                                                               { 47 DeclItem
-;;;                                                                                                 what = DECL_NAME
-;;;                                                                                                 name = putchr
-;;;                                                                                               } 47 DeclItem
-;;;                                                                                             } 46 List<DeclItem>
-;;;                                                                                           } 45 TypeName
-;;;                                                                                           { 45 ParameterDeclaration
-;;;                                                                                             isEllipsis = false
-;;;                                                                                             { 46 TypeName
-;;;                                                                                               { 47 TypeSpecifier (all)
-;;;                                                                                                 spec = char (20000)
-;;;                                                                                               } 47 TypeSpecifier (all)
-;;;                                                                                               { 47 List<DeclItem>
-;;;                                                                                                 { 48 DeclItem
-;;;                                                                                                   what = DECL_NAME
-;;;                                                                                                   name = c
-;;;                                                                                                 } 48 DeclItem
-;;;                                                                                               } 47 List<DeclItem>
-;;;                                                                                             } 46 TypeName
-;;;                                                                                           } 45 ParameterDeclaration
-;;;                                                                                           { 45 Expression (variable name)
-;;;                                                                                             expr_type = "identifier" (out)
-;--	load_rr_var out = -1(FP), SP at -1 (8 bit)
-	MOVE	0(SP), RS
-;;;                                                                                           } 45 Expression (variable name)
-;--	push_rr (8 bit)
-	MOVE	R, -(SP)
-;--	push 2 bytes
-;--	call
-	CALL	Cputchr
-;--	pop 1 bytes
-	ADD	SP, #1
-;;;                                                                                         } 44 Expr l(r)
-;;;                                                                                       } 43 ExpressionStatement
-L38_cont_124:
-;;;                                                                                       { 43 Expr ++r
-;;;                                                                                         { 44 Expression (variable name)
-;;;                                                                                           expr_type = "identifier" (out)
-;--	load_rr_var out = -1(FP), SP at -1 (8 bit)
-	MOVE	0(SP), RS
-;;;                                                                                         } 44 Expression (variable name)
-;--	++
-	ADD	RR, #0x0001
-;--	store_rr_var out = -1(FP), SP at -1
-	MOVE	R, 0(SP)
-;;;                                                                                       } 43 Expr ++r
-L38_tst_124:
-;;;                                                                                       { 43 Expr l <= r
-;;;                                                                                         { 44 TypeName (internal)
-;;;                                                                                           { 45 TypeSpecifier (all)
-;;;                                                                                             spec = int (80000)
-;;;                                                                                           } 45 TypeSpecifier (all)
-;;;                                                                                         } 44 TypeName (internal)
-;;;                                                                                         { 44 Expression (variable name)
-;;;                                                                                           expr_type = "identifier" (out)
-;--	load_rr_var out = -1(FP), SP at -1 (8 bit)
-	MOVE	0(SP), RS
-;;;                                                                                         } 44 Expression (variable name)
-;--	l <= r
-	SLE	RR, #0x0039
-;;;                                                                                       } 43 Expr l <= r
-;--	branch_true
-	JMP	RRNZ, L38_loop_124
-L38_brk_125:
-;;;                                                                                     } 42 for Statement
-;;;                                                                                     { 42 for Statement
-;;;                                                                                       { 43 ExpressionStatement
-;;;                                                                                         { 44 Expr l = r
-;;;                                                                                           { 45 TypeName
-;;;                                                                                             { 46 TypeSpecifier (all)
-;;;                                                                                               spec = char (20000)
-;;;                                                                                             } 46 TypeSpecifier (all)
-;;;                                                                                             { 46 List<DeclItem>
-;;;                                                                                               { 47 DeclItem
-;;;                                                                                                 what = DECL_NAME
-;;;                                                                                                 name = out
-;;;                                                                                               } 47 DeclItem
-;;;                                                                                             } 46 List<DeclItem>
-;;;                                                                                           } 45 TypeName
-;;;                                                                                           { 45 NumericExpression (constant 65 = 0x41)
-;--	load_rr_constant
-	MOVE	#0x0041, RR
-;;;                                                                                           } 45 NumericExpression (constant 65 = 0x41)
-;--	store_rr_var out = -1(FP), SP at -1
-	MOVE	R, 0(SP)
-;;;                                                                                         } 44 Expr l = r
-;;;                                                                                       } 43 ExpressionStatement
-;--	branch
 	JMP	L38_tst_126
 L38_loop_126:
 ;;;                                                                                       { 43 ExpressionStatement
@@ -20686,7 +20674,7 @@ L38_tst_126:
 	MOVE	0(SP), RS
 ;;;                                                                                         } 44 Expression (variable name)
 ;--	l <= r
-	SLE	RR, #0x005A
+	SLE	RR, #0x0039
 ;;;                                                                                       } 43 Expr l <= r
 ;--	branch_true
 	JMP	RRNZ, L38_loop_126
@@ -20706,10 +20694,10 @@ L38_brk_127:
 ;;;                                                                                               } 47 DeclItem
 ;;;                                                                                             } 46 List<DeclItem>
 ;;;                                                                                           } 45 TypeName
-;;;                                                                                           { 45 NumericExpression (constant 97 = 0x61)
+;;;                                                                                           { 45 NumericExpression (constant 65 = 0x41)
 ;--	load_rr_constant
-	MOVE	#0x0061, RR
-;;;                                                                                           } 45 NumericExpression (constant 97 = 0x61)
+	MOVE	#0x0041, RR
+;;;                                                                                           } 45 NumericExpression (constant 65 = 0x41)
 ;--	store_rr_var out = -1(FP), SP at -1
 	MOVE	R, 0(SP)
 ;;;                                                                                         } 44 Expr l = r
@@ -20783,11 +20771,108 @@ L38_tst_128:
 	MOVE	0(SP), RS
 ;;;                                                                                         } 44 Expression (variable name)
 ;--	l <= r
-	SLE	RR, #0x007A
+	SLE	RR, #0x005A
 ;;;                                                                                       } 43 Expr l <= r
 ;--	branch_true
 	JMP	RRNZ, L38_loop_128
 L38_brk_129:
+;;;                                                                                     } 42 for Statement
+;;;                                                                                     { 42 for Statement
+;;;                                                                                       { 43 ExpressionStatement
+;;;                                                                                         { 44 Expr l = r
+;;;                                                                                           { 45 TypeName
+;;;                                                                                             { 46 TypeSpecifier (all)
+;;;                                                                                               spec = char (20000)
+;;;                                                                                             } 46 TypeSpecifier (all)
+;;;                                                                                             { 46 List<DeclItem>
+;;;                                                                                               { 47 DeclItem
+;;;                                                                                                 what = DECL_NAME
+;;;                                                                                                 name = out
+;;;                                                                                               } 47 DeclItem
+;;;                                                                                             } 46 List<DeclItem>
+;;;                                                                                           } 45 TypeName
+;;;                                                                                           { 45 NumericExpression (constant 97 = 0x61)
+;--	load_rr_constant
+	MOVE	#0x0061, RR
+;;;                                                                                           } 45 NumericExpression (constant 97 = 0x61)
+;--	store_rr_var out = -1(FP), SP at -1
+	MOVE	R, 0(SP)
+;;;                                                                                         } 44 Expr l = r
+;;;                                                                                       } 43 ExpressionStatement
+;--	branch
+	JMP	L38_tst_130
+L38_loop_130:
+;;;                                                                                       { 43 ExpressionStatement
+;;;                                                                                         { 44 Expr l(r)
+;;;                                                                                           { 45 TypeName
+;;;                                                                                             { 46 TypeSpecifier (all)
+;;;                                                                                               spec = int (80000)
+;;;                                                                                             } 46 TypeSpecifier (all)
+;;;                                                                                             { 46 List<DeclItem>
+;;;                                                                                               { 47 DeclItem
+;;;                                                                                                 what = DECL_NAME
+;;;                                                                                                 name = putchr
+;;;                                                                                               } 47 DeclItem
+;;;                                                                                             } 46 List<DeclItem>
+;;;                                                                                           } 45 TypeName
+;;;                                                                                           { 45 ParameterDeclaration
+;;;                                                                                             isEllipsis = false
+;;;                                                                                             { 46 TypeName
+;;;                                                                                               { 47 TypeSpecifier (all)
+;;;                                                                                                 spec = char (20000)
+;;;                                                                                               } 47 TypeSpecifier (all)
+;;;                                                                                               { 47 List<DeclItem>
+;;;                                                                                                 { 48 DeclItem
+;;;                                                                                                   what = DECL_NAME
+;;;                                                                                                   name = c
+;;;                                                                                                 } 48 DeclItem
+;;;                                                                                               } 47 List<DeclItem>
+;;;                                                                                             } 46 TypeName
+;;;                                                                                           } 45 ParameterDeclaration
+;;;                                                                                           { 45 Expression (variable name)
+;;;                                                                                             expr_type = "identifier" (out)
+;--	load_rr_var out = -1(FP), SP at -1 (8 bit)
+	MOVE	0(SP), RS
+;;;                                                                                           } 45 Expression (variable name)
+;--	push_rr (8 bit)
+	MOVE	R, -(SP)
+;--	push 2 bytes
+;--	call
+	CALL	Cputchr
+;--	pop 1 bytes
+	ADD	SP, #1
+;;;                                                                                         } 44 Expr l(r)
+;;;                                                                                       } 43 ExpressionStatement
+L38_cont_130:
+;;;                                                                                       { 43 Expr ++r
+;;;                                                                                         { 44 Expression (variable name)
+;;;                                                                                           expr_type = "identifier" (out)
+;--	load_rr_var out = -1(FP), SP at -1 (8 bit)
+	MOVE	0(SP), RS
+;;;                                                                                         } 44 Expression (variable name)
+;--	++
+	ADD	RR, #0x0001
+;--	store_rr_var out = -1(FP), SP at -1
+	MOVE	R, 0(SP)
+;;;                                                                                       } 43 Expr ++r
+L38_tst_130:
+;;;                                                                                       { 43 Expr l <= r
+;;;                                                                                         { 44 TypeName (internal)
+;;;                                                                                           { 45 TypeSpecifier (all)
+;;;                                                                                             spec = int (80000)
+;;;                                                                                           } 45 TypeSpecifier (all)
+;;;                                                                                         } 44 TypeName (internal)
+;;;                                                                                         { 44 Expression (variable name)
+;;;                                                                                           expr_type = "identifier" (out)
+;--	load_rr_var out = -1(FP), SP at -1 (8 bit)
+	MOVE	0(SP), RS
+;;;                                                                                         } 44 Expression (variable name)
+;--	l <= r
+	SLE	RR, #0x007A
+;;;                                                                                       } 43 Expr l <= r
+;--	branch_true
+	JMP	RRNZ, L38_loop_130
+L38_brk_131:
 ;;;                                                                                     } 42 for Statement
 ;;;                                                                                     { 42 ExpressionStatement
 ;;;                                                                                       { 43 Expr l(r)
@@ -20920,10 +21005,10 @@ L38_brk_129:
 ;;;                                                                                   } 41 List<ExpressionStatement>
 ;--	pop 0 bytes
 ;;;                                                                                 } 40 CompoundStatement
-L38_cont_122:
+L38_cont_124:
 ;--	branch
-	JMP	L38_loop_122
-L38_brk_123:
+	JMP	L38_loop_124
+L38_brk_125:
 ;;;                                                                               } 39 for Statement
 ;;;                                                                             } 38 List<ExpressionStatement>
 ;--	pop 1 bytes
@@ -22178,7 +22263,7 @@ Ctask_3:			;
 	.WORD	Ctos_3
 	.BYTE	0
 	.BYTE	30
-	.WORD	Cstr_131
+	.WORD	Cstr_137
 	.WORD	Cstack_3			; & stack_3
 	.WORD	Ctop_3			; & top_3
 	.BYTE	0			; VOID sema_ret
@@ -22198,7 +22283,7 @@ Ctask_2:			;
 	.WORD	Ctos_2
 	.BYTE	0
 	.BYTE	40
-	.WORD	Cstr_132
+	.WORD	Cstr_138
 	.WORD	Cstack_2			; & stack_2
 	.WORD	Ctop_2			; & top_2
 	.BYTE	0			; VOID sema_ret
@@ -22218,7 +22303,7 @@ Ctask_1:			;
 	.WORD	Ctos_1
 	.BYTE	0
 	.BYTE	50
-	.WORD	Cstr_133
+	.WORD	Cstr_139
 	.WORD	Cstack_1			; & stack_1
 	.WORD	Ctop_1			; & top_1
 	.BYTE	0			; VOID sema_ret
@@ -22238,7 +22323,7 @@ Ctask_idle:			;
 	.WORD	0
 	.BYTE	0
 	.BYTE	0
-	.WORD	Cstr_134
+	.WORD	Cstr_140
 	.WORD	8064
 	.WORD	8192
 	.BYTE	0			; VOID sema_ret
@@ -22760,7 +22845,7 @@ Cstr_75:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_79:				;
+Cstr_83:				;
 	.BYTE	0x52			;
 	.BYTE	0x45			;
 	.BYTE	0x41			;
@@ -22768,7 +22853,7 @@ Cstr_79:				;
 	.BYTE	0x59			;
 	.BYTE	0x0D			;
 	.BYTE	0			;
-Cstr_80:				;
+Cstr_84:				;
 	.BYTE	0x25			;
 	.BYTE	0x73			;
 	.BYTE	0x20			;
@@ -22784,7 +22869,7 @@ Cstr_80:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_81:				;
+Cstr_85:				;
 	.BYTE	0x54			;
 	.BYTE	0x61			;
 	.BYTE	0x73			;
@@ -22801,7 +22886,7 @@ Cstr_81:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_82:				;
+Cstr_86:				;
 	.BYTE	0x54			;
 	.BYTE	0x61			;
 	.BYTE	0x73			;
@@ -22830,7 +22915,7 @@ Cstr_82:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_87:				;
+Cstr_91:				;
 	.BYTE	0x64			;
 	.BYTE	0x65			;
 	.BYTE	0x73			;
@@ -22865,7 +22950,7 @@ Cstr_87:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_88:				;
+Cstr_92:				;
 	.BYTE	0x44			;
 	.BYTE	0x69			;
 	.BYTE	0x73			;
@@ -22875,22 +22960,22 @@ Cstr_88:				;
 	.BYTE	0x79			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_89:				;
+Cstr_93:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_90:				;
+Cstr_94:				;
 	.BYTE	0x4C			;
 	.BYTE	0x45			;
 	.BYTE	0x44			;
 	.BYTE	0x73			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_92:				;
+Cstr_96:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_93:				;
+Cstr_97:				;
 	.BYTE	0x4D			;
 	.BYTE	0x65			;
 	.BYTE	0x6D			;
@@ -22899,7 +22984,7 @@ Cstr_93:				;
 	.BYTE	0x79			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_94:				;
+Cstr_98:				;
 	.BYTE	0x20			;
 	.BYTE	0x56			;
 	.BYTE	0x61			;
@@ -22908,11 +22993,11 @@ Cstr_94:				;
 	.BYTE	0x65			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_95:				;
+Cstr_99:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_96:				;
+Cstr_100:				;
 	.BYTE	0x44			;
 	.BYTE	0x49			;
 	.BYTE	0x50			;
@@ -22934,7 +23019,7 @@ Cstr_96:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_98:				;
+Cstr_102:				;
 	.BYTE	0x54			;
 	.BYTE	0x65			;
 	.BYTE	0x6D			;
@@ -22971,7 +23056,7 @@ Cstr_98:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_100:				;
+Cstr_104:				;
 	.BYTE	0x48			;
 	.BYTE	0x61			;
 	.BYTE	0x6C			;
@@ -22982,7 +23067,7 @@ Cstr_100:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_103:				;
+Cstr_107:				;
 	.BYTE	0x48			;
 	.BYTE	0x65			;
 	.BYTE	0x6C			;
@@ -23251,7 +23336,7 @@ Cstr_103:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_118:				;
+Cstr_123:				;
 	.BYTE	0x4D			;
 	.BYTE	0x65			;
 	.BYTE	0x61			;
@@ -23267,7 +23352,7 @@ Cstr_118:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_127:				;
+Cstr_132:				;
 	.BYTE	0x74			;
 	.BYTE	0x6F			;
 	.BYTE	0x74			;
@@ -23288,7 +23373,7 @@ Cstr_127:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_128:				;
+Cstr_133:				;
 	.BYTE	0x68			;
 	.BYTE	0x61			;
 	.BYTE	0x6C			;
@@ -23309,7 +23394,7 @@ Cstr_128:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_129:				;
+Cstr_134:				;
 	.BYTE	0x69			;
 	.BYTE	0x64			;
 	.BYTE	0x6C			;
@@ -23326,7 +23411,7 @@ Cstr_129:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_130:				;
+Cstr_135:				;
 	.BYTE	0x6C			;
 	.BYTE	0x6F			;
 	.BYTE	0x61			;
@@ -23343,7 +23428,7 @@ Cstr_130:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_131:				;
+Cstr_137:				;
 	.BYTE	0x4C			;
 	.BYTE	0x6F			;
 	.BYTE	0x61			;
@@ -23355,7 +23440,7 @@ Cstr_131:				;
 	.BYTE	0x6B			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_132:				;
+Cstr_138:				;
 	.BYTE	0x4D			;
 	.BYTE	0x65			;
 	.BYTE	0x61			;
@@ -23368,7 +23453,7 @@ Cstr_132:				;
 	.BYTE	0x6E			;
 	.BYTE	0x74			;
 	.BYTE	0			;
-Cstr_133:				;
+Cstr_139:				;
 	.BYTE	0x4D			;
 	.BYTE	0x6F			;
 	.BYTE	0x6E			;
@@ -23377,7 +23462,7 @@ Cstr_133:				;
 	.BYTE	0x6F			;
 	.BYTE	0x72			;
 	.BYTE	0			;
-Cstr_134:				;
+Cstr_140:				;
 	.BYTE	0x49			;
 	.BYTE	0x64			;
 	.BYTE	0x6C			;
