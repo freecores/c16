@@ -564,12 +564,15 @@ char c;
    return c;
 }
 //-----------------------------------------------------------------------------
-int peekchr()
+char peekchr()
 {
+char ret;
+
    P(&rx_sema);
+   ret = serial_in_buffer[serial_in_get];
    V(&rx_sema);
 
-   return serial_in_buffer[serial_in_get];
+   return ret;
 }
 //-----------------------------------------------------------------------------
 char getnibble(char echo)
@@ -754,12 +757,13 @@ void show_tasks()
 {
 Task * t = &task_idle;
 
-   printf("\r\nTask name        Prio Stack  Size  Used Next waiting     Status\r\n");
+   printf("\r\nTask name        Prio   PC Stack  Size  Used "
+          "Next waiting     Status\r\n");
    print_n('-', 79);   printf("\r\n");
 
    do {
-        printf("%-16s %4d  %4X %5d %5d ",
-               t->name, t->priority, t->stack_pointer,
+        printf("%-16s %4d  %4X %4X %5d %5d ",
+               t->name, t->priority, t->stack_pointer[2], t->stack_pointer,
                t->stack_top - t->stack_bottom, stack_used(t));
         if (t->next_waiting_task)   printf("%-16s ", t->next_waiting_task);
         else                        printf("none.            ");
@@ -819,7 +823,7 @@ int  col;
 //
 //   main() is the idle task. main() MUST NOT BLOCK, but could do
 //   some non-blocking background jobs. It is safer, though, to do
-//   nothing in main().
+//   nothing in main()'s for() loop.
 //
 int main()
 {
@@ -1089,8 +1093,8 @@ Task task_idle = { &task_1,        // next task
                    TASK_RUNNING,   // current state
                    0,              // priority
                    "Idle Task",    // task name
-                   (char *)0x9F80,         // bottom of stack
-                   (char *)0xA000 };       // top    of stack
+                   (char *)0x1F80,         // bottom of stack
+                   (char *)0x2000 };       // top    of stack
 
 Task * current_task = &task_idle;
 

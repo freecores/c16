@@ -10571,7 +10571,7 @@ L22_endif_66:
 ;;;                                           { 21 FunctionDefinition
 ;;;                                             { 22 TypeName
 ;;;                                               { 23 TypeSpecifier (all)
-;;;                                                 spec = int (80000)
+;;;                                                 spec = char (20000)
 ;;;                                               } 23 TypeSpecifier (all)
 ;;;                                               { 23 List<DeclItem>
 ;;;                                                 { 24 DeclItem
@@ -10591,6 +10591,16 @@ L22_endif_66:
 ;;;                                             } 22 List<DeclItem>
 Cpeekchr:
 ;;;                                             { 22 CompoundStatement
+;;;                                               { 23 InitDeclarator
+;;;                                                 { 24 List<DeclItem>
+;;;                                                   { 25 DeclItem
+;;;                                                     what = DECL_NAME
+;;;                                                     name = ret
+;;;                                                   } 25 DeclItem
+;;;                                                 } 24 List<DeclItem>
+;--	push_zero 1 bytes
+	CLRB	-(SP)
+;;;                                               } 23 InitDeclarator
 ;;;                                               { 23 List<ExpressionStatement>
 ;;;                                                 { 24 ExpressionStatement
 ;;;                                                   { 25 Expr l(r)
@@ -10641,6 +10651,48 @@ Cpeekchr:
 ;;;                                                   } 25 Expr l(r)
 ;;;                                                 } 24 ExpressionStatement
 ;;;                                                 { 24 ExpressionStatement
+;;;                                                   { 25 Expr l = r
+;;;                                                     { 26 TypeName
+;;;                                                       { 27 TypeSpecifier (all)
+;;;                                                         spec = char (20000)
+;;;                                                       } 27 TypeSpecifier (all)
+;;;                                                       { 27 List<DeclItem>
+;;;                                                         { 28 DeclItem
+;;;                                                           what = DECL_NAME
+;;;                                                           name = ret
+;;;                                                         } 28 DeclItem
+;;;                                                       } 27 List<DeclItem>
+;;;                                                     } 26 TypeName
+;;;                                                     { 26 Expr l[r]
+;;;                                                       { 27 TypeName
+;;;                                                         { 28 TypeSpecifier (all)
+;;;                                                           spec = unsigned char (22000)
+;;;                                                         } 28 TypeSpecifier (all)
+;;;                                                         { 28 List<DeclItem>
+;;;                                                           { 29 DeclItem
+;;;                                                             what = DECL_NAME
+;;;                                                             name = serial_in_buffer
+;;;                                                           } 29 DeclItem
+;;;                                                         } 28 List<DeclItem>
+;;;                                                       } 27 TypeName
+;;;                                                       { 27 Expr l[r]
+;;;                                                         { 28 Expression (variable name)
+;;;                                                           expr_type = "identifier" (serial_in_get)
+;--	load_rr_var serial_in_get, (8 bit)
+	MOVE	(Cserial_in_get), RU
+;;;                                                         } 28 Expression (variable name)
+;--	scale_rr *1
+;--	add_address serial_in_buffer
+	ADD	RR, #Cserial_in_buffer
+;;;                                                       } 27 Expr l[r]
+;--	content
+	MOVE	(RR), RU
+;;;                                                     } 26 Expr l[r]
+;--	store_rr_var ret = -1(FP), SP at -1
+	MOVE	R, 0(SP)
+;;;                                                   } 25 Expr l = r
+;;;                                                 } 24 ExpressionStatement
+;;;                                                 { 24 ExpressionStatement
 ;;;                                                   { 25 Expr l(r)
 ;;;                                                     { 26 TypeName
 ;;;                                                       { 27 TypeSpecifier (all)
@@ -10689,36 +10741,18 @@ Cpeekchr:
 ;;;                                                   } 25 Expr l(r)
 ;;;                                                 } 24 ExpressionStatement
 ;;;                                                 { 24 return Statement
-;;;                                                   { 25 Expr l[r]
-;;;                                                     { 26 TypeName
-;;;                                                       { 27 TypeSpecifier (all)
-;;;                                                         spec = unsigned char (22000)
-;;;                                                       } 27 TypeSpecifier (all)
-;;;                                                       { 27 List<DeclItem>
-;;;                                                         { 28 DeclItem
-;;;                                                           what = DECL_NAME
-;;;                                                           name = serial_in_buffer
-;;;                                                         } 28 DeclItem
-;;;                                                       } 27 List<DeclItem>
-;;;                                                     } 26 TypeName
-;;;                                                     { 26 Expr l[r]
-;;;                                                       { 27 Expression (variable name)
-;;;                                                         expr_type = "identifier" (serial_in_get)
-;--	load_rr_var serial_in_get, (8 bit)
-	MOVE	(Cserial_in_get), RU
-;;;                                                       } 27 Expression (variable name)
-;--	scale_rr *1
-;--	add_address serial_in_buffer
-	ADD	RR, #Cserial_in_buffer
-;;;                                                     } 26 Expr l[r]
-;--	content
-	MOVE	(RR), RU
-;;;                                                   } 25 Expr l[r]
+;;;                                                   { 25 Expression (variable name)
+;;;                                                     expr_type = "identifier" (ret)
+;--	load_rr_var ret = -1(FP), SP at -1 (8 bit)
+	MOVE	0(SP), RS
+;;;                                                   } 25 Expression (variable name)
 ;--	ret
+	ADD	SP, #1
 	RET
 ;;;                                                 } 24 return Statement
 ;;;                                               } 23 List<ExpressionStatement>
-;--	pop 0 bytes
+;--	pop 1 bytes
+	ADD	SP, #1
 ;;;                                             } 22 CompoundStatement
 ;--	ret
 	RET
@@ -10773,7 +10807,7 @@ Cgetnibble:
 ;;;                                                     { 26 Expr l(r)
 ;;;                                                       { 27 TypeName
 ;;;                                                         { 28 TypeSpecifier (all)
-;;;                                                           spec = int (80000)
+;;;                                                           spec = char (20000)
 ;;;                                                         } 28 TypeSpecifier (all)
 ;;;                                                         { 28 List<DeclItem>
 ;;;                                                           { 29 DeclItem
@@ -10782,7 +10816,7 @@ Cgetnibble:
 ;;;                                                           } 29 DeclItem
 ;;;                                                         } 28 List<DeclItem>
 ;;;                                                       } 27 TypeName
-;--	push 2 bytes
+;--	push 1 bytes
 ;--	call
 	CALL	Cpeekchr
 ;--	pop 0 bytes
@@ -13946,7 +13980,7 @@ Cshow_tasks:
 ;;;                                                                       } 35 ParameterDeclaration
 ;;;                                                                       { 35 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_60, RR
+	MOVE	#Cstr_61, RR
 ;;;                                                                       } 35 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -14160,17 +14194,47 @@ L32_loop_92:
 ;;;                                                                                         } 44 List<DeclItem>
 ;;;                                                                                       } 43 TypeName
 ;;;                                                                                     } 42 ParameterDeclaration
-;;;                                                                                     { 42 Expr * r
-;;;                                                                                       { 43 Expression (variable name)
-;;;                                                                                         expr_type = "identifier" (t)
-;--	load_rr_var t = -2(FP), SP at -8 (16 bit)
-	MOVE	6(SP), RR
-;;;                                                                                       } 43 Expression (variable name)
-;;;                                                                                     } 42 Expr * r
+;;;                                                                                     { 42 Expr l[r]
+;;;                                                                                       { 43 TypeName
+;;;                                                                                         { 44 TypeSpecifier (all)
+;;;                                                                                           spec = int (80000)
+;;;                                                                                         } 44 TypeSpecifier (all)
+;;;                                                                                         { 44 List<DeclItem>
+;;;                                                                                           { 45 DeclItem
+;;;                                                                                             what = DECL_NAME
+;;;                                                                                             name = stack_pointer
+;;;                                                                                           } 45 DeclItem
+;;;                                                                                         } 44 List<DeclItem>
+;;;                                                                                       } 43 TypeName
+;;;                                                                                       { 43 Expr l[r]
+;;;                                                                                         { 44 NumericExpression (constant 2 = 0x2)
+;--	load_rr_constant
+	MOVE	#0x0002, RR
+;;;                                                                                         } 44 NumericExpression (constant 2 = 0x2)
+;--	scale_rr *2
+;--	*
+	LSL	RR, #1
+;--	push_rr (16 bit)
+	MOVE	RR, -(SP)
+;;;                                                                                         { 44 Expr * r
+;;;                                                                                           { 45 Expression (variable name)
+;;;                                                                                             expr_type = "identifier" (t)
+;--	load_rr_var t = -2(FP), SP at -10 (16 bit)
+	MOVE	8(SP), RR
+;;;                                                                                           } 45 Expression (variable name)
+;;;                                                                                         } 44 Expr * r
 ;--	+ (member)
-	ADD	RR, #0x0005
+	ADD	RR, #0x0002
 ;--	content
-	MOVE	(RR), RU
+	MOVE	(RR), RR
+;--	pop_ll (16 bit)
+	MOVE	(SP)+, LL
+;--	+ (element)
+	ADD	LL, RR
+;;;                                                                                       } 43 Expr l[r]
+;--	content
+	MOVE	(RR), RR
+;;;                                                                                     } 42 Expr l[r]
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
 ;;;                                                                                     { 42 Expr (l , r)
@@ -14203,38 +14267,74 @@ L32_loop_92:
 ;;;                                                                                         } 44 Expression (variable name)
 ;;;                                                                                       } 43 Expr * r
 ;--	+ (member)
+	ADD	RR, #0x0005
+;--	content
+	MOVE	(RR), RU
+;--	push_rr (16 bit)
+	MOVE	RR, -(SP)
+;;;                                                                                       { 43 Expr (l , r)
+;;;                                                                                         { 44 ParameterDeclaration
+;;;                                                                                           isEllipsis = true
+;;;                                                                                           { 45 TypeName
+;;;                                                                                             { 46 TypeSpecifier (all)
+;;;                                                                                               spec = const char (20100)
+;;;                                                                                             } 46 TypeSpecifier (all)
+;;;                                                                                             { 46 List<DeclItem>
+;;;                                                                                               { 47 DeclItem
+;;;                                                                                                 what = DECL_POINTER
+;;;                                                                                                 { 48 List<Ptr>
+;;;                                                                                                   { 49 Ptr
+;;;                                                                                                   } 49 Ptr
+;;;                                                                                                 } 48 List<Ptr>
+;;;                                                                                               } 47 DeclItem
+;;;                                                                                               { 47 DeclItem
+;;;                                                                                                 what = DECL_NAME
+;;;                                                                                                 name = format
+;;;                                                                                               } 47 DeclItem
+;;;                                                                                             } 46 List<DeclItem>
+;;;                                                                                           } 45 TypeName
+;;;                                                                                         } 44 ParameterDeclaration
+;;;                                                                                         { 44 Expr * r
+;;;                                                                                           { 45 Expression (variable name)
+;;;                                                                                             expr_type = "identifier" (t)
+;--	load_rr_var t = -2(FP), SP at -12 (16 bit)
+	MOVE	10(SP), RR
+;;;                                                                                           } 45 Expression (variable name)
+;;;                                                                                         } 44 Expr * r
+;--	+ (member)
 	ADD	RR, #0x0006
 ;--	content
 	MOVE	(RR), RR
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
-;;;                                                                                       { 43 ParameterDeclaration
-;;;                                                                                         isEllipsis = true
-;;;                                                                                         { 44 TypeName
-;;;                                                                                           { 45 TypeSpecifier (all)
-;;;                                                                                             spec = const char (20100)
-;;;                                                                                           } 45 TypeSpecifier (all)
-;;;                                                                                           { 45 List<DeclItem>
-;;;                                                                                             { 46 DeclItem
-;;;                                                                                               what = DECL_POINTER
-;;;                                                                                               { 47 List<Ptr>
-;;;                                                                                                 { 48 Ptr
-;;;                                                                                                 } 48 Ptr
-;;;                                                                                               } 47 List<Ptr>
-;;;                                                                                             } 46 DeclItem
-;;;                                                                                             { 46 DeclItem
-;;;                                                                                               what = DECL_NAME
-;;;                                                                                               name = format
-;;;                                                                                             } 46 DeclItem
-;;;                                                                                           } 45 List<DeclItem>
-;;;                                                                                         } 44 TypeName
-;;;                                                                                       } 43 ParameterDeclaration
-;;;                                                                                       { 43 StringExpression
+;;;                                                                                         { 44 ParameterDeclaration
+;;;                                                                                           isEllipsis = true
+;;;                                                                                           { 45 TypeName
+;;;                                                                                             { 46 TypeSpecifier (all)
+;;;                                                                                               spec = const char (20100)
+;;;                                                                                             } 46 TypeSpecifier (all)
+;;;                                                                                             { 46 List<DeclItem>
+;;;                                                                                               { 47 DeclItem
+;;;                                                                                                 what = DECL_POINTER
+;;;                                                                                                 { 48 List<Ptr>
+;;;                                                                                                   { 49 Ptr
+;;;                                                                                                   } 49 Ptr
+;;;                                                                                                 } 48 List<Ptr>
+;;;                                                                                               } 47 DeclItem
+;;;                                                                                               { 47 DeclItem
+;;;                                                                                                 what = DECL_NAME
+;;;                                                                                                 name = format
+;;;                                                                                               } 47 DeclItem
+;;;                                                                                             } 46 List<DeclItem>
+;;;                                                                                           } 45 TypeName
+;;;                                                                                         } 44 ParameterDeclaration
+;;;                                                                                         { 44 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_61, RR
-;;;                                                                                       } 43 StringExpression
+	MOVE	#Cstr_62, RR
+;;;                                                                                         } 44 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
+;;;                                                                                       } 43 Expr (l , r)
 ;;;                                                                                     } 42 Expr (l , r)
 ;;;                                                                                   } 41 Expr (l , r)
 ;;;                                                                                 } 40 Expr (l , r)
@@ -14243,8 +14343,8 @@ L32_loop_92:
 ;--	push 2 bytes
 ;--	call
 	CALL	Cprintf
-;--	pop 12 bytes
-	ADD	SP, #12
+;--	pop 14 bytes
+	ADD	SP, #14
 ;;;                                                                           } 37 Expr l(r)
 ;;;                                                                         } 36 ExpressionStatement
 ;;;                                                                         { 36 IfElseStatement
@@ -14332,7 +14432,7 @@ L32_loop_92:
 ;;;                                                                                 } 40 ParameterDeclaration
 ;;;                                                                                 { 40 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_62, RR
+	MOVE	#Cstr_63, RR
 ;;;                                                                                 } 40 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -14383,7 +14483,7 @@ L32_else_94:
 ;;;                                                                               } 39 ParameterDeclaration
 ;;;                                                                               { 39 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_63, RR
+	MOVE	#Cstr_64, RR
 ;;;                                                                               } 39 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -14455,7 +14555,7 @@ L32_endif_94:
 ;;;                                                                               } 39 ParameterDeclaration
 ;;;                                                                               { 39 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_64, RR
+	MOVE	#Cstr_65, RR
 ;;;                                                                               } 39 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -14527,7 +14627,7 @@ L32_endif_95:
 ;;;                                                                               } 39 ParameterDeclaration
 ;;;                                                                               { 39 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_65, RR
+	MOVE	#Cstr_66, RR
 ;;;                                                                               } 39 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -14634,7 +14734,7 @@ L32_endif_96:
 ;;;                                                                                 } 40 ParameterDeclaration
 ;;;                                                                                 { 40 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_66, RR
+	MOVE	#Cstr_67, RR
 ;;;                                                                                 } 40 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -14748,7 +14848,7 @@ L32_endif_97:
 ;;;                                                                                 } 40 ParameterDeclaration
 ;;;                                                                                 { 40 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_67, RR
+	MOVE	#Cstr_68, RR
 ;;;                                                                                 } 40 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -14798,7 +14898,7 @@ L32_endif_98:
 ;;;                                                                             } 38 ParameterDeclaration
 ;;;                                                                             { 38 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_68, RR
+	MOVE	#Cstr_69, RR
 ;;;                                                                             } 38 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -14982,7 +15082,7 @@ L32_brk_93:
 ;;;                                                                       } 35 ParameterDeclaration
 ;;;                                                                       { 35 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_69, RR
+	MOVE	#Cstr_70, RR
 ;;;                                                                       } 35 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -15281,7 +15381,7 @@ L33_brk_100:
 ;;;                                                                               } 39 ParameterDeclaration
 ;;;                                                                               { 39 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_70, RR
+	MOVE	#Cstr_71, RR
 ;;;                                                                               } 39 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -15471,7 +15571,7 @@ L34_loop_101:
 ;;;                                                                                   } 41 ParameterDeclaration
 ;;;                                                                                   { 41 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_71, RR
+	MOVE	#Cstr_72, RR
 ;;;                                                                                   } 41 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -15587,7 +15687,7 @@ L34_loop_103:
 ;;;                                                                                     } 42 ParameterDeclaration
 ;;;                                                                                     { 42 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_72, RR
+	MOVE	#Cstr_73, RR
 ;;;                                                                                     } 42 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -15703,7 +15803,7 @@ L34_brk_104:
 ;;;                                                                                 } 40 ParameterDeclaration
 ;;;                                                                                 { 40 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_73, RR
+	MOVE	#Cstr_74, RR
 ;;;                                                                                 } 40 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -16016,7 +16116,7 @@ L34_brk_106:
 ;;;                                                                                 } 40 ParameterDeclaration
 ;;;                                                                                 { 40 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_74, RR
+	MOVE	#Cstr_75, RR
 ;;;                                                                                 } 40 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -16397,7 +16497,7 @@ L36_loop_111:
 ;;;                                                                                     } 42 ParameterDeclaration
 ;;;                                                                                     { 42 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_78, RR
+	MOVE	#Cstr_79, RR
 ;;;                                                                                     } 42 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -16671,7 +16771,7 @@ L36_loop_111:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_79, RR
+	MOVE	#Cstr_80, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17108,7 +17208,7 @@ L36_case_114_0032:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_80, RR
+	MOVE	#Cstr_81, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17298,7 +17398,7 @@ L36_case_114_0033:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_81, RR
+	MOVE	#Cstr_82, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17502,7 +17602,7 @@ L36_case_114_0062:
 ;;;                                                                                               } 47 ParameterDeclaration
 ;;;                                                                                               { 47 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_86, RR
+	MOVE	#Cstr_87, RR
 ;;;                                                                                               } 47 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17605,7 +17705,7 @@ L36_case_114_0064:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_87, RR
+	MOVE	#Cstr_88, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17716,7 +17816,7 @@ L36_case_114_0064:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_88, RR
+	MOVE	#Cstr_89, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17836,7 +17936,7 @@ L36_case_114_0065:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_89, RR
+	MOVE	#Cstr_90, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17927,7 +18027,7 @@ L36_case_114_0065:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_91, RR
+	MOVE	#Cstr_92, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -17999,7 +18099,7 @@ L36_case_114_006D:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_92, RR
+	MOVE	#Cstr_93, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18111,7 +18211,7 @@ L36_case_114_006D:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_93, RR
+	MOVE	#Cstr_94, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18264,7 +18364,7 @@ L36_case_114_006D:
 ;;;                                                                                           } 45 ParameterDeclaration
 ;;;                                                                                           { 45 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_94, RR
+	MOVE	#Cstr_95, RR
 ;;;                                                                                           } 45 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18342,7 +18442,7 @@ L36_case_114_0073:
 ;;;                                                                                               } 47 ParameterDeclaration
 ;;;                                                                                               { 47 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_95, RR
+	MOVE	#Cstr_96, RR
 ;;;                                                                                               } 47 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18422,7 +18522,7 @@ L36_case_114_0074:
 ;;;                                                                                               } 47 ParameterDeclaration
 ;;;                                                                                               { 47 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_97, RR
+	MOVE	#Cstr_98, RR
 ;;;                                                                                               } 47 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18477,7 +18577,7 @@ L36_case_114_0048:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_99, RR
+	MOVE	#Cstr_100, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -18638,7 +18738,7 @@ L36_deflt_114:
 ;;;                                                                                             } 46 ParameterDeclaration
 ;;;                                                                                             { 46 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_102, RR
+	MOVE	#Cstr_103, RR
 ;;;                                                                                             } 46 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -19043,7 +19143,7 @@ L37_loop_118:
 ;;;                                                                                       } 43 ParameterDeclaration
 ;;;                                                                                       { 43 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_117, RR
+	MOVE	#Cstr_118, RR
 ;;;                                                                                       } 43 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -19806,7 +19906,7 @@ L37_brk_121:
 ;;;                                                                                         } 44 ParameterDeclaration
 ;;;                                                                                         { 44 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_126, RR
+	MOVE	#Cstr_127, RR
 ;;;                                                                                         } 44 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -19883,7 +19983,7 @@ L37_brk_121:
 ;;;                                                                                         } 44 ParameterDeclaration
 ;;;                                                                                         { 44 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_127, RR
+	MOVE	#Cstr_128, RR
 ;;;                                                                                         } 44 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -20038,7 +20138,7 @@ L37_brk_121:
 ;;;                                                                                         } 44 ParameterDeclaration
 ;;;                                                                                         { 44 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_128, RR
+	MOVE	#Cstr_129, RR
 ;;;                                                                                         } 44 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -20120,7 +20220,7 @@ L37_brk_121:
 ;;;                                                                                         } 44 ParameterDeclaration
 ;;;                                                                                         { 44 StringExpression
 ;--	load_rr_string
-	MOVE	#Cstr_129, RR
+	MOVE	#Cstr_130, RR
 ;;;                                                                                         } 44 StringExpression
 ;--	push_rr (16 bit)
 	MOVE	RR, -(SP)
@@ -22078,7 +22178,7 @@ Ctask_3:			;
 	.WORD	Ctos_3
 	.BYTE	0
 	.BYTE	30
-	.WORD	Cstr_130
+	.WORD	Cstr_131
 	.WORD	Cstack_3			; & stack_3
 	.WORD	Ctop_3			; & top_3
 	.BYTE	0			; VOID sema_ret
@@ -22098,7 +22198,7 @@ Ctask_2:			;
 	.WORD	Ctos_2
 	.BYTE	0
 	.BYTE	40
-	.WORD	Cstr_131
+	.WORD	Cstr_132
 	.WORD	Cstack_2			; & stack_2
 	.WORD	Ctop_2			; & top_2
 	.BYTE	0			; VOID sema_ret
@@ -22118,7 +22218,7 @@ Ctask_1:			;
 	.WORD	Ctos_1
 	.BYTE	0
 	.BYTE	50
-	.WORD	Cstr_132
+	.WORD	Cstr_133
 	.WORD	Cstack_1			; & stack_1
 	.WORD	Ctop_1			; & top_1
 	.BYTE	0			; VOID sema_ret
@@ -22138,9 +22238,9 @@ Ctask_idle:			;
 	.WORD	0
 	.BYTE	0
 	.BYTE	0
-	.WORD	Cstr_133
-	.WORD	40832
-	.WORD	40960
+	.WORD	Cstr_134
+	.WORD	8064
+	.WORD	8192
 	.BYTE	0			; VOID sema_ret
 	.BYTE	0			; VOID saved_priority
 	.WORD	0			; VOID waiting_for
@@ -22441,6 +22541,11 @@ Cstr_59:				;
 	.BYTE	0x69			;
 	.BYTE	0x6F			;
 	.BYTE	0x20			;
+	.BYTE	0x20			;
+	.BYTE	0x20			;
+	.BYTE	0x50			;
+	.BYTE	0x43			;
+	.BYTE	0x20			;
 	.BYTE	0x53			;
 	.BYTE	0x74			;
 	.BYTE	0x61			;
@@ -22485,11 +22590,11 @@ Cstr_59:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_60:				;
+Cstr_61:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_61:				;
+Cstr_62:				;
 	.BYTE	0x25			;
 	.BYTE	0x2D			;
 	.BYTE	0x31			;
@@ -22506,6 +22611,10 @@ Cstr_61:				;
 	.BYTE	0x58			;
 	.BYTE	0x20			;
 	.BYTE	0x25			;
+	.BYTE	0x34			;
+	.BYTE	0x58			;
+	.BYTE	0x20			;
+	.BYTE	0x25			;
 	.BYTE	0x35			;
 	.BYTE	0x64			;
 	.BYTE	0x20			;
@@ -22514,7 +22623,7 @@ Cstr_61:				;
 	.BYTE	0x64			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_62:				;
+Cstr_63:				;
 	.BYTE	0x25			;
 	.BYTE	0x2D			;
 	.BYTE	0x31			;
@@ -22522,7 +22631,7 @@ Cstr_62:				;
 	.BYTE	0x73			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_63:				;
+Cstr_64:				;
 	.BYTE	0x6E			;
 	.BYTE	0x6F			;
 	.BYTE	0x6E			;
@@ -22541,20 +22650,20 @@ Cstr_63:				;
 	.BYTE	0x20			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_64:				;
+Cstr_65:				;
 	.BYTE	0x52			;
 	.BYTE	0x55			;
 	.BYTE	0x4E			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_65:				;
+Cstr_66:				;
 	.BYTE	0x53			;
 	.BYTE	0x55			;
 	.BYTE	0x53			;
 	.BYTE	0x50			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_66:				;
+Cstr_67:				;
 	.BYTE	0x53			;
 	.BYTE	0x4C			;
 	.BYTE	0x45			;
@@ -22568,7 +22677,7 @@ Cstr_66:				;
 	.BYTE	0x73			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_67:				;
+Cstr_68:				;
 	.BYTE	0x42			;
 	.BYTE	0x4C			;
 	.BYTE	0x4B			;
@@ -22581,15 +22690,15 @@ Cstr_67:				;
 	.BYTE	0x73			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_68:				;
-	.BYTE	0x0D			;
-	.BYTE	0x0A			;
-	.BYTE	0			;
 Cstr_69:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
 Cstr_70:				;
+	.BYTE	0x0D			;
+	.BYTE	0x0A			;
+	.BYTE	0			;
+Cstr_71:				;
 	.BYTE	0x55			;
 	.BYTE	0x70			;
 	.BYTE	0x74			;
@@ -22626,7 +22735,7 @@ Cstr_70:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_71:				;
+Cstr_72:				;
 	.BYTE	0x25			;
 	.BYTE	0x34			;
 	.BYTE	0x2E			;
@@ -22634,7 +22743,7 @@ Cstr_71:				;
 	.BYTE	0x58			;
 	.BYTE	0x3A			;
 	.BYTE	0			;
-Cstr_72:				;
+Cstr_73:				;
 	.BYTE	0x20			;
 	.BYTE	0x25			;
 	.BYTE	0x32			;
@@ -22642,16 +22751,16 @@ Cstr_72:				;
 	.BYTE	0x32			;
 	.BYTE	0x58			;
 	.BYTE	0			;
-Cstr_73:				;
+Cstr_74:				;
 	.BYTE	0x20			;
 	.BYTE	0x2D			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_74:				;
+Cstr_75:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_78:				;
+Cstr_79:				;
 	.BYTE	0x52			;
 	.BYTE	0x45			;
 	.BYTE	0x41			;
@@ -22659,7 +22768,7 @@ Cstr_78:				;
 	.BYTE	0x59			;
 	.BYTE	0x0D			;
 	.BYTE	0			;
-Cstr_79:				;
+Cstr_80:				;
 	.BYTE	0x25			;
 	.BYTE	0x73			;
 	.BYTE	0x20			;
@@ -22675,7 +22784,7 @@ Cstr_79:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_80:				;
+Cstr_81:				;
 	.BYTE	0x54			;
 	.BYTE	0x61			;
 	.BYTE	0x73			;
@@ -22692,7 +22801,7 @@ Cstr_80:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_81:				;
+Cstr_82:				;
 	.BYTE	0x54			;
 	.BYTE	0x61			;
 	.BYTE	0x73			;
@@ -22721,7 +22830,7 @@ Cstr_81:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_86:				;
+Cstr_87:				;
 	.BYTE	0x64			;
 	.BYTE	0x65			;
 	.BYTE	0x73			;
@@ -22756,7 +22865,7 @@ Cstr_86:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_87:				;
+Cstr_88:				;
 	.BYTE	0x44			;
 	.BYTE	0x69			;
 	.BYTE	0x73			;
@@ -22766,22 +22875,22 @@ Cstr_87:				;
 	.BYTE	0x79			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_88:				;
+Cstr_89:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_89:				;
+Cstr_90:				;
 	.BYTE	0x4C			;
 	.BYTE	0x45			;
 	.BYTE	0x44			;
 	.BYTE	0x73			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_91:				;
+Cstr_92:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_92:				;
+Cstr_93:				;
 	.BYTE	0x4D			;
 	.BYTE	0x65			;
 	.BYTE	0x6D			;
@@ -22790,7 +22899,7 @@ Cstr_92:				;
 	.BYTE	0x79			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_93:				;
+Cstr_94:				;
 	.BYTE	0x20			;
 	.BYTE	0x56			;
 	.BYTE	0x61			;
@@ -22799,11 +22908,11 @@ Cstr_93:				;
 	.BYTE	0x65			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_94:				;
+Cstr_95:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_95:				;
+Cstr_96:				;
 	.BYTE	0x44			;
 	.BYTE	0x49			;
 	.BYTE	0x50			;
@@ -22825,7 +22934,7 @@ Cstr_95:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_97:				;
+Cstr_98:				;
 	.BYTE	0x54			;
 	.BYTE	0x65			;
 	.BYTE	0x6D			;
@@ -22862,7 +22971,7 @@ Cstr_97:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_99:				;
+Cstr_100:				;
 	.BYTE	0x48			;
 	.BYTE	0x61			;
 	.BYTE	0x6C			;
@@ -22873,7 +22982,7 @@ Cstr_99:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_102:				;
+Cstr_103:				;
 	.BYTE	0x48			;
 	.BYTE	0x65			;
 	.BYTE	0x6C			;
@@ -23142,7 +23251,7 @@ Cstr_102:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_117:				;
+Cstr_118:				;
 	.BYTE	0x4D			;
 	.BYTE	0x65			;
 	.BYTE	0x61			;
@@ -23158,7 +23267,7 @@ Cstr_117:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_126:				;
+Cstr_127:				;
 	.BYTE	0x74			;
 	.BYTE	0x6F			;
 	.BYTE	0x74			;
@@ -23179,7 +23288,7 @@ Cstr_126:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_127:				;
+Cstr_128:				;
 	.BYTE	0x68			;
 	.BYTE	0x61			;
 	.BYTE	0x6C			;
@@ -23200,28 +23309,11 @@ Cstr_127:				;
 	.BYTE	0x0D			;
 	.BYTE	0x0A			;
 	.BYTE	0			;
-Cstr_128:				;
+Cstr_129:				;
 	.BYTE	0x69			;
 	.BYTE	0x64			;
 	.BYTE	0x6C			;
 	.BYTE	0x65			;
-	.BYTE	0x3A			;
-	.BYTE	0x20			;
-	.BYTE	0x20			;
-	.BYTE	0x20			;
-	.BYTE	0x25			;
-	.BYTE	0x64			;
-	.BYTE	0x20			;
-	.BYTE	0x25			;
-	.BYTE	0x25			;
-	.BYTE	0x0D			;
-	.BYTE	0x0A			;
-	.BYTE	0			;
-Cstr_129:				;
-	.BYTE	0x6C			;
-	.BYTE	0x6F			;
-	.BYTE	0x61			;
-	.BYTE	0x64			;
 	.BYTE	0x3A			;
 	.BYTE	0x20			;
 	.BYTE	0x20			;
@@ -23235,6 +23327,23 @@ Cstr_129:				;
 	.BYTE	0x0A			;
 	.BYTE	0			;
 Cstr_130:				;
+	.BYTE	0x6C			;
+	.BYTE	0x6F			;
+	.BYTE	0x61			;
+	.BYTE	0x64			;
+	.BYTE	0x3A			;
+	.BYTE	0x20			;
+	.BYTE	0x20			;
+	.BYTE	0x20			;
+	.BYTE	0x25			;
+	.BYTE	0x64			;
+	.BYTE	0x20			;
+	.BYTE	0x25			;
+	.BYTE	0x25			;
+	.BYTE	0x0D			;
+	.BYTE	0x0A			;
+	.BYTE	0			;
+Cstr_131:				;
 	.BYTE	0x4C			;
 	.BYTE	0x6F			;
 	.BYTE	0x61			;
@@ -23246,7 +23355,7 @@ Cstr_130:				;
 	.BYTE	0x6B			;
 	.BYTE	0x20			;
 	.BYTE	0			;
-Cstr_131:				;
+Cstr_132:				;
 	.BYTE	0x4D			;
 	.BYTE	0x65			;
 	.BYTE	0x61			;
@@ -23259,7 +23368,7 @@ Cstr_131:				;
 	.BYTE	0x6E			;
 	.BYTE	0x74			;
 	.BYTE	0			;
-Cstr_132:				;
+Cstr_133:				;
 	.BYTE	0x4D			;
 	.BYTE	0x6F			;
 	.BYTE	0x6E			;
@@ -23268,7 +23377,7 @@ Cstr_132:				;
 	.BYTE	0x6F			;
 	.BYTE	0x72			;
 	.BYTE	0			;
-Cstr_133:				;
+Cstr_134:				;
 	.BYTE	0x49			;
 	.BYTE	0x64			;
 	.BYTE	0x6C			;
