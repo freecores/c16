@@ -7,6 +7,9 @@ all:	test
 loader:	assembler.exe
 	assembler ../loader.asm ../loader.bin
 
+polled:	assembler.exe
+	assembler ../polled.asm ../polled.bin
+
 test:	assembler.exe
 	assembler ../test.asm ../test.bin
 

@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <conio.h>
 
-const bool do_log = true;
+const bool do_log = false;
 
 typedef   signed char  sc;
 typedef   signed short ss;

@@ -246,7 +246,7 @@ const char * funname = GetDeclaredName(fun_declarator);
 
 int ret_size = ret_type->GetSize();
    if (ret_size <= 4)   ret_size = 0;   // return value in register
-   ret_size += 2;                       // call return address
+   ret_size += 2;                       // return address
 
 ParameterDeclarationList * pdl = ::GetParameters(fun_declarator);
 
@@ -258,12 +258,9 @@ int offset = ret_size;
          offset += pd->AllocateParameters(offset);
        }
 
-const int autosize = body->EmitAutovars(out);
-
    body->Emit(out);
-   Backend::ret(autosize);
-   EmitEnd(out);
 
+   Backend::ret();
    Name::RemoveAuto();
 }
 //-----------------------------------------------------------------------------

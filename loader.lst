@@ -31,7 +31,6 @@ L2_cont_1:
    1E37: 03 1E32    JMP RRNZ, L2_loop_1
 L2_brk_2:
    1E3A: 2E 00      IN (IN_RX_DATA), RU
-L2_return:
    1E3C: 07         RET 
 Cputchr:
 L3_loop_3:
@@ -42,7 +41,6 @@ L3_cont_3:
 L3_brk_4:
    1E44: 65 02      MOVE 2(SP), RU
    1E46: 2F 00      OUT R, (OUT_TX_DATA)
-L3_return:
    1E48: 07         RET 
 Cprint_string:
    1E49: 02 1E59    JMP L4_cont_5
@@ -60,7 +58,6 @@ L4_cont_5:
    1E5B: 47         MOVE (RR), RS
    1E5C: 03 1E4C    JMP RRNZ, L4_loop_5
 L4_brk_6:
-L4_return:
    1E5F: 07         RET 
 Cget_nibble:
    1E60: 05 1E32    CALL Cgetchr
@@ -69,44 +66,50 @@ Cget_nibble:
    1E66: 29 30      SLO RR, #48
    1E68: 04 1E71    JMP RRZ, L5_endif_7
    1E6B: F8 00FF    MOVE #255, RR
-   1E6E: 02 1EBB    JMP L5_return
+   1E6E: 2B 01      ADD SP, #1
+   1E70: 07         RET 
 L5_endif_7:
    1E71: 65 00      MOVE 0(SP), RU
    1E73: 27 39      SLS RR, #57
    1E75: 04 1E7F    JMP RRZ, L5_endif_8
    1E78: 65 00      MOVE 0(SP), RU
    1E7A: F7 30      SUB RR, #48
-   1E7C: 02 1EBB    JMP L5_return
+   1E7C: 2B 01      ADD SP, #1
+   1E7E: 07         RET 
 L5_endif_8:
    1E7F: 65 00      MOVE 0(SP), RU
    1E81: 29 41      SLO RR, #65
    1E83: 04 1E8C    JMP RRZ, L5_endif_9
    1E86: F8 00FF    MOVE #255, RR
-   1E89: 02 1EBB    JMP L5_return
+   1E89: 2B 01      ADD SP, #1
+   1E8B: 07         RET 
 L5_endif_9:
    1E8C: 65 00      MOVE 0(SP), RU
    1E8E: 27 46      SLS RR, #70
    1E90: 04 1E9A    JMP RRZ, L5_endif_10
    1E93: 65 00      MOVE 0(SP), RU
    1E95: F7 37      SUB RR, #55
-   1E97: 02 1EBB    JMP L5_return
+   1E97: 2B 01      ADD SP, #1
+   1E99: 07         RET 
 L5_endif_10:
    1E9A: 65 00      MOVE 0(SP), RU
    1E9C: 29 61      SLO RR, #97
    1E9E: 04 1EA7    JMP RRZ, L5_endif_11
    1EA1: F8 00FF    MOVE #255, RR
-   1EA4: 02 1EBB    JMP L5_return
+   1EA4: 2B 01      ADD SP, #1
+   1EA6: 07         RET 
 L5_endif_11:
    1EA7: 65 00      MOVE 0(SP), RU
    1EA9: 27 66      SLS RR, #102
    1EAB: 04 1EB5    JMP RRZ, L5_endif_12
    1EAE: 65 00      MOVE 0(SP), RU
    1EB0: F7 57      SUB RR, #87
-   1EB2: 02 1EBB    JMP L5_return
+   1EB2: 2B 01      ADD SP, #1
+   1EB4: 07         RET 
 L5_endif_12:
    1EB5: F8 00FF    MOVE #255, RR
-   1EB8: 02 1EBB    JMP L5_return
-L5_return:
+   1EB8: 2B 01      ADD SP, #1
+   1EBA: 07         RET 
    1EBB: 2B 01      ADD SP, #1
    1EBD: 07         RET 
 Cget_byte:
@@ -126,7 +129,8 @@ Cget_byte:
    1EDC: 43         MOVE RR, LL
    1EDD: 65 00      MOVE 0(SP), RU
    1EDF: 31         OR LL, RR
-   1EE0: 02 1EED    JMP L6_return
+   1EE0: 2B 02      ADD SP, #2
+   1EE2: 07         RET 
 L6_endif_14:
 L6_endif_13:
    1EE3: F8 1FC7    MOVE #Cstr_5, RR
@@ -134,7 +138,6 @@ L6_endif_13:
    1EE7: 05 1E49    CALL Cprint_string
    1EEA: 2B 02      ADD SP, #2
    1EEC: 00         HALT 
-L6_return:
    1EED: 2B 02      ADD SP, #2
    1EEF: 07         RET 
 Cmain:
@@ -267,7 +270,6 @@ L7_brk_18:
 L7_cont_15:
    1FC1: 02 1EF6    JMP L7_loop_15
 L7_brk_16:
-L7_return:
    1FC4: 2B 07      ADD SP, #7
    1FC6: 07         RET 
 Cstr_5:

@@ -27,6 +27,9 @@ ansic_flex.cc:	ansic.flex ansic_bison.cc.h
 loader:	cc80.exe
 	cc80 -l $(MEMTOP) ..\loader.c ..\loader.asm
 
+polled:	cc80.exe
+	cc80 $(MEMTOP) ..\polled.c ..\polled.asm
+
 test:	cc80.exe
 	cc80 $(MEMTOP) ..\test.c ..\test.asm
 

@@ -11,16 +11,20 @@ class LoopStack
 public:
    LoopStack(int num, LoopStack * prev)
    : number(num),
+     stack_depth(Backend::GetSP()),
      previous(prev)
      {};
 
    static int Push(LoopStack * & stack);
    static void Pop(LoopStack * & stack, int val);
-   static int Get(LoopStack * & stack)
+   static int GetNumber(LoopStack * stack)
       { assert(stack);   return stack->number; };
+   static int GetStackDepth(LoopStack * stack)
+      { assert(stack);   return stack->stack_depth; };
 
 private:
    int number;
+   int stack_depth;
    LoopStack * previous;
 
    static int next_number;
@@ -250,7 +254,7 @@ void ReturnStatement::Emit(FILE * out)
 
    if (retval)   retval->Emit(out);
 
-   Backend::branch("return");
+   Backend::ret();
 
    EmitEnd(out);
 }
@@ -259,14 +263,22 @@ void ContStatement::Emit(FILE * out)
 {
    EmitStart(out);
 
-   if (do_break)
+LoopStack * ls;
+const char * ln;
+
+   if (do_break)   { ls = break_stack;   ln = "brk"; }
+   else            { ls = loop_stack;    ln = "cont"; };
+
+const int stack_diff = LoopStack::GetStackDepth(ls) - Backend::GetSP();
+
+   if (stack_diff < 0)
       {
-        Backend::branch("brk", LoopStack::Get(break_stack));
+        fprintf(stderr, "Jump over initialization\n");
+        semantic_errors++;
       }
-   else
-      {
-        Backend::branch("cont", LoopStack::Get(loop_stack));
-      }
+   
+   if (stack_diff > 0)   Backend::pop_jump(stack_diff);
+   Backend::branch(ln, LoopStack::GetNumber(ls));
 
    EmitEnd(out);
 }
@@ -274,7 +286,16 @@ void ContStatement::Emit(FILE * out)
 void CompoundStatement::Emit(FILE * out)
 {
    EmitStart(out);
+
+   Name::PushContext();
+
+const int autosize = EmitAutovars(out);
+
    if (stat_list)   stat_list->Emit(out);
+
+   Backend::pop(autosize);
+
+   Name::PopContext();
    EmitEnd(out);
 }
 //-----------------------------------------------------------------------------
@@ -296,7 +317,7 @@ int ret = 0;
 //-----------------------------------------------------------------------------
 void CompoundStatement::EmitCaseJumps(FILE * out, int size)
 {
-const int brk = LoopStack::Get(break_stack);
+const int brk = LoopStack::GetNumber(break_stack);
 
 bool has_default = false;
 
@@ -326,7 +347,7 @@ bool has_default = false;
 //-----------------------------------------------------------------------------
 void CaseStatement::Emit(FILE * out)
 {
-const int brk = LoopStack::Get(break_stack);
+const int brk = LoopStack::GetNumber(break_stack);
 
    EmitStart(out);
    if (case_value)

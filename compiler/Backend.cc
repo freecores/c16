@@ -312,11 +312,14 @@ void Backend::call_ptr()
    fprintf(out, "\tCALL\t(RR)\n");
 }
 //-----------------------------------------------------------------------------
-void Backend::ret(int autosize)
+void Backend::ret()
 {
    fprintf(out, ";--\tret\n");
-   fprintf(out, "L%d_return:\n", function_num);
-   pop(autosize);
+
+   assert(stack_pointer <= 0);
+   // pop, but don't update stack_pointer
+
+   if (stack_pointer)   fprintf(out, "\tADD\tSP, #%d\n", -stack_pointer);
    fprintf(out, "\tRET\n");
 }
 //-----------------------------------------------------------------------------
@@ -359,6 +362,15 @@ void Backend::pop(int pushed)
    stack_pointer += pushed;
 
    if (pushed)   fprintf(out, "\tADD\tSP, #%d\n", pushed);
+}
+//-----------------------------------------------------------------------------
+void Backend::pop_jump(int diff)
+{
+   fprintf(out, ";--\tpop (break/continue) %d bytes\n", diff);
+   assert(diff >= 0);
+   // don't update stack_pointer !
+
+   if (diff)   fprintf(out, "\tADD\tSP, #%d\n", diff);
 }
 //-----------------------------------------------------------------------------
 void Backend::pop_return(int ret_bytes)

@@ -2,6 +2,7 @@
 
 #include "List.hh"
 class TypeName;
+class Name;
 
 //-----------------------------------------------------------------------------
 class Name
@@ -23,9 +24,13 @@ public:
    static void        AddLocal(const char * na, TypeName * decl);
    static void        AddAuto(const char * na, TypeName * decl, int spos = 0);
    static void        SetAutoPos(const char * na, int spos);
-   static void        RemoveAuto();
    static void        AutoToLocal();
    static void        PrintAll(FILE * out);
+
+   static void        RemoveAuto();
+   static bool        ContextIsEmpty()   { return (autos == 0); };
+   static void        PushContext();
+   static void        PopContext();
 
    void               Print(FILE * out);
 

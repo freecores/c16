@@ -8,6 +8,13 @@ loader:
 	make -C .\memory loader
 #	make -C .\sim loader
 
+polled:
+	gcc -c polled.c
+	make -C .\compiler polled
+	make -C .\asm polled
+	make -C .\memory polled
+	make -C .\sim polled
+
 test:
 	gcc -c test.c
 	make -C .\compiler test

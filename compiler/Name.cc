@@ -64,6 +64,26 @@ void StructName::Add(const char * na, StructDeclarationList * sdl)
    structs = new StructName(na, structs, sdl);
 }
 //=============================================================================
+void Name::PushContext()
+{
+   // use "}" as a marker for contexts
+   autos = new Name("}", autos, 0, 0);
+}
+//-----------------------------------------------------------------------------
+void Name::PopContext()
+{
+   while (autos)
+       {
+          Name * tl = autos->tail;
+          const bool marker = !strcmp("}", autos->name);
+          delete autos;
+	  autos = tl;
+          if (marker)   return;
+       }
+
+   assert(0 && "No context marker");
+}
+//-----------------------------------------------------------------------------
 void Name::RemoveAuto()
 {
    while (autos)

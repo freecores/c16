@@ -4,6 +4,9 @@ all:	test
 loader:	makemem.exe
 	makemem ..\loader.bin
 
+polled:	makemem.exe
+	makemem ..\polled.bin
+
 test:	makemem.exe
 	makemem ..\test.bin
 

@@ -44,12 +44,13 @@ public:
 
    static void call(const char * name);
    static void call_ptr();
-   static void ret(int autosize);
+   static void ret();
 
    static void push_rr(SUW suw);
    static void pop_rr (SUW suw);
    static void pop_ll (SUW suw);
    static void pop(int pushed);
+   static void pop_jump(int diff);
    static void pop_return(int ret_bytes);
    static int  push_return(int ret_bytes);
    static void push_zero(int bytes);
