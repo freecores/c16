@@ -7,9 +7,8 @@ use work.cpu_pack.ALL;
 library UNISIM;
 use UNISIM.VComponents.all;
 
-entity cpu16 is
+entity cpu is
 	PORT(	CLK_I			: in  STD_LOGIC;
-			T2				: out STD_LOGIC;
 			SWITCH			: in  STD_LOGIC_VECTOR (9 downto 0);
 
 			SER_IN			: in  STD_LOGIC;
@@ -30,13 +29,12 @@ entity cpu16 is
 			XM_WE			: out STD_LOGIC;
 			XM_CE			: out STD_LOGIC
 	    );
-end cpu16;
+end cpu;
 
-architecture behavioral of cpu16 is
+architecture behavioral of cpu is
 
 	COMPONENT bin_to_7segment
 	PORT(	CLK_I : IN std_logic;
-			T2    : IN std_logic;
 			PC    : IN std_logic_vector(15 downto 0);
 			SEG1  : OUT std_logic_vector(7 downto 1);
 			SEG2  : OUT std_logic_vector(7 downto 0)
@@ -45,27 +43,26 @@ architecture behavioral of cpu16 is
 
 	COMPONENT cpu_engine
 	PORT(	CLK_I    : in  std_logic;
-			T2       : out std_logic;
-			CLR      : in  std_logic;
+			DAT_I    : in  std_logic_vector( 7 downto 0);
+			DAT_O    : out std_logic_vector( 7 downto 0);
+			RST_I    : in  std_logic;
+			ACK_I    : in  std_logic;
+			ADR_O    : out std_logic_vector(15 downto 0);
+			CYC_O    : out std_logic;
+			STB_O    : out std_logic;
+			TGA_O    : out std_logic_vector(0 downto 0);
+			WE_O     : out std_logic;
+
+			INT      : in  std_logic;
+			HALT     : out std_logic;
+
+			-- debug signals
+			--
 			Q_PC   : out std_logic_vector(15 downto 0);
 			Q_OPC  : out std_logic_vector( 7 downto 0);
 			Q_CAT  : out op_category;
 			Q_IMM  : out std_logic_vector(15 downto 0);
 			Q_CYC  : out cycle;
-
-			-- input/output
-			INT      : in  std_logic;
-			IO_ADR   : out std_logic_vector(7 downto 0);
-			IO_RD    : out std_logic;
-			IO_WR    : out std_logic;
-			IO_RDAT  : in  std_logic_vector( 7 downto 0);
-
-			-- memory
-			XM_ADR   : out std_logic_vector(15 downto 0);
-			XM_RDAT  : in  std_logic_vector( 7 downto 0);
-			XM_WDAT  : out std_logic_vector( 7 downto 0);
-			XM_WE    : out std_logic;
-			XM_CE    : out std_logic;
 
 			-- select signals
 			Q_SX    : out std_logic_vector(1 downto 0);
@@ -81,15 +78,19 @@ architecture behavioral of cpu16 is
 
 			Q_RR     : out std_logic_vector(15 downto 0);
 			Q_LL     : out std_logic_vector(15 downto 0);
-			Q_SP     : out std_logic_vector(15 downto 0);
-			HALT     : out std_logic
+			Q_SP     : out std_logic_vector(15 downto 0)
 		);
 	END COMPONENT;
 
 	COMPONENT input_output
 	PORT(	CLK_I        : IN std_logic;
-			T2           : IN std_logic;
-			CLR          : OUT std_logic;
+			CYC_I        : IN  std_logic;
+			RST_O        : OUT std_logic;
+			STB_I        : IN  std_logic;
+			ACK_O        : OUT std_logic;
+			IO           : IN  std_logic;
+			WE_I         : IN  std_logic;
+			ADR_I        : IN  std_logic_vector(7 downto 0);
 
 			TEMP_SPO     : IN  std_logic;
 			TEMP_SPI     : OUT std_logic;
@@ -102,9 +103,6 @@ architecture behavioral of cpu16 is
 			SWITCH       : IN  std_logic_vector(9 downto 0);
 			LED          : OUT std_logic_vector(7 downto 0);
 
-			IO_RD        : IN  std_logic;
-			IO_WR        : IN  std_logic;
-			IO_ADR       : IN  std_logic_vector(7 downto 0);
 			IO_WDAT      : IN  std_logic_vector(7 downto 0);
 			IO_RDAT      : OUT std_logic_vector(7 downto 0);
 			INT          : OUT std_logic;
@@ -113,19 +111,25 @@ architecture behavioral of cpu16 is
 	END COMPONENT;
 
 	signal CLR      : std_logic;
-	signal LT2      : std_logic;
 
 	signal ADR      : std_logic_vector(15 downto 0);
+	signal CYC      : std_logic;
+	signal STB      : std_logic;
+	signal XM_STB   : std_logic;
+	signal IO_STB   : std_logic;
+	signal ACK      : std_logic;
+	signal XM_ACK   : std_logic;
+	signal IO_ACK   : std_logic;
 
 	signal HALT     : std_logic;
 	signal INT      : std_logic;
-	signal IO_RD    : std_logic;
-	signal IO_WR    : std_logic;
-	signal IO_ADR   : std_logic_vector( 7 downto 0);
+	signal IO       : std_logic;
+	signal WE       : std_logic;
 	signal IO_RDAT  : std_logic_vector( 7 downto 0);
-	signal IOM_WDAT : std_logic_vector( 7 downto 0);
-	signal PC       : std_logic_vector(15 downto 0);
+	signal WDAT     : std_logic_vector( 7 downto 0);
+	signal RDAT     : std_logic_vector( 7 downto 0);
 
+	signal PC       : std_logic_vector(15 downto 0);
 	signal Q_C_SX    : std_logic_vector(1 downto 0);
 	signal Q_C_SY    : std_logic_vector(3 downto 0);
 	signal Q_C_OP    : std_logic_vector(4 downto 0);
@@ -147,40 +151,44 @@ architecture behavioral of cpu16 is
 
 begin
 
-	T2      <= LT2;
 	SEG1(0) <= HALT;
 	XM_ADR  <= ADR;
-	XM_WDAT <= IOM_WDAT;
+	XM_WDAT <= WDAT;
+	XM_WE   <= WE;
+	XM_STB  <= STB and not IO;
+	IO_STB  <= STB and IO;
+	XM_ACK  <= XM_STB;
+	XM_CE   <= CYC and not IO;
+	RDAT    <= IO_RDAT when (IO = '1') else XM_RDAT;
+	ACK     <= IO_ACK  when (IO = '1') else XM_ACK;
 
 	seg7: bin_to_7segment
 	PORT MAP(	CLK_I => CLK_I,
-				T2    => LT2,
 				PC    => PC,
-				SEG1  => SEG1(7 downto 1),
+				SEG1  => SEG1(7 downto 1),		-- SEG1(0) is HALT
 				SEG2  => SEG2
 			);
 
 	eng: cpu_engine
 	PORT MAP(	CLK_I     => CLK_I,
-				T2        => LT2,
-				CLR       => CLR,	-- SW-1 (RESET)
+				DAT_I     => RDAT,
+				DAT_O     => WDAT,
+				RST_I     => CLR,	-- SW-1 (RESET)
+				ACK_I     => ACK,
+				CYC_O     => CYC,
+				STB_O     => STB,
+				ADR_O     => ADR,
+				TGA_O(0)  => IO,
+				WE_O      => WE,
+
+				INT       => INT,
+				HALT      => HALT,
+
 				Q_PC      => PC,
 				Q_OPC     => Q_C_OPC,
 				Q_CAT     => Q_C_CAT,
 				Q_IMM     => Q_C_IMM,
 				Q_CYC     => Q_C_CYC,
-
-				INT       => INT,
-				IO_ADR    => IO_ADR,
-				IO_RD     => IO_RD,
-				IO_WR     => IO_WR,
-				IO_RDAT   => IO_RDAT,
-
-				XM_ADR    => ADR,
-				XM_RDAT   => XM_RDAT,
-				XM_WDAT   => IOM_WDAT,
-				XM_WE     => XM_WE,
-				XM_CE     => XM_CE,
 
 				Q_SX      => Q_C_SX,
 				Q_SY      => Q_C_SY,
@@ -194,14 +202,15 @@ begin
 
 				Q_RR      => Q_C_RR,
 				Q_LL      => Q_C_LL,
-				Q_SP      => Q_C_SP,
-				HALT      => HALT
+				Q_SP      => Q_C_SP
 			);
 
-	io: input_output
+	ino: input_output
 	PORT MAP(	CLK_I        => CLK_I,
-				T2           => LT2,
-				CLR          => CLR,
+				CYC_I        => CYC,
+				RST_O        => CLR,
+				STB_I        => IO_STB,
+				ACK_O        => IO_ACK,
 
 				TEMP_SPO     => TEMP_SPO,
 				TEMP_SPI     => TEMP_SPI,
@@ -214,11 +223,11 @@ begin
 				SWITCH       => SWITCH,
 				LED          => LED,
 
-				IO_RD        => IO_RD,
-				IO_WR        => IO_WR,
-				IO_ADR       => IO_ADR,
+				IO           => IO,
+				WE_I         => WE,
+				ADR_I        => ADR(7 downto 0),
 				IO_RDAT      => IO_RDAT,
-				IO_WDAT      => IOM_WDAT,
+				IO_WDAT      => WDAT,
 				INT          => INT,
 				HALT         => HALT
 			);

@@ -10,7 +10,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity uart is
 	PORT(	CLK_I     : in std_logic;
-			CLR       : in std_logic;
+			RST_I     : in std_logic;
 			CE_16     : in std_logic;
 
 			TX_DATA   : in std_logic_vector(7 downto 0);
@@ -28,7 +28,7 @@ architecture Behavioral of uart is
 
 	COMPONENT uart_tx
 	PORT(	CLK_I      : IN  std_logic;
-			CLR        : IN  std_logic;
+			RST_I      : IN  std_logic;
 			CE_16      : IN  std_logic;
 			DATA       : IN  std_logic_vector(7 downto 0);
 			DATA_FLAG  : IN  std_logic;          
@@ -39,7 +39,7 @@ architecture Behavioral of uart is
 
 	COMPONENT uart_rx
 	PORT(	CLK_I     : IN std_logic;
-			CLR       : IN std_logic;
+			RST_I     : IN std_logic;
 			CE_16     : IN std_logic;
 			SER_IN    : IN std_logic;
           
@@ -52,7 +52,7 @@ begin
 
 	tx: uart_tx
 	PORT MAP(	CLK_I      => CLK_I,
-				CLR        => CLR,
+				RST_I      => RST_I,
 				CE_16      => CE_16,
 				DATA       => TX_DATA,
 				DATA_FLAG  => TX_FLAG,
@@ -63,7 +63,7 @@ begin
 
 	rx: uart_rx
 	PORT MAP(	CLK_I     => CLK_I,
-				CLR       => CLR,
+				RST_I     => RST_I,
 				CE_16     => CE_16,
 				DATA      => RX_DATA,
 				SER_IN    => RX_SERIN,

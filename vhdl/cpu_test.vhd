@@ -21,8 +21,7 @@ ARCHITECTURE behavior OF testbench IS
 
 	COMPONENT cpu16
 	PORT(
-		clk : IN std_logic;
-		cck : IN std_logic;
+		clk_i : IN std_logic;
 		switch : IN std_logic_vector(9 downto 0);
 		ser_in : IN std_logic;
 		temp_spo : IN std_logic;
@@ -41,8 +40,7 @@ ARCHITECTURE behavior OF testbench IS
 		);
 	END COMPONENT;
 
-	signal	clk :  std_logic;
-	signal	cck :  std_logic;
+	signal	clk_i :  std_logic;
 	signal	switch :  std_logic_vector(9 downto 0) := "0000000000";
 	signal	ser_in :  std_logic := '0';
 	signal	temp_spo :  std_logic := '0';
@@ -64,8 +62,7 @@ ARCHITECTURE behavior OF testbench IS
 BEGIN
 
 	uut: cpu16 PORT MAP(
-		clk => clk,
-		cck => cck,
+		clk_i => clk_i,
 		switch => switch,
 		ser_in => ser_in,
 		ser_out => ser_out,
@@ -87,19 +84,19 @@ BEGIN
 	PROCESS -- clock process for CLK,
 	BEGIN
 		CLOCK_LOOP : LOOP
-			CLK <= transport '0';
+			CLK_I <= transport '0';
 			WAIT FOR 1 ns;
-			CLK <= transport '1';
+			CLK_I <= transport '1';
 			WAIT FOR 1 ns;
 			WAIT FOR 11 ns;
-			CLK <= transport '0';
+			CLK_I <= transport '0';
 			WAIT FOR 12 ns;
 		END LOOP CLOCK_LOOP;
 	END PROCESS;
 
-	PROCESS(CLK)
+	PROCESS(CLK_I)
 	BEGIN
-		if (rising_edge(CLK)) then
+		if (rising_edge(CLK_I)) then
 			CLK_COUNTER <= CLK_COUNTER + 1;
 
 			case CLK_COUNTER is

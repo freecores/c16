@@ -228,7 +228,6 @@ package cpu_pack is
 	constant SY_UQ   : std_logic_vector(3 downto 0) := "1011";
 	constant SY_SM   : std_logic_vector(3 downto 0) := "1100";
 	constant SY_UM   : std_logic_vector(3 downto 0) := "1101";
-	constant SY_IO   : std_logic_vector(3 downto 0) := "1110";
 	constant SY_ANY  : std_logic_vector(3 downto 0) := SY_RR;
 --------------------------------------------------------------
 	constant PC_NEXT : std_logic_vector(2 downto 0) := "000";	-- count up

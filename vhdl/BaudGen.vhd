@@ -13,7 +13,7 @@ use STD.TEXTIO.ALL;
 entity BaudGen is
 	Generic(bg_clock_freq : integer; bg_baud_rate  : integer);
     Port( CLK_I  : in  std_logic;
-           CLR   : in  std_logic;
+           RST_I : in  std_logic;
            CE_16 : out std_logic
 		);
 end BaudGen;
@@ -43,7 +43,7 @@ begin
 		if (rising_edge(CLK_I)) then
 			CE_16 <= '0';		-- make CE_16 stay on for (at most) one cycle
 
-			if (CLR = '1') then
+			if (RST_I = '1') then
 				COUNTER <= 0;
 			elsif (COUNTER >= limit) then
 				CE_16 <= '1';

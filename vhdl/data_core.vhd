@@ -32,14 +32,11 @@ entity data_core is
 
 			-- data in signals
 			IMM  : in  std_logic_vector(15 downto 0);		-- immediate data
-			M_RDAT : in  std_logic_vector( 7 downto 0);		-- memory data
+			RDAT : in  std_logic_vector( 7 downto 0);		-- memory/IO data
 
 			-- memory control signals
 			ADR     : out std_logic_vector(15 downto 0);
 			MQ     : out std_logic_vector( 7 downto 0);
-
-			-- input/output
-			IO_RDAT: in  std_logic_vector( 7 downto 0);
 
 			Q_RR   : out std_logic_vector(15 downto 0);
 			Q_LL   : out std_logic_vector(15 downto 0);
@@ -71,8 +68,7 @@ architecture Behavioral of data_core is
 	PORT(	SY      : IN  std_logic_vector( 3 downto 0);
 			IMM     : IN  std_logic_vector(15 downto 0);
 			QUICK   : IN  std_logic_vector( 3 downto 0);
-			M_RDAT  : IN  std_logic_vector( 7 downto 0);
-			IO_RDAT : IN  std_logic_vector( 7 downto 0);
+			RDAT    : IN  std_logic_vector( 7 downto 0);
 			RR      : IN  std_logic_vector(15 downto 0);          
 			YY      : OUT std_logic_vector(15 downto 0)
 		);
@@ -111,8 +107,7 @@ begin
 	PORT MAP(	SY      => SY,
 				IMM     => IMM,
 				QUICK   => QU,
-				M_RDAT  => M_RDAT,
-				IO_RDAT => IO_RDAT,
+				RDAT    => RDAT,
 				RR      => RR,
 				YY      => YY
 	);
@@ -179,21 +174,19 @@ begin
 	regs: process(CLK_I)
 	begin
 		if (rising_edge(CLK_I)) then
-			if    (T2 = '1') then
-				if    (CLR = '1') then
-					RR  <= X"0000";
-					LL  <= X"0000";
-					SP  <= X"0000";
-				elsif (CE  = '1') then
-					if (WE_RR = '1') then		RR  <= ZZ;		end if;
-					if (WE_LL = '1') then		LL  <= ZZ;		end if;
+			if    (CLR = '1') then
+				RR  <= X"0000";
+				LL  <= X"0000";
+				SP  <= X"0000";
+			elsif (CE  = '1' and T2 = '1') then
+				if (WE_RR = '1') then		RR  <= ZZ;		end if;
+				if (WE_LL = '1') then		LL  <= ZZ;		end if;
 
-					case WE_SP is
-						when SP_INC  	=>		SP <= ADR_YZ;
-						when SP_LOAD 	=>		SP <= ADR_XYZ;
-						when SP_NOP		=>		null;
-					end case;
-				end if;
+				case WE_SP is
+					when SP_INC  	=>		SP <= ADR_YZ;
+					when SP_LOAD 	=>		SP <= ADR_XYZ;
+					when SP_NOP		=>		null;
+				end case;
 			end if;
 		end if;
 	end process;

@@ -46,9 +46,8 @@ end board_cpu;
 
 architecture behavioral of board_cpu is
 
-	COMPONENT cpu16
+	COMPONENT cpu
 	PORT(	CLK_I			: in  STD_LOGIC;
-			T2				: out STD_LOGIC;
 			SWITCH			: in  STD_LOGIC_VECTOR (9 downto 0);
 
 			SER_IN			: in  STD_LOGIC;
@@ -78,12 +77,13 @@ architecture behavioral of board_cpu is
 	signal WE_N     : std_logic;
 	signal DEL_WE_N : std_logic;
 	signal XM_CE    : std_logic;
+	signal LCLK     : std_logic;
+
 
 begin
 
-	cp: cpu16
+	cp: cpu
 	PORT MAP(	CLK_I        =>	CLK40,
-				T2           =>	CLK_OUT,
 				SWITCH       =>	SWITCH,
 
 				SER_IN       => SER_IN,
@@ -107,6 +107,7 @@ begin
 
 	ENABLE_N     <= '0';
 	DEACTIVATE_N <= '1';
+	CLK_OUT      <= LCLK;
 
 	MEM_T   <=     DEL_WE_N;		-- active low
 	WE_N    <= not XM_WE;
@@ -122,5 +123,12 @@ begin
 	p133: iobuf	PORT MAP(I => XM_WDAT(4), O => XM_RDAT(4), T => MEM_T, IO => XM_DIO(4));
 	p131: iobuf	PORT MAP(I => XM_WDAT(3), O => XM_RDAT(3), T => MEM_T, IO => XM_DIO(3));
 	p63:  iobuf	PORT MAP(I => WE_N,		  O => DEL_WE_N,   T => '0',   IO => XM_WE_N);
+
+	process(CLK40)
+	begin
+		if (rising_edge(CLK40)) then
+			LCLK <= not LCLK;
+		end if;
+	end process;
 
 end behavioral;

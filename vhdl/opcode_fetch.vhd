@@ -36,20 +36,19 @@ begin
 	process(CLK_I)
 	begin
 		if (rising_edge(CLK_I)) then
-			if (T2 = '1') then
-				if    (CLR = '1') then		LPC     <= X"0000";
-				elsif (CE  = '1') then
-					case PC_OP is
-						when PC_NEXT =>		LPC  <= LPC + 1;		-- next address
-						when PC_JMP  =>		LPC  <= JDATA;			-- jump address
-						when PC_RETL =>		LRET <= RDATA;			-- return address L
+			if    (CLR = '1') then
+				LPC     <= X"0000";
+			elsif (CE  = '1' and T2 = '1') then
+				case PC_OP is
+					when PC_NEXT =>		LPC  <= LPC + 1;		-- next address
+					when PC_JMP  =>		LPC  <= JDATA;			-- jump address
+					when PC_RETL =>		LRET <= RDATA;			-- return address L
 										LPC  <= LPC + 1;
-						when PC_RETH =>		LPC  <= RDATA & LRET;	-- return address H
-						when PC_JPRR =>		LPC  <= RR;
-						when PC_WAIT =>
-						when others  =>		LPC  <= X"0008";		-- interrupt
-					end case;
-				end if;
+					when PC_RETH =>		LPC  <= RDATA & LRET;	-- return address H
+					when PC_JPRR =>		LPC  <= RR;
+					when PC_WAIT =>
+					when others  =>		LPC  <= X"0008";		-- interrupt
+				end case;
 			end if;
 		end if;
 	end process;

@@ -10,8 +10,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity uart_baudgen is
 	PORT(	CLK_I     : in  std_logic;
-			T2        : in  std_logic;
-			CLR       : in  std_logic;
+			RST_I     : in  std_logic;
 
 			RD        : in  std_logic;
 			WR        : in  std_logic;
@@ -29,16 +28,15 @@ architecture Behavioral of uart_baudgen is
 
 	COMPONENT baudgen
 	Generic(bg_clock_freq : integer; bg_baud_rate : integer);
-	PORT(
-		CLK_I : IN std_logic;
-		CLR   : IN std_logic;          
-		CE_16 : OUT std_logic
-		);
+	PORT(	CLK_I : IN std_logic;
+			RST_I : IN std_logic;
+			CE_16 : OUT std_logic
+			);
 	END COMPONENT;
 
 	COMPONENT uart
 	PORT(	CLK_I     : in std_logic;
-			CLR       : in std_logic;
+			RST_I     : in std_logic;
 			CE_16     : in std_logic;
 
 			TX_DATA   : in std_logic_vector(7 downto 0);
@@ -69,13 +67,13 @@ begin
 	GENERIC MAP(bg_clock_freq => 40000000, bg_baud_rate => 115200)
 	PORT MAP(
 		CLK_I => CLK_I,
-		CLR   => CLR,
+		RST_I => RST_I,
 		CE_16 => CE_16
 	);
 
 	urt: uart
 	PORT MAP(	CLK_I     => CLK_I,
-				CLR       => CLR,
+				RST_I     => RST_I,
 				CE_16     => CE_16,
 				TX_DATA   => LTX_DATA,
 				TX_FLAG   => TX_FLAG,
@@ -89,26 +87,24 @@ begin
 	process(CLK_I)
 	begin
 		if (rising_edge(CLK_I)) then
-			if (T2 = '1') then
-				if (CLR = '1') then
-						TX_FLAG <= '0';
-						LTX_DATA <= X"33";
-				else
-					if (RD = '1') then			-- read Rx data
-						LRX_READY    <= '0';
-					end if;
-
-					if (WR = '1') then			-- write Tx data
-						TX_FLAG  <= not TX_FLAG;
-						LTX_DATA <= TX_DATA;
-					end if;
-
-					if (RX_FLAG /= RX_OLD_FLAG) then
-						LRX_READY <= '1';
-					end if;
-
-					RX_OLD_FLAG <= RX_FLAG;
+			if (RST_I = '1') then
+				TX_FLAG <= '0';
+				LTX_DATA <= X"33";
+			else
+				if (RD = '1') then			-- read Rx data
+					LRX_READY    <= '0';
 				end if;
+
+				if (WR = '1') then			-- write Tx data
+					TX_FLAG  <= not TX_FLAG;
+					LTX_DATA <= TX_DATA;
+				end if;
+
+				if (RX_FLAG /= RX_OLD_FLAG) then
+					LRX_READY <= '1';
+				end if;
+
+				RX_OLD_FLAG <= RX_FLAG;
 			end if;
 		end if;
 	end process;

@@ -4,8 +4,7 @@ use IEEE.std_logic_unsigned.all;
 
 entity temperature is
 	PORT(	CLK_I			: in STD_LOGIC;
-			T2				: in STD_LOGIC;
-			CLR				: in STD_LOGIC;
+			RST_I			: in STD_LOGIC;
 			DATA_OUT		: out STD_LOGIC_VECTOR(7 downto 0);
 			TEMP_SPI		: out STD_LOGIC;
 			TEMP_SPO		: in STD_LOGIC;
@@ -17,9 +16,8 @@ end temperature;
 architecture behavioral of temperature is
 
 	component DS1722
-	PORT(	RESET			: in std_logic;
-			CLK_I			: in std_logic;
-			T2				: in std_logic;
+	PORT(	CLK_I			: in std_logic;
+			RST_I			: in std_logic;
 	
 			DATA_IN			: in std_logic_vector(7 downto 0);	
 			DATA_OUT		: out std_logic_vector(7 downto 0);	
@@ -49,8 +47,7 @@ begin
 
 	tsensor: DS1722
 	PORT MAP(	CLK_I 		=> CLK_I,
-				T2 			=> T2,
-				RESET 		=> CLR,
+				RST_I 		=> RST_I,
 				
 				DATA_IN 	=> TEMP_DATA_IN,
 				DATA_OUT	=> TEMP_DATA_OUT,
@@ -65,16 +62,18 @@ begin
 				TEMP_SCLK 	=> TEMP_SCLK
 			);
    
--- State machine to step though the process of getting data from the Digital Thermometer.
-	process (CLR, CLK_I)
+	-- State machine to step though the process of getting data
+	-- from the Digital Thermometer.
+	--
+	process (CLK_I)
 	begin
-		if (CLR = '1') then
-			TEMP_state   <= TEMP_IDLE;
-			TEMP_START   <= '0';
-			TEMP_ADDRESS <= "00000000";
-			TEMP_DATA_IN <= "00000000";
-		elsif (rising_edge(CLK_I)) then
-			if (T2 = '1') then
+		if (rising_edge(CLK_I)) then
+			if (RST_I = '1') then
+				TEMP_state   <= TEMP_IDLE;
+				TEMP_START   <= '0';
+				TEMP_ADDRESS <= "00000000";
+				TEMP_DATA_IN <= "00000000";
+			else
 				case TEMP_state is
 					when TEMP_IDLE =>
 						TEMP_START   <= '0';

@@ -4,7 +4,7 @@ use IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity UART_TX is 
 	PORT(	CLK_I      : in  std_logic;	
-			CLR        : in  std_logic;							-- RESET
+			RST_I      : in  std_logic;							-- RESET
 			CE_16      : in  std_logic;							-- BUAD rate clock
 			DATA       : in  std_logic_vector(7 downto 0);		-- DATA to be sent
 			DATA_FLAG  : in  std_logic;							-- toggle to send data
@@ -32,7 +32,7 @@ begin
 	begin
 		if (rising_edge(CLK_I)) then
 			CE_1 <= '0';
-			if (CLR = '1') then
+			if (RST_I = '1') then
 				C16 <= "0000";
 			elsif (CE_16 = '1') then
 				if (C16 = "1111") then
@@ -46,7 +46,7 @@ begin
 	process(CLK_I)
 	begin
 		if (rising_edge(CLK_I)) then
-			if (CLR = '1') then
+			if (RST_I = '1') then
 				SER_OUT     <= '1';
 				BUF         <= "11111111";
 				TODO        <= 0;

@@ -20,74 +20,59 @@ END testbench;
 ARCHITECTURE behavior OF testbench IS 
 
 	COMPONENT cpu_engine
-	PORT(	CLK      : in  std_logic;
-			CCK      : in  std_logic;
-			CLR      : in  std_logic;
-			Q_PC   : out std_logic_vector(15 downto 0);
-			Q_OPC  : out std_logic_vector( 7 downto 0);
-			Q_CAT  : out op_category;
-			Q_IMM  : out std_logic_vector(15 downto 0);
-			Q_CYC  : out cycle;
-
-			-- input/output
-			INT      : in  std_logic;
-			IO_ADR   : out std_logic_vector(7 downto 0);
-			IO_RD    : out std_logic;
-			IO_WR    : out std_logic;
-			IO_RDAT  : in  std_logic_vector( 7 downto 0);
-
-			-- memory
-			XM_ADR  : out std_logic_vector(15 downto 0);
-			XM_RDAT : in  std_logic_vector( 7 downto 0);
-			XM_WDAT : out std_logic_vector( 7 downto 0);
-			XM_WE   : out std_logic;
-			XM_CE   : out std_logic;
-
-			-- select signals
-			Q_SX    : out std_logic_vector(1 downto 0);
-			Q_SY    : out std_logic_vector(3 downto 0);
-			Q_OP    : out std_logic_vector(4 downto 0);
-			Q_SA    : out std_logic_vector(4 downto 0);
-			Q_SMQ   : out std_logic;
-
-			-- write enable/select signal
-			Q_WE_RR  : out std_logic;
-			Q_WE_LL  : out std_logic;
-			Q_WE_SP  : out SP_OP;
-
-			Q_RR     : out std_logic_vector(15 downto 0);
-			Q_LL     : out std_logic_vector(15 downto 0);
-			Q_SP     : out std_logic_vector(15 downto 0);
-			HALT       : out std_logic
+	PORT(
+		clk_i : IN std_logic;
+		dat_i : IN std_logic_vector(7 downto 0);
+		rst_i : IN std_logic;
+		ack_i : IN std_logic;
+		int : IN std_logic;          
+		dat_o : OUT std_logic_vector(7 downto 0);
+		adr_o : OUT std_logic_vector(15 downto 0);
+		cyc_o : OUT std_logic;
+		stb_o : OUT std_logic;
+		tga_o : OUT std_logic_vector(0 to 0);
+		we_o : OUT std_logic;
+		halt : OUT std_logic;
+		q_pc : OUT std_logic_vector(15 downto 0);
+		q_opc : OUT std_logic_vector(7 downto 0);
+		q_cat : OUT op_category;
+		q_imm : OUT std_logic_vector(15 downto 0);
+		q_cyc : OUT cycle;
+		q_sx : OUT std_logic_vector(1 downto 0);
+		q_sy : OUT std_logic_vector(3 downto 0);
+		q_op : OUT std_logic_vector(4 downto 0);
+		q_sa : OUT std_logic_vector(4 downto 0);
+		q_smq : OUT std_logic;
+		q_we_rr : OUT std_logic;
+		q_we_ll : OUT std_logic;
+		q_we_sp : OUT SP_OP;
+		q_rr : OUT std_logic_vector(15 downto 0);
+		q_ll : OUT std_logic_vector(15 downto 0);
+		q_sp : OUT std_logic_vector(15 downto 0)
 		);
 	END COMPONENT;
 
-	signal	CLK      : std_logic;
-	signal	CLR      : std_logic;
-	signal	Q_PC   : std_logic_vector(15 downto 0);
-	signal	Q_OPC  : std_logic_vector( 7 downto 0);
-	signal	Q_CAT  : op_category;
-	signal	Q_CYC  : cycle;
-	signal	Q_IMM  : std_logic_vector(15 downto 0);
+	signal	CLK_I   : std_logic;
+	signal	DAT_I   : std_logic_vector( 7 downto 0);
+	signal	DAT_O   : std_logic_vector( 7 downto 0);
+	signal	RST_I   : std_logic;
+	signal	ACK_I   : std_logic;
+	signal	ADR_O   : std_logic_vector(15 downto 0);
+	signal	CYC_O   : std_logic;
+	signal	STB_O   : std_logic;
+	signal	TGA_O   : std_logic_vector( 0 downto 0);		-- '1' if I/O
+	signal	WE_O    : std_logic;
 
-	signal	Q_SP     : std_logic_vector(15 downto 0);
-	signal	Q_LL     : std_logic_vector(15 downto 0);
-	signal	Q_RR     : std_logic_vector(15 downto 0);
+	signal	INT     : std_logic;
+	signal	HALT    : std_logic;
 
-	-- input/output
-	signal	INT      : std_logic;
-	signal	IO_RD    : std_logic;
-	signal	IO_ADR   : std_logic_vector( 7 downto 0);
-	signal	IO_WR    : std_logic;
-	signal	IO_RDAT  : std_logic_vector( 7 downto 0);
-	signal	HALT     : std_logic;
-
-			-- memory
-	signal	XM_ADR  : std_logic_vector(15 downto 0);
-	signal	XM_RDAT : std_logic_vector( 7 downto 0);
-	signal	XM_WDAT : std_logic_vector( 7 downto 0);
-	signal	XM_WE   : std_logic;
-	signal	XM_CE   : std_logic;
+			-- debug signals
+			--
+	signal	Q_PC    : std_logic_vector(15 downto 0);
+	signal	Q_OPC   : std_logic_vector( 7 downto 0);
+	signal	Q_CAT   : op_category;
+	signal	Q_IMM   : std_logic_vector(15 downto 0);
+	signal	Q_CYC   : cycle;
 
 			-- select signals
 	signal	Q_SX    : std_logic_vector(1 downto 0);
@@ -97,80 +82,80 @@ ARCHITECTURE behavior OF testbench IS
 	signal	Q_SMQ   : std_logic;
 
 			-- write enable/select signal
-	signal	Q_WE_RR  : std_logic;
-	signal	Q_WE_LL  : std_logic;
-	signal	Q_WE_SP  : SP_OP;
+	signal	Q_WE_RR : std_logic;
+	signal	Q_WE_LL : std_logic;
+	signal	Q_WE_SP : SP_OP;
 
-	signal clk_counter : INTEGER := 0;
+	signal	Q_RR    : std_logic_vector(15 downto 0);
+	signal	Q_LL    : std_logic_vector(15 downto 0);
+	signal	Q_SP    : std_logic_vector(15 downto 0);
+	    
+	signal	clk_counter : INTEGER := 0;
 
 BEGIN
 
-	uut: cpu_engine PORT MAP(
-		CLK        => CLK,
-		CCK        => CLK,
-		CLR        => CLR,
-		Q_PC     => Q_PC,
-		Q_OPC    => Q_OPC,
-		Q_CAT    => Q_CAT,
-		Q_IMM    => Q_IMM,
-		Q_CYC    => Q_CYC,
-
-		INT        => INT,
-		IO_ADR     => IO_ADR,
-		IO_RD      => IO_RD,
-		IO_WR      => IO_WR,
-		IO_RDAT    => IO_RDAT,
-
-		XM_ADR     => XM_ADR,
-		XM_RDAT    => XM_RDAT,
-		XM_WDAT    => XM_WDAT,
-		XM_WE      => XM_WE,
-		XM_CE      => XM_CE,
-
-		Q_SX     => Q_SX,
-		Q_SY     => Q_SY,
-		Q_OP     => Q_OP,
-		Q_SA     => Q_SA,
-		Q_SMQ    => Q_SMQ,
-
-		Q_WE_RR  => Q_WE_RR,
-		Q_WE_LL  => Q_WE_LL,
-		Q_WE_SP  => Q_WE_SP,
-
-		Q_RR     => Q_RR,
-		Q_LL     => Q_LL,
-		Q_SP     => Q_SP,
-		HALT     => HALT
+	uut: cpu_engine
+	PORT MAP(
+		clk_i => clk_i,
+		dat_i => dat_i,
+		dat_o => dat_o,
+		rst_i => rst_i,
+		ack_i => ack_i,
+		adr_o => adr_o,
+		cyc_o => cyc_o,
+		stb_o => stb_o,
+		tga_o => tga_o,
+		we_o => we_o,
+		int => int,
+		halt => halt,
+		q_pc => q_pc,
+		q_opc => q_opc,
+		q_cat => q_cat,
+		q_imm => q_imm,
+		q_cyc => q_cyc,
+		q_sx => q_sx,
+		q_sy => q_sy,
+		q_op => q_op,
+		q_sa => q_sa,
+		q_smq => q_smq,
+		q_we_rr => q_we_rr,
+		q_we_ll => q_we_ll,
+		q_we_sp => q_we_sp,
+		q_rr => q_rr,
+		q_ll => q_ll,
+		q_sp => q_sp
 	);
 
+	ack_i <= stb_o;
+
 -- *** Test Bench - User Defined Section ***
-	PROCESS -- clock process for CLK,
+	PROCESS -- clock process for CLK_I,
 	BEGIN
 		CLOCK_LOOP : LOOP
-			CLK <= transport '0';
+			CLK_I <= transport '0';
 			WAIT FOR 1 ns;
-			CLK <= transport '1';
+			CLK_I <= transport '1';
 			WAIT FOR 1 ns;
 			WAIT FOR 11 ns;
-			CLK <= transport '0';
+			CLK_I <= transport '0';
 			WAIT FOR 12 ns;
 		END LOOP CLOCK_LOOP;
 	END PROCESS;
 
-	PROCESS(CLK)
+	PROCESS(CLK_I)
 	BEGIN
-		if (rising_edge(CLK)) then
+		if (rising_edge(CLK_I)) then
 			if (Q_CYC = M1) then
 				CLK_COUNTER <= CLK_COUNTER + 1;
 			end if;
 
-			if (XM_ADR(0) = '0') then		IO_RDAT <= X"44";	-- data
-			else							IO_RDAT <= X"01";	-- control
+			if (ADR_O(0) = '0') then		DAT_I <= X"44";	-- data
+			else							DAT_I <= X"01";	-- control
 			end if;
 
 			case CLK_COUNTER is
-				when 0		=>	CLR <= '1';   INT <= '0';
-				when 1		=>	CLR <= '0';
+				when 0		=>	RST_I <= '1';   INT <= '0';
+				when 1		=>	RST_I <= '0';
 --				when 20		=>	INT <= '1';
 
 

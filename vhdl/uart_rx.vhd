@@ -4,7 +4,7 @@ use IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity UART_RX is
 	PORT(	CLK_I     : in  std_logic;
-			CLR       : in  std_logic;
+			RST_I     : in  std_logic;
 			CE_16     : in  std_logic;			-- 16 times baud rate 
 			SER_IN    : in  std_logic;			-- Serial input line
 
@@ -28,7 +28,7 @@ begin
 	process(CLK_I)
 	begin
 		if (rising_edge(CLK_I)) then	
-			if (CLR = '1') then
+			if (RST_I = '1') then
 				SER_IN1 <= '1';
 				SER_HOT <= '1';
 			else
@@ -52,7 +52,7 @@ begin
 		STOP_POS  := STOP_BIT and POSITION(3 downto 2) = "11";		-- 3/4 of stop bit
 
 		if (rising_edge(CLK_I)) then	
-			if (CLR = '1') then
+			if (RST_I = '1') then
 				LDATA_FLAG <= '0';
 				POSITION   <= X"00";	-- idle
 				BUF        <= "1111111111";

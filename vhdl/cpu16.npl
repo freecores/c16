@@ -57,8 +57,5 @@ DEPASSOC board_cpu board_cpu.ucf SYSTEM
 p_ModelSimSignalWin=xstvhd, virtexe, Module VHDL Test Bench.t_MSimulateBehavioralVhdlModel, 1056198882, False
 p_ModelSimStructWin=xstvhd, virtexe, Module VHDL Test Bench.t_MSimulateBehavioralVhdlModel, 1056198882, False
 _SynthExtractROM=xstvhd, virtexe, Schematic.t_synthesize, 1064066560, False
-[STATUS-ALL]
-board_cpu.ncdFile=WARNINGS,1065278577
-board_cpu.ngcFile=WARNINGS,1065278577
 [STRATEGY-LIST]
 Normal=True

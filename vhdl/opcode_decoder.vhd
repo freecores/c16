@@ -16,9 +16,9 @@ entity opcode_decoder is
 			CLR    : IN  std_logic;
 			CE     : IN  std_logic;
 			OPCODE : IN  std_logic_vector(7 downto 0);
-			OP_CYC : IN  cycle;
-			INT    : IN  std_logic;
-			RRZ    : IN  std_logic;
+			OP_CYC : IN  cycle;					-- current cycle (M1, M2, ...)
+			INT    : IN  std_logic;				-- interrupt
+			RRZ    : IN  std_logic;				-- RR is zero
 
 			OP_CAT : OUT op_category;
 
@@ -32,12 +32,14 @@ entity opcode_decoder is
 			-- write enable/select signal
 			D_WE_RR  : out std_logic;
 			D_WE_LL  : out std_logic;
-			D_WE_M   : out std_logic;
 			D_WE_SP  : out SP_OP;
 
+			D_RD_O   : out std_logic;
+			D_WE_O   : out std_logic;
+			D_LOCK   : out std_logic;
+
 			-- input/output
-			IO_RD    : out std_logic;
-			IO_WR    : out std_logic;
+			D_IO     : out std_logic;
 
 			PC_OP  : out std_logic_vector(2 downto 0);
 
@@ -98,26 +100,24 @@ begin
 	process(CLK_I)
 	begin
 		if (rising_edge(CLK_I)) then
-			if (T2 = '1') then
-				if (CLR = '1') then
-					DISABLE_CNT <= "0001";	-- 1 x disabled
-					INT_ACK     <= '0';
-					HALTED      <= '0';
-				elsif (CE = '1') then
-					if (DISABLE_INT = '1') then
-						DISABLE_CNT <= DISABLE_CNT + 1;
-					elsif (ENABLE_INT  = '1' and DISABLE_CNT /= 0) then
-						DISABLE_CNT <= DISABLE_CNT - 1;
-					end if;
-
-					if (UNHALT_REQ = '1') then
-						HALTED <= '0';
-					elsif (HALT_REQ = '1') then
-						HALTED <= '1';
-					end if;
-
-						INT_ACK <= SERVE_INT;
+			if (CLR = '1') then
+				DISABLE_CNT <= "0001";	-- 1 x disabled
+				INT_ACK     <= '0';
+				HALTED      <= '0';
+			elsif (CE = '1' and T2 = '1') then
+				if (DISABLE_INT = '1') then
+					DISABLE_CNT <= DISABLE_CNT + 1;
+				elsif (ENABLE_INT  = '1' and DISABLE_CNT /= 0) then
+					DISABLE_CNT <= DISABLE_CNT - 1;
 				end if;
+
+				if (UNHALT_REQ = '1') then
+					HALTED <= '0';
+				elsif (HALT_REQ = '1') then
+					HALTED <= '1';
+				end if;
+
+				INT_ACK <= SERVE_INT;
 			end if;
 		end if;
 	end process;
@@ -151,10 +151,11 @@ begin
 		D_SMQ       <= '0';
 		D_WE_RR     <= '0';
 		D_WE_LL     <= '0';
-		D_WE_M      <= '0';
 		D_WE_SP     <= SP_NOP;
-		IO_RD       <= '0';
-		IO_WR       <= '0';
+		D_WE_O      <= '0';
+		D_RD_O      <= '0';
+		D_LOCK      <= '0';
+		D_IO        <= '0';
 		PC_OP       <= PC_NEXT;
 		LAST        <= M1;			-- default: single cycle opcode (M1 only)
 		ENABLE_INT  <= '0';
@@ -172,8 +173,9 @@ begin
 			D_SX        <= SX_PC;
 			D_SY        <= SY_SY0;		-- PC + 0 (current PC)
 			D_SA        <= ADR_dSP;
+			D_WE_O      <= IS_M1_M2;
+			D_LOCK      <= IS_M1;
 			PC_OP       <= pc(IS_M1, PC_INT);
-			D_WE_M      <= IS_M1_M2;
 			D_SMQ       <= IS_M1;
 			D_WE_SP     <= sp(IS_M1_M2, SP_LOAD);
 			DISABLE_INT <= '1';
@@ -341,8 +343,9 @@ begin
 					D_SX    <= SX_PC;
 					D_SY    <= SY_SY3;		-- PC + 3
 					D_SA    <= ADR_dSP;
+					D_WE_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
 					PC_OP   <= pc(IS_M2, PC_JMP);
-					D_WE_M  <= IS_M1_M2;
 					D_SMQ   <= IS_M1;
 					D_WE_SP <= sp(IS_M1_M2, SP_LOAD);
 
@@ -353,8 +356,9 @@ begin
 					D_SX    <= SX_PC;
 					D_SY    <= SY_SY1;		-- PC + 1
 					D_SA    <= ADR_dSP;
+					D_WE_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
 					PC_OP   <= pc(IS_M1, PC_JPRR);
-					D_WE_M  <= IS_M1_M2;
 					D_SMQ   <= IS_M1;
 					D_WE_SP <= sp(IS_M1_M2, SP_LOAD);
 
@@ -368,6 +372,8 @@ begin
 
 					LAST    <= M5;
 					D_SA    <= ADR_SPi;		-- read address: (SP)+
+					D_RD_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
 					D_WE_SP <= sp(IS_M1_M2, SP_INC);
 					case OP_CYC is
 						when M1 =>	PC_OP   <= PC_WAIT;
@@ -378,12 +384,14 @@ begin
 					end case;
 
 				when "0001000" =>
-					OP_CAT <= MOVE_SPi_RR;
-					D_SX   <= SX_RR;
-					D_SY   <= SY_UM;
-					D_SA   <= ADR_SPi;
-					LAST   <= M3;
-					PC_OP  <= pc(IS_M1_M2, PC_WAIT);
+					OP_CAT  <= MOVE_SPi_RR;
+					D_SX    <= SX_RR;
+					D_SY    <= SY_UM;
+					D_SA    <= ADR_SPi;
+					D_RD_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
+					LAST    <= M3;
+					PC_OP   <= pc(IS_M1_M2, PC_WAIT);
 					D_WE_RR <= IS_M2_M3;
 					D_WE_SP <= sp(IS_M1_M2, SP_INC);
 					D_OP    <= mix(IS_M3);
@@ -395,6 +403,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_SM;
 					D_SA    <= ADR_SPi;
+					D_RD_O  <= IS_M1;
 					D_WE_RR <= IS_M2;
 					PC_OP   <= pc(IS_M1, PC_WAIT);
 					D_WE_SP <= sp(IS_M1, SP_INC);
@@ -406,6 +415,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_SPi;
+					D_RD_O  <= IS_M1;
 					PC_OP   <= pc(IS_M1, PC_WAIT);
 					D_WE_SP <= sp(IS_M1, SP_INC);
 					D_WE_RR <= IS_M2;
@@ -416,6 +426,8 @@ begin
 					D_SX    <= SX_LL;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_SPi;
+					D_RD_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
 					PC_OP   <= pc(IS_M1_M2, PC_WAIT);
 					D_WE_SP <= sp(IS_M1_M2, SP_INC);
 					D_WE_LL <= IS_M2_M3;
@@ -428,6 +440,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_SM;
 					D_SA    <= ADR_SPi;
+					D_RD_O  <= IS_M1;
 					PC_OP   <= pc(IS_M1, PC_WAIT);
 					D_WE_SP <= sp(IS_M1, SP_INC);
 					D_WE_LL <= IS_M2;
@@ -439,6 +452,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_SPi;
+					D_RD_O  <= IS_M1;
 					PC_OP   <= pc(IS_M1, PC_WAIT);
 					D_WE_SP <= sp(IS_M1, SP_INC);
 					D_WE_LL <= IS_M2;
@@ -450,10 +464,11 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_SA    <= ADR_dSP;
+					D_WE_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
 					PC_OP   <= pc(IS_M1, PC_WAIT);
 					D_WE_SP <= sp(IS_M1_M2, SP_LOAD);
 					D_SMQ   <= IS_M1;
-					D_WE_M  <= IS_M1_M2;
 
 				when "0001111" =>
 					OP_CAT  <= MOVE_R_dSP;
@@ -461,8 +476,8 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_SA    <= ADR_dSP;
+					D_WE_O  <= '1';
 					D_WE_SP <= SP_LOAD;
-					D_WE_M  <= '1';
 
 				-- 11111111111111111111111111111111111111111111111111111111111111111111
 				when "0010000" =>
@@ -699,8 +714,9 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_SY0;
 					D_SA    <= ADR_dSP;
+					D_WE_O  <= '1';
+					D_LOCK  <= IS_M1;
 					D_WE_SP <= SP_LOAD;
-					D_WE_M  <= '1';
 					PC_OP   <= pc(IS_M1, PC_WAIT);
 
 				when "0101101" =>
@@ -709,17 +725,18 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_SY0;
 					D_SA    <= ADR_dSP;
+					D_WE_O  <= IS_M1;
 					D_WE_SP <= SP_LOAD;
-					D_WE_M  <= IS_M1;
 
 				when "0101110" =>
 					OP_CAT  <= IN_ci_RU;
 					LAST    <= M2;
 					D_OP    <= ALU_MOVE_Y;
 					D_SX    <= SX_ANY;
-					D_SY    <= SY_IO;
+					D_SY    <= SY_UM;
 					D_SA    <= ADR_IO;
-					IO_RD   <= IS_M2;
+					D_RD_O  <= IS_M1;
+					D_IO    <= IS_M1;
 					D_WE_RR <= IS_M2;
 
 				when "0101111" =>
@@ -729,7 +746,8 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_SA    <= ADR_IO;
-					IO_WR   <= IS_M2;
+					D_WE_O  <= IS_M1;
+					D_IO    <= IS_M1;
 
 				-- 33333333333333333333333333333333333333333333333333333333333333333333
 				when "0110000" =>
@@ -860,8 +878,9 @@ begin
 					D_SX    <= SX_LL;
 					D_SY    <= SY_SY0;
 					D_SA    <= hadr(IS_M2, ADR_cRR_H);
+					D_WE_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
 					D_SMQ   <= IS_M2;
-					D_WE_M  <= IS_M1_M2;
 
 				when "1000010" =>
 					OP_CAT  <= MOVE_L_cRR;
@@ -869,7 +888,7 @@ begin
 					D_SX    <= SX_LL;
 					D_SY    <= SY_SY0;
 					D_SA    <= ADR_cRR_L;
-					D_WE_M  <= IS_M1;
+					D_WE_O  <= IS_M1;
 
 				when "1000011" =>
 					OP_CAT  <= MOVE_RR_LL;
@@ -886,8 +905,9 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_SA    <= hadr(IS_M2, ADR_cLL_H);
+					D_WE_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
 					D_SMQ   <= IS_M2;
-					D_WE_M  <= IS_M1_M2;
 
 				when "1000101" =>
 					OP_CAT  <= MOVE_R_cLL;
@@ -895,7 +915,7 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_SA    <= ADR_cLL_L;
-					D_WE_M  <= IS_M1;
+					D_WE_O  <= IS_M1;
 
 				when "1000110" =>
 					OP_CAT  <= MOVE_cRR_RR;
@@ -906,6 +926,8 @@ begin
 					PC_OP   <= pc(IS_M1_M2, PC_WAIT);
 					D_OP    <= mix(IS_M3);
 					D_SA    <= hadr(IS_M2, ADR_cRR_H);
+					D_RD_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
 
 				when "1000111" =>
 					OP_CAT  <= MOVE_cRR_RS;
@@ -914,6 +936,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_SM;
 					D_SA    <= ADR_cRR_L;
+					D_RD_O  <= IS_M1;
 					D_WE_RR <= IS_M2;
 					PC_OP   <= pc(IS_M1, PC_WAIT);
 
@@ -924,6 +947,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_cRR_L;
+					D_RD_O  <= IS_M1;
 					D_WE_RR <= IS_M2;
 					PC_OP  <= pc(IS_M1, PC_WAIT);
 
@@ -936,6 +960,8 @@ begin
 					D_OP    <= mix(IS_M4);
 					D_WE_RR <= IS_M3_M4;
 					D_SA    <= hadr(IS_M3, ADR_cI16_H);
+					D_RD_O  <= IS_M2_M3;
+					D_LOCK  <= IS_M2;
 
 				when "1001010" =>
 					OP_CAT  <= MOVE_ci_RS;
@@ -944,6 +970,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_SM;
 					D_SA    <= ADR_cI16_L;
+					D_RD_O  <= IS_M2;
 					D_WE_RR <= IS_M3;
 
 				when "1001011" =>
@@ -953,6 +980,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_cI16_L;
+					D_RD_O  <= IS_M2;
 					D_WE_RR <= IS_M3;
 
 				when "1001100" =>
@@ -963,6 +991,8 @@ begin
 					PC_OP   <= pc(IS_M3, PC_WAIT);
 					D_OP    <= mix(IS_M4);
 					D_SA    <= hadr(IS_M3, ADR_cI16_H);
+					D_RD_O  <= IS_M2_M3;
+					D_LOCK  <= IS_M2;
 					D_WE_LL <= IS_M3_M4;
 
 				when "1001101" =>
@@ -972,6 +1002,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_SM;
 					D_SA    <= ADR_cI16_L;
+					D_RD_O  <= IS_M2;
 					D_WE_LL <= IS_M3;
 
 				when "1001110" =>
@@ -981,6 +1012,7 @@ begin
 					D_SX    <= SX_ANY;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_cI16_L;
+					D_RD_O  <= IS_M2;
 					D_WE_LL <= IS_M3;
 
 				when "1001111" =>
@@ -1060,8 +1092,9 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_OP    <= ALU_X_OR_Y;
-					D_WE_M  <= not IS_M1;		-- M2 or M3
 					D_SA    <= hadr(IS_M3, ADR_cI16_H);
+					D_WE_O  <= IS_M2_M3;
+					D_LOCK  <= IS_M2;
 					D_SMQ   <= IS_M3;
 
 				when "1011011" =>
@@ -1070,8 +1103,8 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_OP    <= ALU_X_OR_Y;
-					D_WE_M  <= IS_M2;
 					D_SA    <= ADR_cI16_L;
+					D_WE_O  <= IS_M2;
 
 				when "1011100" =>		-- long offset / long move
 					OP_CAT  <= MOVE_RR_uSP;
@@ -1079,9 +1112,10 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_OP    <= ALU_X_OR_Y;
-					D_WE_M  <= not IS_M1;
-					D_SMQ   <= IS_M3;
 					D_SA    <= hadr(IS_M3, ADR_16SP_H);
+					D_WE_O  <= IS_M2_M3;
+					D_LOCK  <= IS_M2;
+					D_SMQ   <= IS_M3;
 
 				when "1011101" =>		-- short offset / long move
 					OP_CAT  <= MOVE_RR_uSP;
@@ -1089,9 +1123,10 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_OP    <= ALU_X_OR_Y;
-					D_WE_M  <= IS_M1_M2;
-					D_SMQ   <= IS_M2;
 					D_SA    <= hadr(IS_M2, ADR_8SP_H);
+					D_WE_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
+					D_SMQ   <= IS_M2;
 
 				when "1011110" =>		-- long offset / short move
 					OP_CAT  <= MOVE_R_uSP;
@@ -1099,9 +1134,9 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_OP    <= ALU_X_OR_Y;
-					D_WE_M  <= IS_M2;
-					D_OP    <= ALU_X_OR_Y;
 					D_SA    <= ADR_16SP_L;
+					D_WE_O  <= IS_M2;
+					D_OP    <= ALU_X_OR_Y;
 
 				when "1011111" =>		-- short offset / short move
 					OP_CAT  <= MOVE_R_uSP;
@@ -1109,9 +1144,9 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SY0;
 					D_OP    <= ALU_X_OR_Y;
-					D_WE_M  <= IS_M1;
-					D_OP    <= ALU_X_OR_Y;
 					D_SA    <= ADR_8SP_L;
+					D_WE_O  <= IS_M1;
+					D_OP    <= ALU_X_OR_Y;
 
 				-- 66666666666666666666666666666666666666666666666666666666666666666666
 				when "1100000" =>	-- long offset, long move
@@ -1121,8 +1156,10 @@ begin
 					D_SY   <= SY_UM;
 					PC_OP   <= pc(IS_M3, PC_WAIT);
 					D_OP    <= mix(IS_M3_M4);
-					D_WE_RR <= IS_M3_M4;
 					D_SA    <= hadr(IS_M3, ADR_16SP_H);
+					D_RD_O  <= IS_M2_M3;
+					D_LOCK  <= IS_M2;
+					D_WE_RR <= IS_M3_M4;
 
 				when "1100001" =>	-- short offset, long move
 					OP_CAT  <= MOVE_uSP_RR;
@@ -1131,8 +1168,10 @@ begin
 					D_SY    <= SY_UM;
 					PC_OP   <= pc(IS_M2, PC_WAIT);
 					D_OP    <= mix(IS_M3);
-					D_WE_RR <= IS_M2_M3;
 					D_SA    <= hadr(IS_M2, ADR_8SP_H);
+					D_RD_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
+					D_WE_RR <= IS_M2_M3;
 
 				when "1100010" =>	-- long offset, short move
 					OP_CAT  <= MOVE_uSP_RS;
@@ -1141,6 +1180,7 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SM;
 					D_SA    <= ADR_16SP_L;
+					D_RD_O  <= IS_M2;
 					D_WE_RR <= IS_M3;
 
 				when "1100011" =>	-- short offset, short move
@@ -1150,6 +1190,7 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SM;
 					D_SA    <= ADR_8SP_L;
+					D_RD_O  <= IS_M1;
 					D_WE_RR <= IS_M2;
 
 				when "1100100" =>	-- long offset, short move
@@ -1159,6 +1200,7 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_16SP_L;
+					D_RD_O  <= IS_M2;
 					D_WE_RR <= IS_M3;
 
 				when "1100101" =>	-- short offset, short move
@@ -1168,6 +1210,7 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_8SP_L;
+					D_RD_O  <= IS_M1;
 					D_WE_RR <= IS_M2;
 
 				when "1100110" =>	-- long offset, long move
@@ -1177,8 +1220,10 @@ begin
 					D_SY    <= SY_UM;
 					PC_OP   <= pc(IS_M3, PC_WAIT);
 					D_OP    <= mix(IS_M4);
-					D_WE_LL <= IS_M3_M4;
 					D_SA    <= hadr(IS_M3, ADR_8SP_H);
+					D_RD_O  <= IS_M2_M3;
+					D_LOCK  <= IS_M2;
+					D_WE_LL <= IS_M3_M4;
 
 				when "1100111" =>	-- short offset, long move
 					OP_CAT  <= MOVE_uSP_LL;
@@ -1187,8 +1232,10 @@ begin
 					D_SY    <= SY_UM;
 					PC_OP   <= pc(IS_M2, PC_WAIT);
 					D_OP    <= mix(IS_M3);
-					D_WE_LL <= IS_M2_M3;
 					D_SA    <= hadr(IS_M2, ADR_8SP_H);
+					D_RD_O  <= IS_M1_M2;
+					D_LOCK  <= IS_M1;
+					D_WE_LL <= IS_M2_M3;
 
 				when "1101000" =>	-- long offset, short move
 					OP_CAT  <= MOVE_uSP_LS;
@@ -1197,6 +1244,7 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SM;
 					D_SA    <= ADR_16SP_L;
+					D_RD_O  <= IS_M2;
 					D_WE_LL <= IS_M3;
 
 				when "1101001" =>	-- short offset, short move
@@ -1206,6 +1254,7 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_SM;
 					D_SA    <= ADR_8SP_L;
+					D_RD_O  <= IS_M1;
 					D_WE_LL <= IS_M2;
 
 				when "1101010" =>	-- long offset, short move
@@ -1215,6 +1264,7 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_16SP_L;
+					D_RD_O  <= IS_M2;
 					D_WE_LL <= IS_M3;
 
 				when "1101011" =>	-- short offset, short move
@@ -1224,6 +1274,7 @@ begin
 					D_SX    <= SX_RR;
 					D_SY    <= SY_UM;
 					D_SA    <= ADR_8SP_L;
+					D_RD_O  <= IS_M1;
 					D_WE_LL <= IS_M2;
 
 				when "1101100" =>
@@ -1246,7 +1297,8 @@ begin
 					OP_CAT  <= MOVE_dRR_dLL;
 					LAST    <= M3;
 					D_WE_RR <= IS_M1;
-					D_WE_M  <= IS_M2;
+					D_RD_O  <= IS_M1;
+					D_WE_O  <= IS_M2;
 					D_WE_LL <= IS_M3;
 					PC_OP  <= pc(IS_M1_M2, PC_WAIT);
 
@@ -1271,7 +1323,8 @@ begin
 					OP_CAT  <= MOVE_RRi_LLi;
 					LAST    <= M3;
 					D_WE_RR <= IS_M1;
-					D_WE_M  <= IS_M2;
+					D_RD_O  <= IS_M1;
+					D_WE_O  <= IS_M2;
 					D_WE_LL <= IS_M3;
 					PC_OP  <= pc(IS_M1_M2, PC_WAIT);
 
