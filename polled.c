@@ -47,11 +47,11 @@ void print_hex(char * dest, unsigned int value, const char * hex)
 //-----------------------------------------------------------------------------
 void print_unsigned(char * dest, unsigned int value)
 {
-   if (value >= 10000)   { *dest++ = '0' + value / 10000;   value %= 10000; }
-   if (value >=  1000)   { *dest++ = '0' + value /  1000;   value %=  1000; }
-   if (value >=   100)   { *dest++ = '0' + value /   100;   value %=   100; }
-   if (value >=    10)   { *dest++ = '0' + value /    10;   value %=    10; }
-   *dest++ = '0' + value;
+   if (value >= 10000)    *dest++ = '0' + (value / 10000);
+   if (value >=  1000)    *dest++ = '0' + (value /  1000) % 10;
+   if (value >=   100)    *dest++ = '0' + (value /   100) % 10;
+   if (value >=    10)    *dest++ = '0' + (value /    10) % 10;
+   *dest++ = '0' + value % 10;
    *dest = 0;
 }
 //-----------------------------------------------------------------------------
@@ -253,6 +253,19 @@ char c;
 ********************************************************************************
 *******************************************************************************/
 
+struct test
+{
+   int a;
+   char b;
+   int c;
+};
+
+void show_test(struct test t)
+{
+   printf("t.a = %d\n", t.a);
+   printf("t.b = %c\n", t.b);
+   printf("t.c = %d\n", t.c);
+}
 //-----------------------------------------------------------------------------
 void display_memory(unsigned char * address)
 {
@@ -284,8 +297,6 @@ char            noprompt;
 char            last_c;
 unsigned char * address;
 
-   ASM(" MOVE #0x05, RR");            // RxInterrupt enable bit
-   ASM(" OUT  R, (OUT_INT_MASK)");
    for (;;)
       {
         last_c = c;
@@ -304,6 +315,13 @@ unsigned char * address;
                      }
                   noprompt = 1;
                   break;
+
+             case 'a':
+                  {
+                    char t[] = { 1, '=', 2 };
+                    // show_test(t);
+                    break;
+                  }
 
              case 'D':
              case 'd':
