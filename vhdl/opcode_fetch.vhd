@@ -33,24 +33,23 @@ begin
 
 	PC <= LPC;
 
-	process(CLK_I)
+	process(CLK_I, CLR)
 	begin
-		if (rising_edge(CLK_I)) then
-			if    (CLR = '1') then
-				LPC     <= X"0000";
-			elsif (CE  = '1' and T2 = '1') then
-				case PC_OP is
-					when PC_NEXT =>		LPC  <= LPC + 1;		-- next address
-					when PC_JMP  =>		LPC  <= JDATA;			-- jump address
-					when PC_RETL =>		LRET <= RDATA;			-- return address L
-										LPC  <= LPC + 1;
-					when PC_RETH =>		LPC  <= RDATA & LRET;	-- return address H
-					when PC_JPRR =>		LPC  <= RR;
-					when PC_WAIT =>
-					when others  =>		LPC  <= X"0008";		-- interrupt
-				end case;
-			end if;
+		if (CLR = '1') then
+			LPC     <= X"0000";
+		elsif ((rising_edge(CLK_I) and T2 = '1') and CE = '1' ) then
+			case PC_OP is
+				when PC_NEXT =>		LPC  <= LPC + 1;		-- next address
+				when PC_JMP  =>		LPC  <= JDATA;			-- jump address
+				when PC_RETL =>		LRET <= RDATA;			-- return address L
+									LPC  <= LPC + 1;
+				when PC_RETH =>		LPC  <= RDATA & LRET;	-- return address H
+				when PC_JPRR =>		LPC  <= RR;
+				when PC_WAIT =>
+
+				when others  =>		LPC  <= X"0008";		-- interrupt
+			end case;
 		end if;
 	end process;
-
+	
 end Behavioral;

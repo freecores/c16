@@ -327,16 +327,15 @@ begin
 				DOA   => OPC_1(7 downto 7),		DOB   => OUT_1(7 downto 7)
 			);
 
-	process(CLK_I)
+	process(CLK_I)    -- new
 	begin
-		if (rising_edge(CLK_I)) then
-			if (T2 = '1') then
-				if (CE = '1') then
-					LADR <= ADR(15 downto 12);
-				end if;
+		if (rising_edge(CLK_I) and T2 = '1') then
+			if (CE = '1') then
+				LADR <= ADR(15 downto 12);
 			end if;
 		end if;
 	end process;
+	
 
 	process(LADR, OUT_0, OUT_1)
 	begin
@@ -350,11 +349,9 @@ begin
 
 	process(CLK_I)
 	begin
-		if (rising_edge(CLK_I)) then
-			if (T2 = '0') then
-				if (CE = '1') then
-					LPC <= PC(15 downto 12);
-				end if;
+		if (rising_edge(CLK_I) and T2 = '0') then
+			if (CE = '1') then
+				LPC <= PC(15 downto 12);
 			end if;
 		end if;
 	end process;

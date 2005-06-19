@@ -98,28 +98,26 @@ begin
 	HLT    <= HALTED;	-- show when CPU is halted
 	-- HLT    <= '1' when DISABLE_CNT = 0 else '0';	-- show when ints enabled
 
-	process(CLK_I)
+	process(CLK_I, CLR)
 	begin
-		if (rising_edge(CLK_I)) then
-			if (CLR = '1') then
-				DISABLE_CNT <= "0001";	-- 1 x disabled
-				INT_M2      <= '0';
-				HALTED      <= '0';
-			elsif (CE = '1' and T2 = '1') then
-				if (DISABLE_INT = '1') then
-					DISABLE_CNT <= DISABLE_CNT + 1;
-				elsif (ENABLE_INT  = '1' and DISABLE_CNT /= 0) then
-					DISABLE_CNT <= DISABLE_CNT - 1;
-				end if;
-
-				if (UNHALT_REQ = '1') then
-					HALTED <= '0';
-				elsif (HALT_REQ = '1') then
-					HALTED <= '1';
-				end if;
-
-				INT_M2 <= INT_M1;
+		if (CLR = '1') then
+			DISABLE_CNT <= "0001";	-- 1 x disabled
+			INT_M2      <= '0';
+			HALTED      <= '0';
+		elsif ((rising_edge(CLK_I) and T2 = '1') and CE = '1' ) then
+			if (DISABLE_INT = '1') then
+				DISABLE_CNT <= DISABLE_CNT + 1;
+			elsif (ENABLE_INT  = '1' and DISABLE_CNT /= 0) then
+				DISABLE_CNT <= DISABLE_CNT - 1;
 			end if;
+
+			if (UNHALT_REQ = '1') then
+				HALTED <= '0';
+			elsif (HALT_REQ = '1') then
+				HALTED <= '1';
+			end if;
+
+			INT_M2 <= INT_M1;
 		end if;
 	end process;
 

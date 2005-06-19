@@ -207,7 +207,6 @@ architecture Behavioral of cpu_engine is
 												 
 	signal	RRZ      : std_logic;
 	signal	OC_JD    : std_logic_vector(15 downto 0);
-	signal	C_MQ     : std_logic_vector(7 downto 0);
 
 	-- select signals
 	signal	C_SX     : std_logic_vector(1 downto 0);
@@ -366,7 +365,7 @@ begin
 		end if;
 	end process;
 
-	process(T2, M_PC, ADR, C_IO)
+	process(T2, M_PC, ADR, C_IO, C_RD_O, C_WE_O)
 	begin
 		if (T2 = '0') then									-- opcode fetch
 			EXTERN <= M_PC(15) or M_PC(14) or M_PC(13);		-- 8Kx8  internal memory
@@ -402,65 +401,71 @@ begin
 	ADR_O <= M_PC    when (T2 = '0')    else ADR;
 	RDAT  <= LM_RDAT when (RDATS = '0') else XM_RDAT;
 
-	process(CLK_I)
+	process(CLK_I, RST_I)	-- nuovo (thanks to Riccardo Cerulli-Irelli)
 	begin
-		if (rising_edge(CLK_I)) then
-			if (RST_I = '1') then
-				D_PC    <= X"0000";
-				D_OPC   <= X"01";
-				D_CYC   <= M1;
+		if (RST_I = '1') then
 
-				C_PC    <= X"0000";
-				C_OPC   <= X"01";
-				C_CYC   <= M1;
-				C_IMM   <= X"FFFF";
+			C_PC    <= X"0000";
+			C_OPC   <= X"01";
+			C_CYC   <= M1;
 
-				C_SX    <= "00";
-				C_SY    <= "0000";
-				C_OP    <= "00000";
-				C_SA    <= "00000";
-				C_SMQ   <= '0';
-				C_WE_RR <= '0';
-				C_WE_LL <= '0';
-				C_WE_SP <= SP_NOP;
-				C_IO    <= '0';
-				C_RD_O  <= '0';
-				C_WE_O  <= '0';
-				LM_WE   <= '0';
-			elsif (CE = '1' and T2 = '1') then
-				C_CYC   <= D_CYC;
-				Q_CAT   <= D_CAT;
-				C_PC    <= D_PC;
-				C_OPC   <= D_OPC;
-				C_SX    <= D_SX;
-				C_SY    <= D_SY;
-				C_OP    <= D_OP;
-				C_SA    <= D_SA;
-				C_SMQ   <= D_SMQ;
-				C_WE_RR <= D_WE_RR;
-				C_WE_LL <= D_WE_LL;
-				C_WE_SP <= D_WE_SP;
-				C_IO    <= D_IO;
-				C_RD_O  <= D_RD_O;
-				C_WE_O  <= D_WE_O;
-				LM_WE   <= D_WE_O and not D_IO;
+			C_SX    <= "00";
+			C_SY    <= "0000";
+			C_OP    <= "00000";
+			C_SA    <= "00000";
+			C_SMQ   <= '0';
+			C_WE_RR <= '0';
+			C_WE_LL <= '0';
+			C_WE_SP <= SP_NOP;
+			C_IO    <= '0';
+			C_RD_O  <= '0';
+			C_WE_O  <= '0';
+			LM_WE   <= '0';
+		elsif ((rising_edge(CLK_I) and T2 = '1') and CE = '1' ) then
+			C_CYC   <= D_CYC;
+			Q_CAT   <= D_CAT;
+			C_PC    <= D_PC;
+			C_OPC   <= D_OPC;
+			C_SX    <= D_SX;
+			C_SY    <= D_SY;
+			C_OP    <= D_OP;
+			C_SA    <= D_SA;
+			C_SMQ   <= D_SMQ;
+			C_WE_RR <= D_WE_RR;
+			C_WE_LL <= D_WE_LL;
+			C_WE_SP <= D_WE_SP;
+			C_IO    <= D_IO;
+			C_RD_O  <= D_RD_O;
+			C_WE_O  <= D_WE_O;
+			LM_WE   <= D_WE_O and not D_IO;
 
-				if (D_LAST_M = '1') then	-- D goes to M1
-					-- signals valid for entire opcode...
-					D_OPC <= M_OPC;
-					D_PC  <= M_PC;
-					D_CYC <= M1;
-				else 
-					case D_CYC is
-						when M1 =>	D_CYC <= M2;	-- C goes to M1
-									C_IMM <= X"00" & M_OPC;
-						when M2 =>	D_CYC <= M3;
-									C_IMM(15 downto 8) <= M_OPC;
-						when M3 =>	D_CYC <= M4;
-						when M4 =>	D_CYC <= M5;
-						when M5 =>	D_CYC <= M1;
-					end case;
-				end if;
+		end if;
+	end process;
+
+	process(CLK_I, RST_I)	-- nuovo (thanks to Riccardo Cerulli-Irelli)
+	begin
+		if (RST_I = '1') then
+			D_PC    <= X"0000";
+			D_OPC   <= X"01";
+			D_CYC   <= M1;
+			C_IMM   <= X"FFFF";
+
+		elsif ((rising_edge(CLK_I) and T2 = '1') and CE = '1' ) then
+			if (D_LAST_M = '1') then	-- D goes to M1
+				-- signals valid for entire opcode...     PORTATO FUORI
+				D_OPC <= M_OPC;
+				D_PC  <= M_PC;
+				D_CYC <= M1;
+			else
+				case D_CYC is
+					when M1 =>	D_CYC <= M2;	-- C goes to M1
+								C_IMM <= X"00" & M_OPC;
+					when M2 =>	D_CYC <= M3;
+								C_IMM(15 downto 8) <= M_OPC;
+					when M3 =>	D_CYC <= M4;
+					when M4 =>	D_CYC <= M5;
+					when M5 =>	D_CYC <= M1;
+				end case;
 			end if;
 		end if;
 	end process;
