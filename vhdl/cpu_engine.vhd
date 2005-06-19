@@ -360,7 +360,7 @@ begin
 	begin
 		if (rising_edge(CLK_I)) then
 			if (RST_I = '1') then	T2 <= '0';
-			else					T2 <= not T2;
+			elsif (CE = '1') then	T2 <= not T2;
 			end if;
 		end if;
 	end process;
@@ -387,12 +387,14 @@ begin
 	process(CLK_I)
 	begin
 		if (rising_edge(CLK_I)) then
-			if (T2 = '0') then
-				OPCS   <= EXTERN;
-				XM_OPC <= DAT_I;
-			else
-				RDATS   <= EXTERN;
-				XM_RDAT <= DAT_I;
+			if (CE = '1') then
+				if (T2 = '0') then
+					OPCS   <= EXTERN;
+					XM_OPC <= DAT_I;
+				else
+					RDATS   <= EXTERN;
+					XM_RDAT <= DAT_I;
+				end if;
 			end if;
 		end if;
 	end process;
