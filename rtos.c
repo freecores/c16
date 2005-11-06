@@ -86,7 +86,7 @@ st_loop:
 	MOVE	0(SP), RR		; RR = t
 	ADD	RR, #5			; RR = & t->priority
 	MOVE	(RR), RS		; RR = t->priority
-	SGT	LL, RR			; RR = (next->priority > t->priority)
+	SGE	LL, RR			; RR = (next->priority >= t->priority)
 	JMP	RRNZ, st_next_task	; jump if (next->priority > t->priority)
 st_accept:				;
 	MOVE	0(SP), RR		; RR = t
