@@ -69,10 +69,10 @@ architecture Behavioral of alu8 is
 			when "0110" =>	return '1';
 			when "0111" =>	return '1';
 			-- xor
-			when "1000" =>	return '1';
-			when "1001" =>	return '0';
-			when "1010" =>	return '0';
-			when "1011" =>	return '1';
+			when "1000" =>	return '0';
+			when "1001" =>	return '1';
+			when "1010" =>	return '1';
+			when "1011" =>	return '0';
 			-- not Y
 			when "1100" =>	return '1';
 			when "1101" =>	return '0';
